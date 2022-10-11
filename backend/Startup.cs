@@ -63,7 +63,6 @@ namespace WhaleSpotting
 
       services.AddTransient<IAuthService, AuthService>();
       services.AddTransient<IUserService, UserService>();
-      
     }
 
     // This method gets called by the runtime. Use this method to configure the

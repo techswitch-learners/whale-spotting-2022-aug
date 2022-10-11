@@ -1,6 +1,3 @@
-using System.Linq;
-using WhaleSpotting.Models.Database;
-
 namespace WhaleSpotting.Repositories
 {
     public interface IWhaleRepo
@@ -15,6 +12,5 @@ namespace WhaleSpotting.Repositories
         {
             _context = context;
         }
-
     }
 }
