@@ -39,9 +39,6 @@ const Routes: React.FunctionComponent = () => {
       <Route path="/create-user">
         <CreateUser />
       </Route>
-      <Route path="/logout">
-        <Home />
-      </Route>
     </Switch>
   );
 };
