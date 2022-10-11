@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WhaleSpotting.Services;
 
 namespace WhaleSpotting.Controllers {
   [ApiController]
