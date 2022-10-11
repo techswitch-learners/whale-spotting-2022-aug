@@ -7,6 +7,7 @@ namespace WhaleSpotting.Services
     public interface ILocationService
     {
     }
+
     public class LocationService : ILocationService
     {
         private readonly ILocationRepo _locations;
@@ -16,4 +17,4 @@ namespace WhaleSpotting.Services
             _locations = locations;
         }
     }
-};
+}

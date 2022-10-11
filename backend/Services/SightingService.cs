@@ -7,6 +7,7 @@ namespace WhaleSpotting.Services
     public interface ISightingService
     {
     }
+    
     public class SightingService : ISightingService
     {
         private readonly ISightingRepo _sightings;
@@ -16,4 +17,4 @@ namespace WhaleSpotting.Services
             _sightings = sightings;
         }
     }
-};
+}

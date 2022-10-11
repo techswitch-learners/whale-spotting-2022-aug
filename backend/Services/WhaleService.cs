@@ -7,6 +7,7 @@ namespace WhaleSpotting.Services
     public interface IWhaleService
     {
     }
+    
     public class WhaleService : IWhaleService
     {
         private readonly IWhaleRepo _whales;
@@ -16,4 +17,4 @@ namespace WhaleSpotting.Services
             _whales = whales;
         }
     }
-};
+}
