@@ -57,9 +57,13 @@ namespace WhaleSpotting
       services.AddDbContext<WhaleSpottingDbContext>();
 
       services.AddTransient<IUserRepo, UserRepo>();
+      services.AddTransient<ILocationRepo, LocationRepo>();
+      services.AddTransient<ISightingRepo, SightingRepo>();
+      services.AddTransient<IWhaleRepo, WhaleRepo>();
 
       services.AddTransient<IAuthService, AuthService>();
       services.AddTransient<IUserService, UserService>();
+      
     }
 
     // This method gets called by the runtime. Use this method to configure the
