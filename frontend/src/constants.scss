@@ -6,5 +6,10 @@ $blizzard-blue: #bbedf2ff;
 $white: white;
 $black: black;
 
-$text-color: $black;
+$primary: $blue-green; // Used for main elements that needs to be highlighted and buttons
+$primary-light: $blizzard-blue; // Used for background to text boxes that pops up or need to stand out from white background
+$primary-dark: $blue-sapphire; // Used for sub-headings as a background colour
+$secondary: $prussian-blue; // Used for headers with text color as white
+
+$text-color: $black; // If on dark background, change to white
 $site-background: $white;
