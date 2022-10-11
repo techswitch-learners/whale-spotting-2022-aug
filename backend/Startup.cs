@@ -57,6 +57,9 @@ namespace WhaleSpotting
       services.AddDbContext<WhaleSpottingDbContext>();
 
       services.AddTransient<IUserRepo, UserRepo>();
+      services.AddTransient<ILocationRepo, LocationRepo>();
+      services.AddTransient<ISightingRepo, SightingRepo>();
+      services.AddTransient<IWhaleRepo, WhaleRepo>();
 
       services.AddTransient<IAuthService, AuthService>();
       services.AddTransient<IUserService, UserService>();
