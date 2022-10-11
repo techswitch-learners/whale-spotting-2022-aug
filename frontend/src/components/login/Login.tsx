@@ -14,7 +14,10 @@ export const Login: React.FunctionComponent = () => {
   }
 
   return (
-    <div>
+    <>
+      <div className="admin-message">
+        <h2>ONLY ACCESSIBLE TO ADMINS</h2>
+      </div>
       {error && <p>{error}</p>}
       <h1>Log In</h1>
       <form onSubmit={tryLogin}>
@@ -41,6 +44,6 @@ export const Login: React.FunctionComponent = () => {
 
         <button type="submit">Log In</button>
       </form>
-    </div>
+    </>
   );
 };
