@@ -1,3 +1,5 @@
 import React from "react";
 
-export const PendingSightings: React.FunctionComponent = () => <></>;
+export const PendingSightings: React.FunctionComponent = () => (
+  <>TESTERTESTETSTE</>
+);

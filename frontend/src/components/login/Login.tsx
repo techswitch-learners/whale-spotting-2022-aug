@@ -1,5 +1,7 @@
 import React, { FormEvent, useState, useContext } from "react";
 import { LoginContext } from "../login/LoginManager";
+import { PendingSightings } from "../pending-sightings-page/PendingSightings";
+import { Redirect } from "react-router-dom";
 
 export const Login: React.FunctionComponent = () => {
   const [username, setUsername] = useState("");
@@ -11,6 +13,10 @@ export const Login: React.FunctionComponent = () => {
     event.preventDefault();
     loginContext.logIn(username, password);
     setError(undefined);
+  }
+
+  if (loginContext.isLoggedIn) {
+    return <Redirect to="/approve-sightings" />;
   }
 
   return (
