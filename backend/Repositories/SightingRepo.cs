@@ -21,7 +21,12 @@ namespace WhaleSpotting.Repositories
             // return _context.Sightings
             //     .Include(s => s.ConfirmationStatus);
             
-            return _context.Sightings.Include(s => s.ConfirmationStatus).Where(s.ConfirmationStatus == "Approved");
+            return _context.Sightings.Where(s.ConfirmationStatus == "Approved");
+        }
+
+        public IEnumerable<Sighting> GetUnconfirmedSightings()
+        {        
+            return _context.Sightings.Where(s.ConfirmationStatus == "Pending");
         }
     }
 }

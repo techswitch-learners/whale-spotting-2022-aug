@@ -23,5 +23,12 @@ namespace WhaleSpotting.Controllers {
             var approvedSightings = _sightings.GetApprovedSightings();
             return new ListResponse<Sightings>(approvedSightings);
         }
+
+        [HttpGet("/unconfirmed")] 
+        public IActionResult<ListResponse<Sighting>>GetUnconfirmedSightings()
+        {
+            var unconfirmedSightings = _sightings.GetUnconfirmedSightings();
+            return new ListResponse<Sightings>(unconfirmedSightings);
+        }
     }
 }

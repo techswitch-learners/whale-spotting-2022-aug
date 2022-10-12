@@ -24,5 +24,10 @@ namespace WhaleSpotting.Services
         {
             return _sightings.GetApprovedSightings();
         }
+
+        public IEnumerable<Sighting> GetUnconfirmedSightings()
+        {
+            return _sightings.GetUnconfirmedSightings();
+        }
     }
 }
