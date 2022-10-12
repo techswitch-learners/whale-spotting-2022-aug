@@ -19,39 +19,22 @@ interface Source {
   Name: string;
 }
 
-// interface ArticleSummary {
-//   articleTitle: string;
-//   articleSourceName: string;
-//   articlePublishedAt: string;
-//   ArticleUrl: string;
-// }
-
 export const News: React.FunctionComponent = () => {
-  const [articlesList, setArticlesList] = useState<Article[]>([]);
+  const [articlesList, setArticlesList] = useState<any[]>([]);
   const [isloading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    const yyyy = String(today.getFullYear());
-    const todayDate = yyyy + "-" + mm + "-" + dd;
-    const url = `https://newsapi.org/v2/everything?q=Whales&from=${todayDate}&sortBy=popularity&apiKey=08206669f0354799ae8a7553cc7dbe53`;
+    const url = "https://www.reddit.com/r/whales/top.json?limit=50&t=month";
 
-    // We want article.title, article.source.name, article.publishedAt article.url
     const fetchData = async () => {
       try {
         setIsLoading(true);
         const response = await fetch(url);
-        const json: NewsApiResponse = await response.json();
-        const articles = json.articles;
+        const json: any = await response.json();
+        const articles = json.data.children;
         setArticlesList(
-          articles.filter((article) =>
-            article.title.toLowerCase().includes("whale")
-          )
+          articles.filter((article: any) => article.data.is_video)
         );
-        // console.log(filteredArticles);
-
         setIsLoading(false);
       } catch (error) {
         console.log("error", error);
@@ -62,9 +45,19 @@ export const News: React.FunctionComponent = () => {
 
   return (
     <>
-      <h1>articles</h1>
+      <h1>Whale content</h1>
       {articlesList &&
-        articlesList.map((article) => <p key={article.url}>{article.title}</p>)}
+        articlesList.map((article) => (
+          <>
+            <p key={article.data.Id}>{article.data.title}</p>
+            <video
+              src={article.data.media.reddit_video.fallback_url}
+              width="320"
+              height="320"
+              controls
+            />
+          </>
+        ))}
     </>
   );
 };
