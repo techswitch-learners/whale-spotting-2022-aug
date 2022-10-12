@@ -4,7 +4,6 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Helpers;
 using WhaleSpotting.Models.Request;
 using WhaleSpotting.Models.Database;
-using WhaleSpotting.Models.Response;
 
 namespace WhaleSpotting.Controllers 
 {
@@ -25,7 +24,7 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPost("create")]
-        public ActionResult<CreateUserResponse> Create([FromHeader] string authorization, [FromBody] CreateUserRequest newUserRequest)
+        public ActionResult<User> Create([FromHeader] string authorization, [FromBody] CreateUserRequest newUserRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +54,7 @@ namespace WhaleSpotting.Controllers
                 
                 User createdUser = _userService.Create(newUserRequest);
 
-                return new CreateUserResponse(newUserRequest, true);  
+                return Created("/api", createdUser);  
             }
             catch (Exception)
             {
