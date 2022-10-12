@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+
 namespace WhaleSpotting.Models.Database
 {
-    public class WhaleSpecies
+    public class Species
     {
         public int Id { get; set; }
         public string Name { get; set; }

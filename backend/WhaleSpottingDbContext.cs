@@ -7,6 +7,11 @@ namespace WhaleSpotting
 {
     public class WhaleSpottingDbContext : DbContext
     {
+        public DbSet<ConfirmationStatus> ConfirmationStatuses { get; set; }
+        public DbSet<ConservationStatus> ConservationStatuses { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Sighting> Sightings { get; set; }
+        public DbSet<Species> Species { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(

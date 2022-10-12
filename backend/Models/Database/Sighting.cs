@@ -5,7 +5,7 @@ namespace WhaleSpotting.Models.Database
     public class Sighting
     {
         public int Id { get; set; }
-        public WhaleSpecies WhaleSpecies { get; set; }
+        public Species Species { get; set; }
         public string SeenBy { get; set; }
         public DateTime SeenOn { get; set; }
         public string ImageUrl { get; set; }
