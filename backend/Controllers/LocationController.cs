@@ -6,7 +6,7 @@ namespace WhaleSpotting.Controllers {
     [Route("/locations")]
     public class LocationController : ControllerBase {
         private readonly ILocationService _locations;
-        
+
         public LocationController
         (
             ILocationService locations

@@ -19,7 +19,6 @@ namespace WhaleSpotting.Models.Response
 
         public bool Success { get; set; }
     
-
         public CreateUserResponse(CreateUserRequest newUserRequest, bool success)
         {
             this.Name = newUserRequest.Name;

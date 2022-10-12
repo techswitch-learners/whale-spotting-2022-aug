@@ -6,11 +6,12 @@ using WhaleSpotting.Models.Request;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Response;
 
-namespace WhaleSpotting.Controllers {
+namespace WhaleSpotting.Controllers 
+{
     [ApiController]
     [Route("/users")]
-    public class UserController : ControllerBase {
-
+    public class UserController : ControllerBase 
+    {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
 
@@ -56,7 +57,6 @@ namespace WhaleSpotting.Controllers {
 
                 return new CreateUserResponse(newUserRequest, true);  
             }
-
             catch (Exception)
             {
                 return new UnauthorizedResult();
