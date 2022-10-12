@@ -1,5 +1,7 @@
 import React, { FormEvent, useState, useContext } from "react";
 import { LoginContext } from "../login/LoginManager";
+import { PendingSightings } from "../pending-sightings-page/PendingSightings";
+import { Redirect } from "react-router-dom";
 
 export const Login: React.FunctionComponent = () => {
   const [username, setUsername] = useState("");
@@ -13,8 +15,15 @@ export const Login: React.FunctionComponent = () => {
     setError(undefined);
   }
 
+  if (loginContext.isLoggedIn) {
+    return <Redirect to="/approve-sightings" />;
+  }
+
   return (
-    <div>
+    <>
+      <div className="admin-message">
+        <h2>ONLY ACCESSIBLE TO ADMINS</h2>
+      </div>
       {error && <p>{error}</p>}
       <h1>Log In</h1>
       <form onSubmit={tryLogin}>
@@ -41,6 +50,6 @@ export const Login: React.FunctionComponent = () => {
 
         <button type="submit">Log In</button>
       </form>
-    </div>
+    </>
   );
 };
