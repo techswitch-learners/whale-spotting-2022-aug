@@ -1,0 +1,21 @@
+.homePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.newSightingForm {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  max-width: 300px;
+}
+
+.newSightingForm > * {
+  margin: 4px;
+}
+
+.latAndLongInputs {
+  display: flex;
+  flex-direction: column;
+}
