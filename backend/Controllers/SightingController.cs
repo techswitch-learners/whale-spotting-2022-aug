@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
-using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace WhaleSpotting.Controllers {
     [ApiController]
@@ -22,6 +22,13 @@ namespace WhaleSpotting.Controllers {
         {
             var approvedSightings = _sightings.GetApprovedSightings();
             return new ListResponse<Sightings>(approvedSightings);
+        }
+
+        [HttpGet("/species/{speciesId}")]
+        public ActionResult<ListResponse<Sighting>> GetSightingsBySpeciesId([FromRoute] int speciesId)
+        {
+            var sightings = _sightings.GetSightingsBySpeciesId(speciesId);
+            return new ListResponse<Sighting>(sightings);
         }
     }
 }
