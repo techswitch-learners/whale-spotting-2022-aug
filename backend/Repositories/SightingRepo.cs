@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.Database;
 
 namespace WhaleSpotting.Repositories
@@ -21,7 +22,10 @@ namespace WhaleSpotting.Repositories
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
         {
             return _context.Sightings
+                .Include(s => s.Species)
+                .Include(s => s.Location)
                 .Where(s => s.Species.Id == speciesId)
+                .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
                 .OrderByDescending(s => s.SeenOn);
         }
     }
