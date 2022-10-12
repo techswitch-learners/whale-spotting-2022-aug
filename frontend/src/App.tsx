@@ -15,28 +15,28 @@ import { Login } from "./components/login/Login";
 const Routes: React.FunctionComponent = () => {
   return (
     <Switch>
-      <Route path="/">
+      <Route exact path="/">
         <Home />
       </Route>
-      <Route path="/report-sightings">
+      <Route exact path="/report-sightings">
         <ReportSightings />
       </Route>
-      <Route path="/browse-sightings">
+      <Route exact path="/browse-sightings">
         <BrowseSightings />
       </Route>
-      <Route path="/whaleopedia">
+      <Route exact path="/whaleopedia">
         <Whaleopedia />
       </Route>
-      <Route path="/news">
+      <Route exact path="/news">
         <News />
       </Route>
-      <Route path="/login">
+      <Route exact path="/login">
         <Login />
       </Route>
-      <Route path="/approve-sightings">
+      <Route exact path="/approve-sightings">
         <PendingSightings />
       </Route>
-      <Route path="/create-user">
+      <Route exact path="/create-user">
         <CreateUser />
       </Route>
     </Switch>
