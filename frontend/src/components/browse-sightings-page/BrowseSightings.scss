@@ -1,0 +1,20 @@
+@import "../../constants";
+
+.feed {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sighting-card {
+  position: relative;
+  width: 80%;
+  background-color: $primary;
+
+  .image {
+    margin-bottom: 0;
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+  }
+}

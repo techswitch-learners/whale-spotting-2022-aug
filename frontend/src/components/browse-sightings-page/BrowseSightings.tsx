@@ -5,7 +5,7 @@ import "./BrowseSightings.scss";
 
 export const BrowseSightings: React.FunctionComponent = () => {
   return (
-    <main>
+    <main className="feed">
       <h1>Reported Sightings</h1>
       <Sighting sightings={sightingData} />
     </main>
