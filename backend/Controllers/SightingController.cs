@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
-using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
 
@@ -17,18 +16,18 @@ namespace WhaleSpotting.Controllers {
             _sightings = sightings;
         }
         
-        [HttpGet("/approved")] 
+        [HttpGet] 
         public ActionResult<ListResponse<Sighting>>GetApprovedSightings()
         {
             var approvedSightings = _sightings.GetApprovedSightings();
             return new ListResponse<Sighting>(approvedSightings);
         }
 
-        [HttpGet("/unconfirmed")] 
-        public ActionResult<ListResponse<Sighting>>GetUnconfirmedSightings()
+        [HttpGet("/pending")] 
+        public ActionResult<ListResponse<Sighting>>GetPendingSightings()
         {
-            var unconfirmedSightings = _sightings.GetUnconfirmedSightings();
-            return new ListResponse<Sighting>(unconfirmedSightings);
+            var pendingSightings = _sightings.GetPendingSightings();
+            return new ListResponse<Sighting>(pendingSightings);
         }
 
         [HttpGet("/species/{speciesId}")]
