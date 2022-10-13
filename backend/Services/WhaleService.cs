@@ -1,11 +1,12 @@
-using System;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Collections.Generic;
+using WhaleSpotting.Models.Database;
 using WhaleSpotting.Repositories;
 
 namespace WhaleSpotting.Services
 {
     public interface IWhaleService
     {
+        IEnumerable<Species> GetAllSpecies();
     }
     
     public class WhaleService : IWhaleService
@@ -15,6 +16,11 @@ namespace WhaleSpotting.Services
         public WhaleService(IWhaleRepo whales)
         {
             _whales = whales;
+        }
+
+        public IEnumerable<Species> GetAllSpecies() 
+        {
+            return _whales.GetAllSpecies();
         }
     }
 }
