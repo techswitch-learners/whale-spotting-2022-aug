@@ -3,7 +3,6 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
 
-
 namespace WhaleSpotting.Controllers {
     [ApiController]
     [Route("/sightings")]
@@ -18,7 +17,7 @@ namespace WhaleSpotting.Controllers {
         }
         
         [HttpGet] 
-        public ActionResult<ListResponse<Sighting>>GetApprovedSightings()
+        public ActionResult<ListResponse<Sighting>> GetApprovedSightings()
         {
             var approvedSightings = _sightings.GetApprovedSightings();
             return new ListResponse<Sighting>(approvedSightings);
