@@ -34,7 +34,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("LocationSpecies");
+                    b.ToTable("LocationSpecies", (string)null);
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.ConservationStatus", b =>
@@ -53,7 +53,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConservationStatuses");
+                    b.ToTable("ConservationStatuses", (string)null);
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.Location", b =>
@@ -69,7 +69,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Locations", (string)null);
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.Sighting", b =>
@@ -116,7 +116,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("Sightings");
+                    b.ToTable("Sightings", (string)null);
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.Species", b =>
@@ -146,7 +146,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasIndex("ConservationStatusId");
 
-                    b.ToTable("Species");
+                    b.ToTable("Species", (string)null);
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.User", b =>
@@ -174,7 +174,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("LocationSpecies", b =>

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
+using WhaleSpotting.Models.Request;
+using System;
 
 namespace WhaleSpotting.Controllers {
     [ApiController]
@@ -28,9 +30,9 @@ namespace WhaleSpotting.Controllers {
             return new ListResponse<Sighting>(sightings);
         }   
 
-        [HttpPost("/create")]
-        public ActionResult CreateSighting([FromBody] Sighting createSightingRequest)
-        {
+        [HttpPost("create")]
+        public ActionResult CreateSighting([FromBody] CreateSightingRequest createSightingRequest)
+        {   
             var createdSighting = _sightings.CreateSighting(createSightingRequest);
             return Created("/api", createdSighting);
         }
