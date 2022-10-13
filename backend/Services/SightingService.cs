@@ -44,7 +44,8 @@ namespace WhaleSpotting.Services
                 ImageUrl = request.ImageUrl,
                 Description = request.Description,
                 Latitude = request.Latitude,
-                Longitude = request.Longitude
+                Longitude = request.Longitude,
+                ConfirmationStatus = ConfirmationStatus.Pending,
             };
 
             return _sightings.CreateSighting(newSighting);
