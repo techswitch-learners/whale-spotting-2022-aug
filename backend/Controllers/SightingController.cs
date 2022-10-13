@@ -14,7 +14,7 @@ namespace WhaleSpotting.Controllers {
             _sightings = sightings;
         }
          
-        [HttpGet("/species/{speciesId}")]
+        [HttpGet("species/{speciesId}")]
         public ActionResult<ListResponse<Sighting>> GetSightingsBySpeciesId([FromRoute] int speciesId)
         {
             var sightings = _sightings.GetSightingsBySpeciesId(speciesId);
