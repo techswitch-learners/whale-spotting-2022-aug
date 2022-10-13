@@ -9,10 +9,8 @@ namespace WhaleSpotting.Controllers {
     public class SightingController : ControllerBase {
         private readonly ISightingService _sightings;
 
-        public SightingController
-        (
-            ISightingService sightings
-        ) {
+        public SightingController ( ISightingService sightings )
+        {
             _sightings = sightings;
         }
         
