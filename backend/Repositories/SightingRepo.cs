@@ -7,6 +7,7 @@ namespace WhaleSpotting.Repositories
 {
     public interface ISightingRepo
     {
+        IEnumerable<Sighting> GetApprovedSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
     }
 
@@ -17,6 +18,13 @@ namespace WhaleSpotting.Repositories
         public SightingRepo(WhaleSpottingDbContext context)
         {
             _context = context;
+        }
+    
+        public IEnumerable<Sighting> GetApprovedSightings()
+        {
+            return _context
+                .Sightings
+                .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved);
         }
 
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)

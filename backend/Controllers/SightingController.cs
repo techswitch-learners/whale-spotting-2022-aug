@@ -13,7 +13,14 @@ namespace WhaleSpotting.Controllers {
         {
             _sightings = sightings;
         }
-         
+        
+        [HttpGet] 
+        public ActionResult<ListResponse<Sighting>> GetApprovedSightings()
+        {
+            var approvedSightings = _sightings.GetApprovedSightings();
+            return new ListResponse<Sighting>(approvedSightings);
+        }
+
         [HttpGet("species/{speciesId}")]
         public ActionResult<ListResponse<Sighting>> GetSightingsBySpeciesId([FromRoute] int speciesId)
         {
