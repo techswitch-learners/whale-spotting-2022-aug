@@ -20,7 +20,7 @@ export const News: React.FunctionComponent = () => {
         articlesList.map((article: RedditVideo) => (
           <>
             <p key={article.id}>{article.title.replace(/&amp;/g, "&")}</p>
-            <p key={article.id}>{article.created}</p>
+            {/* <p key={article.id}>{article.created}</p> */}
             <video
               key={article.media.reddit_video.fallback_url}
               src={article.media.reddit_video.fallback_url}
