@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using WhaleSpotting.Models.Database;
+using WhaleSpotting.Models.Response;
 using WhaleSpotting.Services;
 
 namespace WhaleSpotting.Controllers {
@@ -12,6 +14,13 @@ namespace WhaleSpotting.Controllers {
             IWhaleService whales
         ) {
             _whales = whales;
+        }
+
+        [HttpGet("")]
+        public ActionResult<ListResponse<Species>> GetAllSpecies()
+        {
+            var whales = _whales.GetAllSpecies();
+            return new ListResponse<Species>(whales);
         }
     }
 }
