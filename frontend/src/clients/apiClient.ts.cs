@@ -1,4 +1,8 @@
-﻿namespace DefaultNamespace;
+﻿namespace WhaleSpotting.Clients;
+
+export interface ListResponse<T> {
+    items: T[];
+}
 
 export interface Sighting {
     id: number;
@@ -14,7 +18,6 @@ export interface Sighting {
 
 public class apiClient_ts
 {
-    
     export const getSightings = async (): Promise<ListResponse<Sighting>> => {
         const response = await fetch(`https://localhost:5001/sightings`);
         return await response.json();
