@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using WhaleSpotting.Repositories;

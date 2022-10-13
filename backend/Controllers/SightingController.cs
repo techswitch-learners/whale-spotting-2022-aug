@@ -3,7 +3,6 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
-using System;
 
 namespace WhaleSpotting.Controllers {
     [ApiController]
