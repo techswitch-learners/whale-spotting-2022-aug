@@ -26,6 +26,13 @@ namespace WhaleSpotting.Controllers {
         {
             var sightings = _sightings.GetSightingsBySpeciesId(speciesId);
             return new ListResponse<Sighting>(sightings);
+        }   
+
+        [HttpPost("/create")]
+        public ActionResult CreateSighting([FromBody] Sighting createSightingRequest)
+        {
+            var createdSighting = _sightings.CreateSighting(createSightingRequest);
+            return Created("/api", createdSighting);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace WhaleSpotting.Services
     {
         IEnumerable<Sighting> GetApprovedSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
+        Sighting CreateSighting(Sighting createSightingRequest);
     }
     
     public class SightingService : ISightingService
@@ -29,6 +30,13 @@ namespace WhaleSpotting.Services
         public IEnumerable<Sighting> GetApprovedSightings()
         {
             return _sightings.GetApprovedSightings();
+        }
+
+        public Sighting CreateSighting(Sighting createSightingRequest)
+        {
+            //TODO
+            //logic, change request to include locationID
+            return _sightings.CreateSighting(createSightingRequest);
         }
     }
 }

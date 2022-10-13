@@ -9,6 +9,7 @@ namespace WhaleSpotting.Repositories
     {
         IEnumerable<Sighting> GetApprovedSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
+        Sighting CreateSighting(Sighting createSightingRequest);
     }
 
     public class SightingRepo : ISightingRepo
@@ -19,7 +20,15 @@ namespace WhaleSpotting.Repositories
         {
             _context = context;
         }
-    
+
+        public Sighting CreateSighting(Sighting createSightingRequest)
+        {
+            var newSighting = _context.Sightings.Add(createSightingRequest);
+            _context.SaveChanges();
+
+            return newSighting.Entity;
+        }
+
         public IEnumerable<Sighting> GetApprovedSightings()
         {
             return _context
