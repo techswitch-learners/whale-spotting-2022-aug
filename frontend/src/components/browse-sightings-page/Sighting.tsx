@@ -13,8 +13,8 @@ export const Sighting: React.FunctionComponent<SightingProps> = ({
     <div className="sighting-card">
       {sightings.map((sighting, index) => (
         <div key={index}>
-          {sighting.species}
-          <img className="image" src={sighting.imageUrl} />
+          <div className="header">{sighting.species}</div>
+          <img className="image" src={sighting.imageUrl} alt="image of whale" />
         </div>
       ))}
     </div>

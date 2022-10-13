@@ -11,6 +11,11 @@
   width: 80%;
   background-color: $primary;
 
+  .header {
+    background-color: $primary-light;
+    font-size: large;
+  }
+
   .image {
     margin-bottom: 0;
     width: 100%;
