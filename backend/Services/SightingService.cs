@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using WhaleSpotting.Models.Database;
 using WhaleSpotting.Repositories;
+using WhaleSpotting.Models.Database;
 
 namespace WhaleSpotting.Services
 {
     public interface ISightingService
     {
-        public IEnumerable<Sighting> GetApprovedSightings();
+        IEnumerable<Sighting> GetApprovedSightings();
+        IEnumerable<Sighting> GetUnconfirmedSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
     }
     

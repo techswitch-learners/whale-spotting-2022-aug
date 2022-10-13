@@ -8,6 +8,8 @@ namespace WhaleSpotting.Repositories
     public interface ISightingRepo
     {
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
+        IEnumerable<Sighting> GetApprovedSightings();
+        IEnumerable<Sighting> GetUnconfirmedSightings();
     }
 
     public class SightingRepo : ISightingRepo
@@ -21,13 +23,12 @@ namespace WhaleSpotting.Repositories
     
         public IEnumerable<Sighting> GetApprovedSightings()
         {
-            
-            return _context.Sightings.Where(s.ConfirmationStatus == "Approved");
+            return _context.Sightings.Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved);
         }
 
         public IEnumerable<Sighting> GetUnconfirmedSightings()
         {        
-            return _context.Sightings.Where(s.ConfirmationStatus == "Pending");
+            return _context.Sightings.Where(s => s.ConfirmationStatus == ConfirmationStatus.Pending);
         }
 
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
