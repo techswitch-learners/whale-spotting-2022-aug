@@ -10,12 +10,12 @@
   margin-bottom: 2rem;
   position: relative;
   width: 80%;
-  background-color: $primary-dark;
+  background-color: $primary;
   color: $text-color-light;
-
   display: flex;
   flex-direction: column;
   align-content: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   .whale-list_card--common-name {
     animation: normal;
@@ -29,5 +29,17 @@
     width: 100%;
     height: auto;
     min-height: 60px;
+  }
+
+  .whale-list_card--scientific {
+    padding: 0.5rem 2rem 0.5rem 2rem;
+  }
+
+  .whale-list_card--description {
+    padding: 0.5rem 2rem 0.5rem 2rem;
+  }
+
+  .whale-list_card--conservation {
+    padding: 0.5rem 2rem 0.5rem 2rem;
   }
 }
