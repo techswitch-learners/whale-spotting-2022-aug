@@ -40,19 +40,22 @@ export const Home: React.FunctionComponent = () => {
     }
     if (locationInputType === "") {
       setLocationInputTypeError("Please select a way to input your location");
-    }
-    if (latitude === "") {
-      setLatError("Please enter a latitude");
       numberOfErrors++;
-    }
-    if (longitude === "") {
-      setLongError("Please enter a longitude");
-      numberOfErrors++;
+    } else {
+      if (latitude === "") {
+        setLatError("Please enter a latitude");
+        numberOfErrors++;
+      }
+      if (longitude === "") {
+        setLongError("Please enter a longitude");
+        numberOfErrors++;
+      }
     }
     if (imageUrl && imageUrl.includes(" ")) {
       setImageUrl("URL cannot contain spaces");
       numberOfErrors++;
     }
+
     return numberOfErrors;
   };
 
