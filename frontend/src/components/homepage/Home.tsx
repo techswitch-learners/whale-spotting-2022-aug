@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import internal from "stream";
 import "./Home.scss";
+import { Sighting, createSighting } from "../../Api/apiClient";
 
 export const Home: React.FunctionComponent = () => {
-  const [locationInputType, setLocationInputType] = useState("");
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
+  const [locationInputType, setLocationInputType] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [nameError, setNameError] = useState("");
   const [dateError, setDateError] = useState("");
+  const [locationInputTypeError, setLocationInputTypeError] = useState("");
   const [latError, setLatError] = useState("");
   const [longError, setLongError] = useState("");
 
@@ -19,32 +21,54 @@ export const Home: React.FunctionComponent = () => {
     setLocationInputType(event.target.value);
   };
 
-  const validateForm = (
-    name: string,
-    date: string,
-    imageUrl: string,
-    latitude: string,
-    longitude: string
-  ) => {
+  const validateForm = () => {
+    let numberOfErrors = 0;
+    setNameError("");
+    setDateError("");
+    setLocationInputTypeError("");
+    setLatError("");
+    setLongError("");
+    setImageUrl("");
+
     if (name === "") {
-      setNameError("Required field");
+      setNameError("Please enter a name");
+      numberOfErrors++;
     }
-    if (imageUrl.includes(" ")) {
-      setImageUrl("URL cannot contain spaces");
-    }
-    if (!date) {
+    if (date === "") {
       setDateError("Please enter date");
+      numberOfErrors++;
     }
-    if (!latitude) {
+    if (locationInputType === "") {
+      setLocationInputTypeError("Please select a way to input your location");
+    }
+    if (latitude === "") {
       setLatError("Please enter a latitude");
+      numberOfErrors++;
     }
-    if (!longitude) {
+    if (longitude === "") {
       setLongError("Please enter a longitude");
+      numberOfErrors++;
     }
+    if (imageUrl && imageUrl.includes(" ")) {
+      setImageUrl("URL cannot contain spaces");
+      numberOfErrors++;
+    }
+    return numberOfErrors;
   };
 
-  const handleSubmit = () => {
-    validateForm(name, date, imageUrl, latitude, longitude);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (validateForm() === 0) {
+      const createSightingRequest: Sighting = {
+        name: name,
+        date: date,
+        latitude: Number.parseFloat(latitude),
+        longitude: Number.parseFloat(longitude),
+        description: description,
+        imageUrl: imageUrl,
+      };
+      createSighting(createSightingRequest);
+    }
   };
 
   return (
@@ -58,14 +82,17 @@ export const Home: React.FunctionComponent = () => {
           onChange={(e) => {
             setName(e.target.value);
           }}
-        ></input>
-        {nameError}
+        />
+        <p>{nameError}</p>
+
         <input
           type="datetime-local"
           onChange={(e) => {
             setDate(e.target.value);
           }}
-        ></input>
+        />
+        <p>{dateError}</p>
+
         <ul>
           <li>
             <input
@@ -77,13 +104,14 @@ export const Home: React.FunctionComponent = () => {
             />
             Use my location
           </li>
+
           <li>
             <input
               type="radio"
               value="manual"
               checked={locationInputType === "manual"}
               onChange={handleChange}
-            />
+            />{" "}
             Enter latitude and longitude
             {locationInputType === "manual" && (
               <div className="latAndLongInputs">
@@ -97,6 +125,7 @@ export const Home: React.FunctionComponent = () => {
                     setLatitude(e.target.value);
                   }}
                 />
+                <p>{latError}</p>
                 <input
                   type="number"
                   placeholder="Longitude"
@@ -107,9 +136,11 @@ export const Home: React.FunctionComponent = () => {
                     setLongitude(e.target.value);
                   }}
                 />
+                <p>{longError}</p>
               </div>
             )}
           </li>
+
           <li>
             <input
               type="radio"
@@ -121,21 +152,25 @@ export const Home: React.FunctionComponent = () => {
             Start typing a location
           </li>
         </ul>
+        <p>{locationInputTypeError}</p>
+
         <input
           type="text"
           placeholder="Description"
           onChange={(e) => {
             setDescription(e.target.value);
           }}
-        ></input>
+        />
+
         <input
           type="text"
           placeholder="Image Url"
           onChange={(e) => {
             setImageUrl(e.target.value);
           }}
-        ></input>
-        <button type="submit">Submit post</button>
+        />
+
+        <button type="submit">Submit sighting</button>
       </form>
     </div>
   );
