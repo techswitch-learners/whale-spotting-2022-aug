@@ -22,7 +22,7 @@ namespace WhaleSpotting.Repositories
         {
             return _context.Species
                 .Include(s => s.ConservationStatus)
-                .OrderByDescending(s => s.Name);
+                .OrderBy(s => s.Name);
         }
     }
 }
