@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Repositories;
-using WhaleSpotting.Models.Database;
 
 namespace WhaleSpotting.Services
 {
@@ -30,6 +29,7 @@ namespace WhaleSpotting.Services
         public IEnumerable<Sighting> GetUnconfirmedSightings()
         {
             return _sightings.GetUnconfirmedSightings();
+        }
 
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
         {

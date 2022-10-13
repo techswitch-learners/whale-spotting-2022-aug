@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
-<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
-=======
->>>>>>> main
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
 
@@ -30,6 +27,7 @@ namespace WhaleSpotting.Controllers {
         {
             var unconfirmedSightings = _sightings.GetUnconfirmedSightings();
             return new ListResponse<Sightings>(unconfirmedSightings);
+        }
 
         [HttpGet("/species/{speciesId}")]
         public ActionResult<ListResponse<Sighting>> GetSightingsBySpeciesId([FromRoute] int speciesId)
