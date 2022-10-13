@@ -1,6 +1,11 @@
 export interface ListResponse<T> {
   items: T[];
 }
+export interface ConservationStatus {
+  id: number;
+  code: string;
+  description: string;
+}
 
 export interface Species {
   id: number;
@@ -8,7 +13,7 @@ export interface Species {
   scientificName: string;
   description: string;
   photoUrl: string;
-  conservationStatus: number;
+  conservationStatus: ConservationStatus;
 }
 
 export const getAllSpecies = async (): Promise<ListResponse<Species>> => {

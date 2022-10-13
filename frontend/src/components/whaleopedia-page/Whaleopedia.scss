@@ -1,6 +1,33 @@
-.whale_info--common-name {
+@import "../../constants.scss";
+
+.whale-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.whale_info--scientific {
-  text-decoration: italic;
+.whale-list_card {
+  margin-bottom: 2rem;
+  position: relative;
+  width: 80%;
+  background-color: $primary-dark;
+  color: $text-color-light;
+
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+
+  .whale-list_card--common-name {
+    animation: normal;
+    font-size: xx-large;
+    font-kerning: normal;
+    font-weight: bold;
+    padding: 1rem;
+  }
+
+  .whale-list_card--image {
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+  }
 }
