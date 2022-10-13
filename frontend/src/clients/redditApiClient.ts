@@ -35,8 +35,10 @@ interface VideoUrl {
 }
 
 export const getTopWhaleVideos = async (): Promise<RedditVideo[]> => {
+  // const url = "https://www.reddit.com/r/whales/top.jso";
   const url = "https://www.reddit.com/r/whales/top.json?limit=50&t=month";
   const response = await fetch(url);
+  console.log(response);
   const json: RedditApiResponse = await response.json();
   const articles: RedditVideoResponse[] = json.data.children;
   const arr: RedditVideoResponse[] = articles.filter(
