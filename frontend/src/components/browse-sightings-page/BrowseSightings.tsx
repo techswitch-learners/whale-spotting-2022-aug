@@ -1,13 +1,25 @@
 import React from "react";
 import { sightingData } from "./sightingData";
-import { Sighting } from "./Sighting";
+import { SightingCard } from "./SightingCard";
+import {
+  getSightings,
+  Sighting as SightingInterface,
+} from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
 export const BrowseSightings: React.FunctionComponent = () => {
+  // switch to the API by uncommenting
+  // const sightingData = getSightings();
+  const sightings = sightingData;
+
   return (
-    <main className="feed">
-      <h1>Reported Sightings</h1>
-      <Sighting sightings={sightingData} />
-    </main>
+    <div className="feed">
+      <h1 className="title">Reported Sightings</h1>
+      <div>
+        {sightings.map((sighting, index) => (
+          <SightingCard sighting={sighting} key={index} />
+        ))}
+      </div>
+    </div>
   );
 };

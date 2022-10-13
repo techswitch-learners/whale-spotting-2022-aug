@@ -1,5 +1,9 @@
 @import "../../constants";
 
+.title {
+  align-self: auto;
+}
+
 .feed {
   display: flex;
   align-items: center;
@@ -9,7 +13,7 @@
 .sighting-card {
   margin-bottom: 2rem;
   position: relative;
-  max-width: 80%;
+  max-width: 600px;
   background-color: $primary-dark;
   display: flex;
   flex-direction: column;
