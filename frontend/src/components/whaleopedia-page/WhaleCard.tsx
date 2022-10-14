@@ -13,20 +13,17 @@ interface WhaleCardProps {
 
 export const WhaleCard: React.FC<WhaleCardProps> = ({ whale }) => {
   return (
-    <div className="whale-list_card">
-      <div className="whale-list_card--common-name">{whale.name}</div>
-      <img className="whale-list_card--image" src={whale.photoUrl} />
-      <div className="whale-list_card--scientific">
-        <strong>Scientific Name: </strong>
-        {whale.scientificName}
+    <div className="whale-card">
+      <div className="whale-card__common-name">{whale.name}</div>
+      <img className="whale-card__image" src={whale.photoUrl} />
+      <div className="whale-card__scientific">
+        Scientific Name: {whale.scientificName}
       </div>
-      <div className="whale-list_card--description">
-        <strong>Description: </strong>
-        {whale.description}
+      <div className="whale-card__description">
+        Description: {whale.description}
       </div>
-      <div className="whale-list_card--conservation">
-        <strong>Conservation Status: </strong>
-        {whale.conservationStatus.code}
+      <div className="whale-card__conservation">
+        Conservation Status: {whale.conservationStatus.code}
       </div>
     </div>
   );

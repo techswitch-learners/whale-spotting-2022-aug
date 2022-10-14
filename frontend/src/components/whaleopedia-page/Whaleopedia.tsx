@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { getAllSpecies, ListResponse, Species } from "../../clients/apiClient";
+import { getAllSpecies, Species } from "../../clients/apiClient";
 import { WhaleCard } from "./WhaleCard";
 import "./Whaleopedia.scss";
 
 export const Whaleopedia: React.FunctionComponent = () => {
-  const [listOfWhales, setListOfWhales] = useState<ListResponse<Species>>();
+  const [whales, setWhales] = useState<Species[]>();
 
   useEffect(() => {
-    getAllSpecies().then(setListOfWhales);
+    getAllSpecies().then(setWhales);
   }, []);
 
-  if (listOfWhales === undefined) {
+  if (whales === undefined) {
     return <p>Loading</p>;
   }
 
   return (
     <div className="whale-list">
       <h1>Whaleopedia</h1>
-      {listOfWhales.items.map((whale, index) => {
+      {whales.map((whale, index) => {
         return <WhaleCard key={index} whale={whale} />;
       })}
     </div>

@@ -1,6 +1,9 @@
+const backendUrl = process.env["REACT_APP_BACKEND_DOMAIN"];
+
 export interface ListResponse<T> {
   items: T[];
 }
+
 export interface ConservationStatus {
   id: number;
   code: string;
@@ -16,7 +19,7 @@ export interface Species {
   conservationStatus: ConservationStatus;
 }
 
-export const getAllSpecies = async (): Promise<ListResponse<Species>> => {
-  const response = await fetch(`https://localhost:5001/whales`);
+export const getAllSpecies = async (): Promise<Species[]> => {
+  const response = await fetch(`backendUrl`);
   return await response.json();
 };
