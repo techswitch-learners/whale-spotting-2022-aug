@@ -20,6 +20,7 @@ export interface Species {
 }
 
 export const getAllSpecies = async (): Promise<Species[]> => {
-  const response = await fetch(`backendUrl`);
-  return await response.json();
+  const response = await fetch(`${backendUrl}/whales`);
+  const whaleListResponse: ListResponse<Species> = await response.json();
+  return whaleListResponse.items;
 };
