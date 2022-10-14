@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using WhaleSpotting.Repositories;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
@@ -9,6 +8,7 @@ namespace WhaleSpotting.Services
     public interface ISightingService
     {
         IEnumerable<Sighting> GetApprovedSightings();
+        IEnumerable<Sighting> GetPendingSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         Sighting CreateSighting(CreateSightingRequest request);
     }
@@ -30,6 +30,11 @@ namespace WhaleSpotting.Services
         public IEnumerable<Sighting> GetApprovedSightings()
         {
             return _sightings.GetApprovedSightings();
+        }
+        
+        public IEnumerable<Sighting> GetPendingSightings()
+        {
+            return _sightings.GetPendingSightings();
         }
 
         public Sighting CreateSighting(CreateSightingRequest request)
