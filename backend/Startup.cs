@@ -80,6 +80,8 @@ namespace WhaleSpotting
                                                 "WhaleSpotting v1"));
       }
 
+      AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
       app.UseCors(AllowAnyOriginPolicy);
 
       app.UseHttpsRedirection();
