@@ -1,0 +1,45 @@
+@import "../../constants.scss";
+
+.whale-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.whale-card {
+  margin-bottom: 2rem;
+  position: relative;
+  width: 80%;
+  background-color: $primary;
+  color: $text-color-light;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  .whale-card__common-name {
+    animation: normal;
+    font-size: xx-large;
+    font-kerning: normal;
+    font-weight: bold;
+    padding: 1rem;
+  }
+
+  .whale-card__image {
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+  }
+
+  .whale-card__scientific {
+    padding: 0.5rem 2rem 0.5rem 2rem;
+  }
+
+  .whale-card__description {
+    padding: 0.5rem 2rem 0.5rem 2rem;
+  }
+
+  .whale-card__conservation {
+    padding: 0.5rem 2rem 0.5rem 2rem;
+  }
+}
