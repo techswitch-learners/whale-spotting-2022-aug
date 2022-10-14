@@ -1,5 +1,5 @@
 import React from "react";
-import { sightingData } from "./sightingData";
+// import { sightingData } from "./sightingData";
 import { SightingCard } from "./SightingCard";
 import {
   getSightings,
@@ -7,10 +7,10 @@ import {
 } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
-export const BrowseSightings: React.FunctionComponent = () => {
+export const BrowseSightings: () => Promise<JSX.Element> = async () => {
   // switch to the API by uncommenting
-  // const sightingData = getSightings();
-  const sightings = sightingData;
+  const sightings = await getSightings();
+  // const sightings = sightingData;
 
   return (
     <div className="feed">
