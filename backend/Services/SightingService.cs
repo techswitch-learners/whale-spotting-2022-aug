@@ -21,10 +21,12 @@ namespace WhaleSpotting.Services
         {
             _sightings = sightings;
         }
+
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
         {
             return _sightings.GetSightingsBySpeciesId(speciesId);
         }
+        
         public IEnumerable<Sighting> GetApprovedSightings()
         {
             return _sightings.GetApprovedSightings();
@@ -36,6 +38,8 @@ namespace WhaleSpotting.Services
 
         public Sighting CreateSighting(CreateSightingRequest request)
         {
+            //TODO: WS-40
+            //logic, change request to include locationID
             var newSighting = new Sighting
             {
                 SeenBy = request.Name,

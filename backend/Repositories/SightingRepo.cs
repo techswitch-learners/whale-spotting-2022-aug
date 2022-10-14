@@ -32,7 +32,9 @@ namespace WhaleSpotting.Repositories
 
         public IEnumerable<Sighting> GetApprovedSightings()
         {
-            return _context.Sightings.Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved);
+            return _context
+                .Sightings
+                .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved);
         }
 
         public IEnumerable<Sighting> GetPendingSightings()
