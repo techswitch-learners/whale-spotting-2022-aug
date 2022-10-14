@@ -21,12 +21,12 @@ namespace WhaleSpotting.Repositories
             _context = context;
         }
 
-        public Sighting CreateSighting(Sighting createSightingRequest)
+        public Sighting CreateSighting(Sighting newSighting)
         {
-            var newSighting = _context.Sightings.Add(createSightingRequest);
+            var insertedSighting = _context.Sightings.Add(newSighting);
             _context.SaveChanges();
 
-            return newSighting.Entity;
+            return insertedSighting.Entity;
         }
 
         public IEnumerable<Sighting> GetApprovedSightings()

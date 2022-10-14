@@ -29,7 +29,7 @@ namespace WhaleSpotting.Controllers {
             return new ListResponse<Sighting>(sightings);
         }   
 
-        [HttpPost("create")]
+        [HttpPost]
         public ActionResult CreateSighting([FromBody] CreateSightingRequest createSightingRequest)
         {   
             var createdSighting = _sightings.CreateSighting(createSightingRequest);

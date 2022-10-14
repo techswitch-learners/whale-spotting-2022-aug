@@ -18,10 +18,8 @@ namespace WhaleSpotting.Models.Request
         [Required]
         public float Longitude { get; set; }
 
-        [StringLength(70)]
         public string Description { get; set; }
 
-        [StringLength(70)]
         public string ImageUrl { get; set; }
     }
 }

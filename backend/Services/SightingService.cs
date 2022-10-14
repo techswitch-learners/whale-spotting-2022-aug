@@ -34,7 +34,7 @@ namespace WhaleSpotting.Services
 
         public Sighting CreateSighting(CreateSightingRequest request)
         {
-            //TODO
+            //TODO: WS-40
             //logic, change request to include locationID
             var newSighting = new Sighting
             {
