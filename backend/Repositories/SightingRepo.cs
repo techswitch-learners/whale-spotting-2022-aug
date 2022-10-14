@@ -10,6 +10,7 @@ namespace WhaleSpotting.Repositories
         IEnumerable<Sighting> GetApprovedSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         IEnumerable<Sighting> GetPendingSightings();
+        Sighting CreateSighting(Sighting createSightingRequest);
     }
 
     public class SightingRepo : ISightingRepo
@@ -20,7 +21,15 @@ namespace WhaleSpotting.Repositories
         {
             _context = context;
         }
-    
+
+        public Sighting CreateSighting(Sighting newSighting)
+        {
+            var insertedSighting = _context.Sightings.Add(newSighting);
+            _context.SaveChanges();
+
+            return insertedSighting.Entity;
+        }
+
         public IEnumerable<Sighting> GetApprovedSightings()
         {
             return _context.Sightings.Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved);
