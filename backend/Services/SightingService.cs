@@ -19,7 +19,10 @@ namespace WhaleSpotting.Services
         {
             _sightings = sightings;
         }
-        
+        public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
+        {
+            return _sightings.GetSightingsBySpeciesId(speciesId);
+        }
         public IEnumerable<Sighting> GetApprovedSightings()
         {
             return _sightings.GetApprovedSightings();
@@ -28,11 +31,6 @@ namespace WhaleSpotting.Services
         public IEnumerable<Sighting> GetPendingSightings()
         {
             return _sightings.GetPendingSightings();
-        }
-
-        public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
-        {
-            return _sightings.GetSightingsBySpeciesId(speciesId);
         }
     }
 }
