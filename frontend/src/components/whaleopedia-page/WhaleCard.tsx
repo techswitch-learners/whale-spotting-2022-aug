@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  getAllSpecies,
-  ListResponse,
-  Species,
-  ConservationStatus,
-} from "../../clients/apiClient";
+import React from "react";
+import { Species } from "../../clients/apiClient";
 import "./Whaleopedia.scss";
 
 interface WhaleCardProps {
