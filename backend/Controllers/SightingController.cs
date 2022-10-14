@@ -9,15 +9,20 @@ namespace WhaleSpotting.Controllers {
     public class SightingController : ControllerBase {
         private readonly ISightingService _sightings;
 
-        public SightingController
-        (
-            ISightingService sightings
-        ) {
+        public SightingController(ISightingService sightings)
+        {
             _sightings = sightings;
         }
         
+        [HttpGet("species/{speciesId}")]
+        public ActionResult<ListResponse<Sighting>> GetSightingsBySpeciesId([FromRoute] int speciesId)
+        {
+            var sightings = _sightings.GetSightingsBySpeciesId(speciesId);
+            return new ListResponse<Sighting>(sightings);
+        }
+        
         [HttpGet] 
-        public ActionResult<ListResponse<Sighting>>GetApprovedSightings()
+        public ActionResult<ListResponse<Sighting>> GetApprovedSightings()
         {
             var approvedSightings = _sightings.GetApprovedSightings();
             return new ListResponse<Sighting>(approvedSightings);
@@ -28,13 +33,6 @@ namespace WhaleSpotting.Controllers {
         {
             var pendingSightings = _sightings.GetPendingSightings();
             return new ListResponse<Sighting>(pendingSightings);
-        }
-
-        [HttpGet("/species/{speciesId}")]
-        public ActionResult<ListResponse<Sighting>> GetSightingsBySpeciesId([FromRoute] int speciesId)
-        {
-            var sightings = _sightings.GetSightingsBySpeciesId(speciesId);
-            return new ListResponse<Sighting>(sightings);
         }
     }
 }

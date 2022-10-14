@@ -27,7 +27,6 @@ namespace WhaleSpotting.Services
         {
             return _sightings.GetApprovedSightings();
         }
-
         public IEnumerable<Sighting> GetPendingSightings()
         {
             return _sightings.GetPendingSightings();
