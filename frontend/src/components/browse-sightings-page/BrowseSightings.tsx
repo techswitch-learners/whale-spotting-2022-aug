@@ -1,16 +1,18 @@
-import React from "react";
-// import { sightingData } from "./sightingData";
+import React, { useEffect, useState } from "react";
+import { getSightings, Sighting } from "../../clients/apiClient";
 import { SightingCard } from "./SightingCard";
-import {
-  getSightings,
-  Sighting as SightingInterface,
-} from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
-export const BrowseSightings: () => Promise<JSX.Element> = async () => {
-  // switch to the API by uncommenting
-  const sightings = await getSightings();
-  // const sightings = sightingData;
+export const BrowseSightings: React.FC = () => {
+  const [sightings, setSightings] = useState<Sighting[]>();
+
+  useEffect(() => {
+    getSightings().then(setSightings);
+  }, []);
+
+  if (sightings === undefined) {
+    return <p>Loading</p>;
+  }
 
   return (
     <div className="feed">

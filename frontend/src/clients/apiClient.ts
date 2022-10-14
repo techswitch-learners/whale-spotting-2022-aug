@@ -37,7 +37,8 @@ export const getAllSpecies = async (): Promise<Species[]> => {
   return whaleListResponse.items;
 };
 
-export const getSightings = async (): Promise<ListResponse<Sighting>> => {
-  const response = await fetch(`https://localhost:5001/sightings`);
-  return await response.json();
+export const getSightings = async (): Promise<Sighting[]> => {
+  const response = await fetch(`${backendUrl}/sightings`);
+  const sightingsListResponse: ListResponse<Sighting> = await response.json();
+  return sightingsListResponse.items;
 };
