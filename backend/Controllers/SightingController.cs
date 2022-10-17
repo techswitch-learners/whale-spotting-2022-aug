@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
+using WhaleSpotting.Models.Request;
 
 namespace WhaleSpotting.Controllers {
     [ApiController]
@@ -26,6 +27,20 @@ namespace WhaleSpotting.Controllers {
         {
             var sightings = _sightings.GetSightingsBySpeciesId(speciesId);
             return new ListResponse<Sighting>(sightings);
+        }   
+
+        [HttpGet("/pending")] 
+        public ActionResult<ListResponse<Sighting>>GetPendingSightings()
+        {
+            var pendingSightings = _sightings.GetPendingSightings();
+            return new ListResponse<Sighting>(pendingSightings);
+        }   
+
+        [HttpPost]
+        public ActionResult CreateSighting([FromBody] CreateSightingRequest createSightingRequest)
+        {   
+            var createdSighting = _sightings.CreateSighting(createSightingRequest);
+            return Created("/api", createdSighting);
         }
     }
 }
