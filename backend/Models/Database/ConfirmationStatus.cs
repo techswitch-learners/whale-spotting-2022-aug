@@ -1,8 +1,9 @@
 namespace WhaleSpotting.Models.Database
 {
-    public class ConfirmationStatus
+    public enum ConfirmationStatus
     {
-        public int Id { get; set; }
-        public string Description { get; set; }
+        Pending,
+        Rejected,
+        Approved
     }
 }
