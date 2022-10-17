@@ -23,32 +23,32 @@ export const Navbar: React.FunctionComponent = () => {
       <Link to="/">
         <h1>WHALESPOTTING</h1>
       </Link>
-      <Link to="/brose-sightings">
-        <h1>BROWSE SIGHTINGS</h1>
+      <Link to="/browse-sightings">
+        <h1>Sightings</h1>
       </Link>
       <Link to="/whaleopedia">
-        <h1>WHALEOPEDIA</h1>
+        <h1>Whaleopedia</h1>
       </Link>
       <Link to="/news">
-        <h1>VIDEOS</h1>
+        <h1>Videos</h1>
       </Link>
 
       <div className="admin-links">
         {!loginContext.isLoggedIn ? (
           <Link to="/login">
-            <h1>LOG IN</h1>
+            <h1>Log On</h1>
           </Link>
         ) : (
           <div className="admin-only-links">
-            <Link to="/approve-sightings">
-              <h1>APPROVE SIGHTINGS</h1>
+            <Link to="/sightings/pending">
+              <h1>Pending</h1>
             </Link>
             <Link to="/create-user">
-              <h1>CREATE USER</h1>
+              <h1>User+</h1>
             </Link>
             <Link to="/">
               <a className="button is-primary" onClick={loginContext.logOut}>
-                <strong>LOG OUT</strong>
+                <strong>Log Out</strong>
               </a>
             </Link>
           </div>
