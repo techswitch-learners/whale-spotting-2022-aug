@@ -1,6 +1,7 @@
 import React from "react";
 import { RedditVideo } from "../../clients/redditApiClient";
 import { Card } from "../card/Card";
+import "./NewsCard.scss";
 
 interface NewsCardProps {
   video: RedditVideo;
@@ -9,13 +10,13 @@ interface NewsCardProps {
 export const NewsCard: React.FC<NewsCardProps> = ({ video }) => {
   return (
     <Card title={video.title}>
-      <video
-        key={video.media.reddit_video.fallback_url}
-        src={video.media.reddit_video.fallback_url}
-        width="320"
-        height="320"
-        controls
-      />
+      <div className="video-container">
+        <video
+          key={video.media.reddit_video.fallback_url}
+          src={video.media.reddit_video.fallback_url}
+          controls
+        />
+      </div>
     </Card>
   );
 };
