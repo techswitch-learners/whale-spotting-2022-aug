@@ -12,6 +12,7 @@ nav.navbar {
   }
 
   .admin-links {
+    margin-left: auto;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -21,6 +22,8 @@ nav.navbar {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    gap: 10px;
+    text-decoration: none;
   }
 
   h1 {
