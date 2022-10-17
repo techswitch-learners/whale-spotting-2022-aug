@@ -1,9 +1,8 @@
 import React from "react";
-import { LoginContext, LoginContextType } from "../login/LoginManager";
-import { useState } from "react";
+import { LoginContext } from "../login/LoginManager";
+import { useState, useContext } from "react";
 import {
   PendingSighting,
-  getAllPendingSighting,
   ConfirmationRequest,
   confirmOrRejectSighting,
 } from "../../clients/apiClient";
@@ -11,13 +10,11 @@ import {
 interface PendingSightingCardProps {
   sighting: PendingSighting;
   index: number;
-  loginContext: LoginContextType;
 }
 
 export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
   sighting,
   index,
-  loginContext,
 }) => {
   const approveOrReject = (isConfirmed: boolean, sightingID: number) => {
     const confirmSightingRequest: ConfirmationRequest = {
@@ -32,6 +29,7 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
     );
   };
   const [status, setStatus] = useState("");
+  const loginContext = useContext(LoginContext);
 
   return (
     <div className="sighting-card">

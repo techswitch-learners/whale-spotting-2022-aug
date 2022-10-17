@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 
-export type LoginContextType = {
+type LoginContextType = {
   isLoggedIn: boolean;
   isAdmin: boolean;
   username: string;
