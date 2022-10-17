@@ -31,10 +31,14 @@ export const News: React.FunctionComponent = () => {
     return (
       <>
         <h1>Whale content</h1>
-        {articlesList &&
-          articlesList?.map((video: RedditVideo) => (
-            <NewsCard video={video} key={video.id} />
-          ))}
+        <ul>
+          {articlesList &&
+            articlesList?.map((video: RedditVideo) => (
+              <li key={video.id}>
+                <NewsCard video={video} />
+              </li>
+            ))}
+        </ul>
       </>
     );
   }
