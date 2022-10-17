@@ -3,24 +3,27 @@ import { LoginContext } from "../login/LoginManager";
 import { Redirect } from "react-router-dom";
 import {
   PendingSighting,
-  getAllPengingSighting,
+  getAllPendingSighting,
+  ConfirmationRequest,
 } from "../../clients/apiClient";
 import { PendingSightingCard } from "./PendingSightingCard";
+import { confirmOrRejectSighting } from "../../clients/apiClient";
 
 export const PendingSightings: React.FunctionComponent = () => {
   const [sightings, setSighting] = useState<PendingSighting[]>();
-  const [selectedId, setSelectedId] = useState<number>();
-  const [error, setError] = useState(undefined);
+  const [confirmSightingRequest, setConfirmSightingRequest] =
+    useState<ConfirmationRequest>();
   const loginContext = useContext(LoginContext);
 
   useEffect(() => {
-    const getPengingSighting = async () => {
-      const pendingSighting = await getAllPengingSighting();
+    const getPendingSighting = async () => {
+      const pendingSighting = await getAllPendingSighting();
       setSighting(pendingSighting);
     };
 
-    getPengingSighting();
+    getPendingSighting();
   }, []);
+
   return (
     <>
       <h1>Pending Sighting</h1>
@@ -28,7 +31,11 @@ export const PendingSightings: React.FunctionComponent = () => {
       {sightings &&
         sightings.map((sighting: PendingSighting, index) => (
           <>
-            <PendingSightingCard sighting={sighting} index={index} />
+            <PendingSightingCard
+              sighting={sighting}
+              index={index}
+              loginContext={loginContext}
+            />
           </>
         ))}
     </>

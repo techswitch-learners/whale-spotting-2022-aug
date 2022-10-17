@@ -1,15 +1,38 @@
 import React from "react";
-import { PendingSighting } from "../../clients/apiClient";
+import { LoginContext, LoginContextType } from "../login/LoginManager";
+import { useState } from "react";
+import {
+  PendingSighting,
+  getAllPendingSighting,
+  ConfirmationRequest,
+  confirmOrRejectSighting,
+} from "../../clients/apiClient";
 
 interface PendingSightingCardProps {
   sighting: PendingSighting;
   index: number;
+  loginContext: LoginContextType;
 }
 
 export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
   sighting,
   index,
+  loginContext,
 }) => {
+  const approveOrReject = (isConfirmed: boolean, sightingID: number) => {
+    const confirmSightingRequest: ConfirmationRequest = {
+      SightingId: sightingID,
+      isApproved: isConfirmed,
+    };
+    confirmOrRejectSighting(
+      confirmSightingRequest,
+      loginContext.username,
+      loginContext.password,
+      setStatus
+    );
+  };
+  const [status, setStatus] = useState("");
+
   return (
     <div className="sighting-card">
       <ul key={sighting.id} style={{ listStyle: "none" }}>
@@ -24,8 +47,30 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
         <li>Location: {sighting.location}</li>
         <li>Latitude: {sighting.latitude}</li>
         <li>Longitude: {sighting.longitude}</li>
-        <button type="button">Approved</button>
-        <button type="button">Rejected</button>
+        {status === "" ? (
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                approveOrReject(true, sighting.id);
+                setStatus("Approved");
+              }}
+            >
+              Approved
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                approveOrReject(false, sighting.id);
+                setStatus("Rejected");
+              }}
+            >
+              Rejected
+            </button>
+          </div>
+        ) : (
+          <p>{status}</p>
+        )}
       </ul>
     </div>
   );
