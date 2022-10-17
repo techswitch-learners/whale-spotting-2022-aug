@@ -29,7 +29,7 @@ namespace WhaleSpotting.Controllers {
             return new ListResponse<Sighting>(sightings);
         }   
 
-        [HttpGet("/pending")] 
+        [HttpGet("pending")] 
         public ActionResult<ListResponse<Sighting>>GetPendingSightings()
         {
             var pendingSightings = _sightings.GetPendingSightings();
