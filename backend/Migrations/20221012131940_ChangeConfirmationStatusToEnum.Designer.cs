@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhaleSpotting;
@@ -11,9 +12,10 @@ using WhaleSpotting;
 namespace WhaleSpotting.Migrations
 {
     [DbContext(typeof(WhaleSpottingDbContext))]
-    partial class WhaleSpottingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221012131940_ChangeConfirmationStatusToEnum")]
+    partial class ChangeConfirmationStatusToEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("LocationSpecies", (string)null);
+                    b.ToTable("LocationSpecies");
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.ConservationStatus", b =>
@@ -53,7 +55,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConservationStatuses", (string)null);
+                    b.ToTable("ConservationStatuses");
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.Location", b =>
@@ -69,7 +71,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.Sighting", b =>
@@ -116,7 +118,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("Sightings", (string)null);
+                    b.ToTable("Sightings");
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.Species", b =>
@@ -146,7 +148,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasIndex("ConservationStatusId");
 
-                    b.ToTable("Species", (string)null);
+                    b.ToTable("Species");
                 });
 
             modelBuilder.Entity("WhaleSpotting.Models.Database.User", b =>
@@ -174,7 +176,7 @@ namespace WhaleSpotting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("LocationSpecies", b =>
