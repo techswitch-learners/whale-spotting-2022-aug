@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getTopWhaleVideos, RedditVideo } from "../../clients/redditApiClient";
+import { NewsCard } from "./NewsCard";
 
 export const News: React.FunctionComponent = () => {
   const [articlesList, setArticlesList] = useState<RedditVideo[]>();
@@ -31,21 +32,8 @@ export const News: React.FunctionComponent = () => {
       <>
         <h1>Whale content</h1>
         {articlesList &&
-          articlesList?.map((article: RedditVideo) => (
-            <div className="videoCard" key={article.id}>
-              <p
-                key={article.id}
-                dangerouslySetInnerHTML={{ __html: article.title }}
-              ></p>
-              {/* <p key={article.id}>{article.created}</p> */}
-              <video
-                key={article.media.reddit_video.fallback_url}
-                src={article.media.reddit_video.fallback_url}
-                width="320"
-                height="320"
-                controls
-              />
-            </div>
+          articlesList?.map((video: RedditVideo) => (
+            <NewsCard video={video} key={video.id} />
           ))}
       </>
     );
