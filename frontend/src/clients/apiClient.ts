@@ -27,7 +27,7 @@ export interface Sighting {
   description: string;
   whaleCount: number;
   confirmationStatus: string;
-  // location: string;
+  location: string;
   latitude: number;
   longitude: number;
 }
@@ -38,16 +38,19 @@ export const getAllSpecies = async (): Promise<Species[]> => {
   return whaleListResponse.items;
 };
 
-export async function createSighting(createSightingRequest: Sighting) {
-  const response = await fetch("https://localhost:5001/sightings/create", {
-    method: "POST",
-    body: JSON.stringify(createSightingRequest),
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
 export const getSightings = async (): Promise<Sighting[]> => {
   const response = await fetch(`${backendUrl}/sightings`);
   const sightingsListResponse: ListResponse<Sighting> = await response.json();
   return sightingsListResponse.items;
 };
+
+export async function createSighting(createSightingRequest: Sighting) {
+  const response = await fetch(`${backendUrl}/sightings`, {
+    // Todo: change to default path before pushing
+    method: "POST",
+    body: JSON.stringify(createSightingRequest),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  // Todo: if no errors return something positive.
+}

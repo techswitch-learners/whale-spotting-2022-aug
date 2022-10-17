@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { createSighting, Sighting } from "../../clients/apiClient";
+import { createSighting, Sighting, Species } from "../../clients/apiClient";
+import Select from "react-select";
+import { isUndefined } from "util";
 
-export const NewSightingForm: React.FunctionComponent = () => {
+interface NewSightingFormProps {
+  whaleSpecies?: Species[];
+}
+
+export const NewSightingForm: React.FC<NewSightingFormProps> = ({
+  whaleSpecies,
+}) => {
   const [seenBy, setSeenBy] = useState("");
   const [date, setDate] = useState("");
   const [locationInputType, setLocationInputType] = useState("");
@@ -10,7 +18,7 @@ export const NewSightingForm: React.FunctionComponent = () => {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [species, setSpecies] = useState("Unknown");
-  const [whaleCount, setWhaleCount] = useState(0);
+  const [whaleCount, setWhaleCount] = useState("");
   const [seenByError, setSeenByError] = useState("");
   const [dateError, setDateError] = useState("");
   const [locationInputTypeError, setLocationInputTypeError] = useState("");
@@ -20,6 +28,13 @@ export const NewSightingForm: React.FunctionComponent = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value);
   };
+
+  const whaleSpeciesMenu: any[] = [];
+  if (whaleSpecies !== undefined) {
+    whaleSpecies.forEach((species, index) => {
+      whaleSpeciesMenu.push({ value: species.name, label: species.name });
+    });
+  }
 
   const validateForm = () => {
     let numberOfErrors = 0;
@@ -68,9 +83,9 @@ export const NewSightingForm: React.FunctionComponent = () => {
         species: species,
         imageUrl: imageUrl,
         description: description,
-        whaleCount: whaleCount,
+        whaleCount: Number.parseInt(whaleCount),
         confirmationStatus: "Pending",
-        // location: location;
+        location: "default", //Todo: temporarily hardcoded - FIX IT !.
         latitude: Number.parseFloat(latitude),
         longitude: Number.parseFloat(longitude),
       };
@@ -160,14 +175,27 @@ export const NewSightingForm: React.FunctionComponent = () => {
           </li>
         </ul>
         <p>{locationInputTypeError}</p>
+
+        {whaleSpecies !== undefined ? (
+          <Select
+            onChange={(e) => {
+              setSpecies(e.value);
+            }}
+            options={whaleSpeciesMenu}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
+
         <input
           type="number"
           placeholder="Number of whales"
           step="1"
           onChange={(e) => {
-            setLongitude(e.target.value);
+            setWhaleCount(e.target.value);
           }}
         />
+
         <input
           type="text"
           placeholder="Description"
