@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { createSighting, Sighting } from "../../Api/apiClient";
+import { createSighting, Sighting } from "../../clients/apiClient";
 
 export const NewSightingForm: React.FunctionComponent = () => {
-  const [name, setName] = useState("");
+  const [seenBy, setSeenBy] = useState("");
   const [date, setDate] = useState("");
   const [locationInputType, setLocationInputType] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [nameError, setNameError] = useState("");
+  const [species, setSpecies] = useState("Unknown");
+  const [whaleCount, setWhaleCount] = useState(0);
+  const [seenByError, setSeenByError] = useState("");
   const [dateError, setDateError] = useState("");
   const [locationInputTypeError, setLocationInputTypeError] = useState("");
   const [latError, setLatError] = useState("");
@@ -21,15 +23,15 @@ export const NewSightingForm: React.FunctionComponent = () => {
 
   const validateForm = () => {
     let numberOfErrors = 0;
-    setNameError("");
+    setSeenByError("");
     setDateError("");
     setLocationInputTypeError("");
     setLatError("");
     setLongError("");
     setImageUrl("");
 
-    if (name === "") {
-      setNameError("Please enter a name");
+    if (seenBy === "") {
+      setSeenByError("Please enter a seenBy");
       numberOfErrors++;
     }
     if (date === "") {
@@ -61,12 +63,16 @@ export const NewSightingForm: React.FunctionComponent = () => {
     event.preventDefault();
     if (validateForm() === 0) {
       const createSightingRequest: Sighting = {
-        name: name,
-        date: date,
+        seenBy: seenBy,
+        seenOn: date,
+        species: species,
+        imageUrl: imageUrl,
+        description: description,
+        whaleCount: whaleCount,
+        confirmationStatus: "Pending",
+        // location: location;
         latitude: Number.parseFloat(latitude),
         longitude: Number.parseFloat(longitude),
-        description: description,
-        imageUrl: imageUrl,
       };
       createSighting(createSightingRequest);
     }
@@ -79,12 +85,12 @@ export const NewSightingForm: React.FunctionComponent = () => {
       <form className="newSightingForm" method="post" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="seenBy"
           onChange={(e) => {
-            setName(e.target.value);
+            setSeenBy(e.target.value);
           }}
         />
-        <p>{nameError}</p>
+        <p>{seenByError}</p>
 
         <input
           type="datetime-local"
@@ -154,7 +160,14 @@ export const NewSightingForm: React.FunctionComponent = () => {
           </li>
         </ul>
         <p>{locationInputTypeError}</p>
-
+        <input
+          type="number"
+          placeholder="Number of whales"
+          step="1"
+          onChange={(e) => {
+            setLongitude(e.target.value);
+          }}
+        />
         <input
           type="text"
           placeholder="Description"
