@@ -43,13 +43,16 @@ namespace WhaleSpotting.Services
             //logic, change request to include locationID
             var newSighting = new Sighting
             {
-                SeenBy = request.Name,
-                SeenOn = request.Date,
+                Species = request.Species,
+                SeenBy = request.SeenBy,
+                SeenOn = request.SeenOn,
                 ImageUrl = request.ImageUrl,
                 Description = request.Description,
-                Latitude = request.Latitude,
-                Longitude = request.Longitude,
+                WhaleCount = request. WhaleCount,
                 ConfirmationStatus = ConfirmationStatus.Pending,
+                Location= request.Location,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude
             };
 
             return _sightings.CreateSighting(newSighting);
