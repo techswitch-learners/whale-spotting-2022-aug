@@ -3,6 +3,7 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
+using System;
 
 namespace WhaleSpotting.Controllers
 {
@@ -47,8 +48,15 @@ namespace WhaleSpotting.Controllers
         [HttpGet("{sightingId}")]
         public ActionResult<Sighting> GetSightingById([FromRoute] int sightingId)
         {
-            var sighting = _sightings.GetSightingById(sightingId);
-            return sighting;
+            try
+            {
+                var sighting = _sightings.GetSightingById(sightingId);
+                return sighting;
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
         }
     }
 }
