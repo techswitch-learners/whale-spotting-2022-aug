@@ -22,5 +22,12 @@ namespace WhaleSpotting.Controllers {
             var whales = _whales.GetAllSpecies();
             return new ListResponse<Species>(whales);
         }
+        
+        [HttpGet("{id}")]
+        public ActionResult<ListResponse<Species>> GetSpeciesById()
+        {
+            var whales = _whales.GetSpeciesById();
+            return new ListResponse<Species>(whales);
+        }
     }
 }
