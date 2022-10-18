@@ -19,6 +19,7 @@ namespace WhaleSpotting.Repositories
         {
             _context = context;
         }
+        
         public IEnumerable<Species> GetAllSpecies()
         {
             return _context.Species
@@ -26,13 +27,11 @@ namespace WhaleSpotting.Repositories
                 .OrderBy(s => s.Name);
         }
 
-        public Species GetSpeciesById(int speciesId) 
+        public Species GetSpeciesById(int speciesId)
         {
             return _context.Species
                 .Include(s => s.ConservationStatus)
-                .Where(s => s.Id == speciesId)
-                .Single();
+                .Single(s => s.Id == speciesId);
         }
-
     }
 }
