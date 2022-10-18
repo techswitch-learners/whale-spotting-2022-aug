@@ -39,7 +39,7 @@ namespace WhaleSpotting.Controllers
             return new ListResponse<Sighting>(sightings);
         }
 
-        [HttpGet("/pending")]
+        [HttpGet("pending")]
         public ActionResult<ListResponse<Sighting>> GetPendingSightings()
         {
             var pendingSightings = _sightings.GetPendingSightings();
@@ -60,16 +60,11 @@ namespace WhaleSpotting.Controllers
             {
                 return new UnauthorizedResult();
             }
-
             try
             {
-                var encodedUsernamePassword = authorization.Substring("Basic ".Length).Trim();
-                string usernamePassword = AuthHelper.Base64Decode(encodedUsernamePassword);
-                int separatorIndex = usernamePassword.IndexOf(':');
-
-                var splitUsernamePassword = usernamePassword.Split(':');
-                var username = splitUsernamePassword[0];
-                var password = splitUsernamePassword[1];
+                (string, string) usernamePassword = AuthHelper.GetUsernameAndPassword(authorization);
+                string username = usernamePassword.Item1;
+                string password = usernamePassword.Item2;
 
                 var check = _authService.IsValidLoginInfo(username, password);
                 if (!check)
@@ -80,7 +75,7 @@ namespace WhaleSpotting.Controllers
                 var result = _sightings.ConfirmOrRejectSighting(confirmOrRejectRequest);
                 if (result)
                 {
-                    return StatusCode(200);
+                    return Ok();
                 }
                 return StatusCode(400);
             }
@@ -88,6 +83,7 @@ namespace WhaleSpotting.Controllers
             {
                 return new UnauthorizedResult();
             }
+
         }
     }
 }

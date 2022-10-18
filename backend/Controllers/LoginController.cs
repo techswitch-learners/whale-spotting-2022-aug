@@ -34,13 +34,9 @@ namespace WhaleSpotting.Controllers {
 
             try
             {
-                var encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
-                string usernamePassword = AuthHelper.Base64Decode(encodedUsernamePassword);
-                int separatorIndex = usernamePassword.IndexOf(':');
-
-                var splitUsernamePassword = usernamePassword.Split(':');
-                var username = splitUsernamePassword[0];
-                var password = splitUsernamePassword[1];
+                (string, string) usernamePassword = AuthHelper.GetUsernameAndPassword(authHeader);
+                string username = usernamePassword.Item1;
+                string password = usernamePassword.Item2;
 
                 var check = _authService.IsValidLoginInfo(username, password);
                 if (!check)
