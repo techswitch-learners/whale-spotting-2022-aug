@@ -44,3 +44,24 @@ nav.navbar {
     font-size: medium;
   }
 }
+@media only screen and (max-width: 650px) {
+  nav.navbar {
+    justify-content: center;
+  }
+
+  .desktop-menu {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    left: 0;
+  }
+}
+
+@media only screen and (min-width: 651px) {
+  .mobile-menu {
+    display: none;
+  }
+}

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../login/LoginManager";
 import "./Navbar.scss";
+import Hamburger from "hamburger-react";
 
 export const Navbar: React.FunctionComponent = () => {
   const loginContext = useContext(LoginContext);
@@ -13,6 +14,9 @@ export const Navbar: React.FunctionComponent = () => {
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
+      <div className="mobile-menu">
+        <Hamburger toggled={isExpanded} toggle={setIsExpanded} />
+      </div>
       <Link to="/">
         <img
           className="navbar__logo"
@@ -20,26 +24,26 @@ export const Navbar: React.FunctionComponent = () => {
           alt="Whale Spotting logo"
         />
       </Link>
-      <Link to="/">
+      <Link to="/" className="desktop-menu">
         <h1>WHALESPOTTING</h1>
       </Link>
-      <Link to="/browse-sightings">
+      <Link to="/browse-sightings" className="desktop-menu">
         <h1>Sightings</h1>
       </Link>
-      <Link to="/whaleopedia">
+      <Link to="/whaleopedia" className="desktop-menu">
         <h1>Whaleopedia</h1>
       </Link>
-      <Link to="/news">
+      <Link to="/videos" className="desktop-menu">
         <h1>Videos</h1>
       </Link>
 
-      <div className="admin-links">
+      <div className="admin-links desktop-menu">
         {!loginContext.isLoggedIn ? (
           <Link to="/login">
             <h1>Log On</h1>
           </Link>
         ) : (
-          <div className="admin-only-links">
+          <div className="admin-only-links desktop-menu">
             <Link to="/sightings/pending">
               <h1>Pending</h1>
             </Link>
