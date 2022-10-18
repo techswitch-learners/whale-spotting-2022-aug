@@ -24,46 +24,26 @@ export const Navbar: React.FunctionComponent = () => {
           alt="Whale Spotting logo"
         />
       </Link>
-      <Link
-        to="/"
-        className={`${isExpanded ? "desktop-menu--expanded" : "desktop-menu"}`}
-      >
+      <Link to="/" className="desktop-menu">
         <h1>WHALESPOTTING</h1>
       </Link>
-      <Link
-        to="/browse-sightings"
-        className={`${isExpanded ? "desktop-menu--expanded" : "desktop-menu"}`}
-      >
+      <Link to="/browse-sightings" className="desktop-menu">
         <h1>Sightings</h1>
       </Link>
-      <Link
-        to="/whaleopedia"
-        className={`${isExpanded ? "desktop-menu--expanded" : "desktop-menu"}`}
-      >
+      <Link to="/whaleopedia" className="desktop-menu">
         <h1>Whaleopedia</h1>
       </Link>
-      <Link
-        to="/videos"
-        className={`${isExpanded ? "desktop-menu--expanded" : "desktop-menu"}`}
-      >
+      <Link to="/videos" className="desktop-menu">
         <h1>Videos</h1>
       </Link>
 
-      <div
-        className={`admin-links ${
-          isExpanded ? "desktop-menu--expanded" : "desktop-menu"
-        }`}
-      >
+      <div className="admin-links desktop-menu">
         {!loginContext.isLoggedIn ? (
           <Link to="/login">
             <h1>Log On</h1>
           </Link>
         ) : (
-          <div
-            className={`admin-only-links ${
-              isExpanded ? "desktop-menu--expanded" : "desktop-menu"
-            }`}
-          >
+          <div className="admin-only-links desktop-menu">
             <Link to="/sightings/pending">
               <h1>Pending</h1>
             </Link>

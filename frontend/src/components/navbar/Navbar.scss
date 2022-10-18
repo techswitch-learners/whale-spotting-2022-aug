@@ -52,7 +52,11 @@ nav.navbar {
   .desktop-menu {
     display: none;
     .desktop-menu--expanded {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-self: flex-start;
+      margin: 0;
     }
   }
 
