@@ -34,7 +34,7 @@ export interface PendingSighting {
 
 export interface ConfirmationRequest {
   SightingId: number;
-  isApproved: boolean;
+  ConfirmationStatus: number;
 }
 
 export const getAllSpecies = async (): Promise<Species[]> => {
@@ -49,25 +49,57 @@ export const getAllPendingSightings = async (): Promise<PendingSighting[]> => {
   return pengingSighting.items;
 };
 
-export const confirmOrRejectSighting = async (
+// export const confirmOrRejectSighting = async (
+//   confirmationRequest: ConfirmationRequest,
+//   username: string,
+//   password: string,
+//   setStatus: React.Dispatch<React.SetStateAction<string>>
+// ): Promise<boolean> => {
+//   const response = await fetch(`${backendUrl}/sightings/pending`, {
+//     method: "PATCH",
+//     headers: {
+//       authorization: `Basic ${btoa(`${username}:${password}`)}`,
+//     },
+//     body: JSON.stringify(confirmationRequest),
+//   });
+
+//   if (!response.ok) {
+//     setStatus("Error. Please try again");
+//     return false;
+//   } else {
+//     if(confirmationRequest.ConfirmationStatus === 2){
+//       setStatus("Approved")
+//     } else if(confirmationRequest.ConfirmationStatus === 1){
+//       setStatus("Rejected")
+//     }
+//     return true;
+//   }
+// };
+
+export const confirmOrRejectSighting = (
   confirmationRequest: ConfirmationRequest,
   username: string,
   password: string,
   setStatus: React.Dispatch<React.SetStateAction<string>>
-): Promise<boolean> => {
-  const response = await fetch(`${backendUrl}/sightings/pending`, {
-    method: "PATCH",
-    headers: {
-      authorization: `Basic ${btoa(`${username}:${password}`)}`,
-    },
-    body: JSON.stringify(confirmationRequest),
-  });
+): boolean => {
+  console.log("hi");
+  // const response = await fetch(`${backendUrl}/sightings/pending`, {
+  //   method: "PATCH",
+  //   headers: {
+  //     authorization: `Basic ${btoa(`${username}:${password}`)}`,
+  //   },
+  //   body: JSON.stringify(confirmationRequest),
+  // });
 
-  if (!response.ok) {
-    setStatus("");
-    return false;
-  } else {
-    setStatus(confirmationRequest.isApproved ? "Approved" : "Rejected");
-    return true;
+  // if (!response.ok) {
+  //   setStatus("Error. Please try again");
+  //   return false;
+  // } else {
+  if (confirmationRequest.ConfirmationStatus === 2) {
+    setStatus("Approved");
+  } else if (confirmationRequest.ConfirmationStatus === 1) {
+    setStatus("Rejected");
   }
+  return true;
+  // }
 };

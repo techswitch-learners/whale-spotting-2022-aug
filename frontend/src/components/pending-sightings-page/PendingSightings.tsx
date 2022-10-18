@@ -21,8 +21,6 @@ export const PendingSightings: React.FunctionComponent = () => {
     <>
       <h1>Pending Sighting</h1>
 
-      <button>Submit</button>
-
       {sightings &&
         sightings.map((sighting: PendingSighting, index) => (
           <PendingSightingCard sighting={sighting} index={index} key={index} />

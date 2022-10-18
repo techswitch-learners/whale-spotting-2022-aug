@@ -16,10 +16,10 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
   sighting,
   index,
 }) => {
-  const approveOrReject = (isConfirmed: boolean, sightingID: number) => {
+  const approveOrReject = (buttonSeleted: number, sightingID: number) => {
     const confirmSightingRequest: ConfirmationRequest = {
       SightingId: sightingID,
-      isApproved: isConfirmed,
+      ConfirmationStatus: buttonSeleted,
     };
     confirmOrRejectSighting(
       confirmSightingRequest,
@@ -28,7 +28,9 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
       setStatus
     );
   };
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<string>("");
+  const [buttonSeleted, setButtonSeleted] = useState<number>(0);
+
   const loginContext = useContext(LoginContext);
 
   return (
@@ -46,28 +48,39 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
         <li>Latitude: {sighting.latitude}</li>
         <li>Longitude: {sighting.longitude}</li>
 
-        <div>
-          <fieldset>
-            <input
-              type="radio"
-              name={sighting.id.toString()}
+        {status == "" ? (
+          <div>
+            <fieldset>
+              <input
+                type="radio"
+                name={sighting.id.toString()}
+                onClick={() => {
+                  // approveOrReject(true, sighting.id);
+                  setButtonSeleted(2);
+                }}
+              />
+              Approve
+              <input
+                type="radio"
+                name={sighting.id.toString()}
+                onClick={() => {
+                  // approveOrReject(false, sighting.id);
+                  setButtonSeleted(1);
+                }}
+              />
+              Reject
+            </fieldset>
+            <button
               onClick={() => {
-                approveOrReject(true, sighting.id);
-                setStatus("Approved");
+                approveOrReject(buttonSeleted, sighting.id);
               }}
-            />{" "}
-            Approve
-            <input
-              type="radio"
-              name={sighting.id.toString()}
-              onClick={() => {
-                approveOrReject(false, sighting.id);
-                setStatus("Rejected");
-              }}
-            />
-            Reject
-          </fieldset>
-        </div>
+            >
+              Submit
+            </button>
+          </div>
+        ) : (
+          <p>{status}</p>
+        )}
       </ul>
     </div>
   );
