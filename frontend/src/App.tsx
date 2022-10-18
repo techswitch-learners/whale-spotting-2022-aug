@@ -48,7 +48,7 @@ const App: React.FunctionComponent = () => {
     <Router>
       <LoginManager>
         <Navbar />
-        <main>
+        <main className="page-Content">
           <Routes />
         </main>
         <Footer />

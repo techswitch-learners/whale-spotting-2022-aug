@@ -11,15 +11,24 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 }) => {
   return (
     <div className="sighting-card">
-      <div className="header fade-in">{sighting.species}</div>
-      <img
-        className="image fade-in"
-        src={sighting.imageUrl}
-        alt={sighting.species}
-      />
-      <div className="cardData fade-in">
+      <h3 className="fade-in">{sighting.species}</h3>
+      {sighting.imageUrl !== undefined ? (
+        <img
+          className="image fade-in"
+          src={sighting.imageUrl}
+          alt={sighting.species}
+        />
+      ) : (
+        <img
+          className="image fade-in"
+          src="../../../public/logo.png"
+          alt={sighting.species}
+        />
+      )}
+
+      <div className="card-data fade-in">
         <p>
-          <strong>description: </strong>
+          <strong>Description: </strong>
           {sighting.description}
         </p>
         <p>
@@ -27,7 +36,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
           {sighting.whaleCount}
         </p>
         <p>
-          <strong>location: </strong>
+          <strong>Location: </strong>
           {sighting.location}
         </p>
       </div>

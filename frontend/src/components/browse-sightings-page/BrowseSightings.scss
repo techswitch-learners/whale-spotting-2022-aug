@@ -1,15 +1,5 @@
 @import "../../constants";
 
-.page-Title {
-  align-self: auto;
-}
-
-.page-Content {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
 .sighting-card {
   margin-bottom: 2rem;
   position: relative;
@@ -19,7 +9,7 @@
   flex-direction: column;
   align-content: center;
 
-  .header {
+  h3 {
     color: $text-color-light;
     animation: normal;
     background-color: $primary;
@@ -35,7 +25,7 @@
     min-height: 60px;
   }
 
-  .cardData {
+  .card-data {
     font-kerning: none;
     color: $text-color-light;
     padding: 0rem 2rem 0rem 2rem;
