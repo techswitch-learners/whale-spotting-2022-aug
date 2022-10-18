@@ -45,30 +45,29 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
         <li>Location: {sighting.location}</li>
         <li>Latitude: {sighting.latitude}</li>
         <li>Longitude: {sighting.longitude}</li>
-        {status === "" ? (
-          <div>
-            <button
-              type="button"
+
+        <div>
+          <fieldset>
+            <input
+              type="radio"
+              name={sighting.id.toString()}
               onClick={() => {
                 approveOrReject(true, sighting.id);
                 setStatus("Approved");
               }}
-            >
-              Approved
-            </button>
-            <button
-              type="button"
+            />{" "}
+            Approve
+            <input
+              type="radio"
+              name={sighting.id.toString()}
               onClick={() => {
                 approveOrReject(false, sighting.id);
                 setStatus("Rejected");
               }}
-            >
-              Rejected
-            </button>
-          </div>
-        ) : (
-          <p>{status}</p>
-        )}
+            />
+            Reject
+          </fieldset>
+        </div>
       </ul>
     </div>
   );

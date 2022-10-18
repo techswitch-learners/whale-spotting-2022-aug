@@ -43,7 +43,7 @@ export const getAllSpecies = async (): Promise<Species[]> => {
   return whaleListResponse.items;
 };
 
-export const getAllPendingSighting = async (): Promise<PendingSighting[]> => {
+export const getAllPendingSightings = async (): Promise<PendingSighting[]> => {
   const response = await fetch(`${backendUrl}/sightings/pending`);
   const pengingSighting: ListResponse<PendingSighting> = await response.json();
   return pengingSighting.items;
