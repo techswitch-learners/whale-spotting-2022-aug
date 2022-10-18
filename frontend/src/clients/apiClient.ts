@@ -37,6 +37,12 @@ export interface ConfirmationRequest {
   ConfirmationStatus: number;
 }
 
+export interface ConfirmationRequestResponse {
+  SightingId: number;
+  ConfirmationStatus: number;
+  StatusCode: number;
+}
+
 export const getAllSpecies = async (): Promise<Species[]> => {
   const response = await fetch(`${backendUrl}/whales`);
   const whaleListResponse: ListResponse<Species> = await response.json();
@@ -79,10 +85,8 @@ export const getAllPendingSightings = async (): Promise<PendingSighting[]> => {
 export const confirmOrRejectSighting = (
   confirmationRequest: ConfirmationRequest,
   username: string,
-  password: string,
-  setStatus: React.Dispatch<React.SetStateAction<string>>
+  password: string
 ): boolean => {
-  console.log("hi");
   // const response = await fetch(`${backendUrl}/sightings/pending`, {
   //   method: "PATCH",
   //   headers: {
@@ -95,11 +99,7 @@ export const confirmOrRejectSighting = (
   //   setStatus("Error. Please try again");
   //   return false;
   // } else {
-  if (confirmationRequest.ConfirmationStatus === 2) {
-    setStatus("Approved");
-  } else if (confirmationRequest.ConfirmationStatus === 1) {
-    setStatus("Rejected");
-  }
+  console.log("Print Request", confirmationRequest);
   return true;
   // }
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LoginContext } from "../login/LoginManager";
 import { useState, useContext } from "react";
 import {
@@ -10,28 +10,34 @@ import {
 interface PendingSightingCardProps {
   sighting: PendingSighting;
   index: number;
+  confirmationRequests: ConfirmationRequest[];
+  setConfirmationRequests: React.Dispatch<
+    React.SetStateAction<ConfirmationRequest[]>
+  >;
 }
 
 export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
   sighting,
   index,
+  confirmationRequests,
+  setConfirmationRequests,
 }) => {
-  const approveOrReject = (buttonSeleted: number, sightingID: number) => {
-    const confirmSightingRequest: ConfirmationRequest = {
-      SightingId: sightingID,
-      ConfirmationStatus: buttonSeleted,
-    };
-    confirmOrRejectSighting(
-      confirmSightingRequest,
-      loginContext.username,
-      loginContext.password,
-      setStatus
-    );
-  };
   const [status, setStatus] = useState<string>("");
-  const [buttonSeleted, setButtonSeleted] = useState<number>(0);
 
-  const loginContext = useContext(LoginContext);
+  const updateList = (sightingId: number, confirmationStatus: number) => {
+    const newConfirmationRequestsArr = confirmationRequests.filter(
+      (item) => item.SightingId != sightingId
+    );
+    const newConfirmationRequest = {
+      SightingId: sightingId,
+      ConfirmationStatus: confirmationStatus,
+    };
+    newConfirmationRequestsArr.push(newConfirmationRequest);
+    setConfirmationRequests(newConfirmationRequestsArr);
+  };
+  useEffect(() => {
+    console.log(confirmationRequests);
+  }, [confirmationRequests]);
 
   return (
     <div className="sighting-card">
@@ -55,8 +61,7 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
                 type="radio"
                 name={sighting.id.toString()}
                 onClick={() => {
-                  // approveOrReject(true, sighting.id);
-                  setButtonSeleted(2);
+                  updateList(sighting.id, 2);
                 }}
               />
               Approve
@@ -64,19 +69,11 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
                 type="radio"
                 name={sighting.id.toString()}
                 onClick={() => {
-                  // approveOrReject(false, sighting.id);
-                  setButtonSeleted(1);
+                  updateList(sighting.id, 1);
                 }}
               />
               Reject
             </fieldset>
-            <button
-              onClick={() => {
-                approveOrReject(buttonSeleted, sighting.id);
-              }}
-            >
-              Submit
-            </button>
           </div>
         ) : (
           <p>{status}</p>
