@@ -11,6 +11,7 @@ namespace WhaleSpotting.Repositories
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         IEnumerable<Sighting> GetPendingSightings();
         Sighting CreateSighting(Sighting createSightingRequest);
+        Sighting GetSightingById(int sightingId);
     }
 
     public class SightingRepo : ISightingRepo
@@ -38,7 +39,7 @@ namespace WhaleSpotting.Repositories
         }
 
         public IEnumerable<Sighting> GetPendingSightings()
-        {        
+        {
             return _context.Sightings.Where(s => s.ConfirmationStatus == ConfirmationStatus.Pending);
         }
 
@@ -50,6 +51,15 @@ namespace WhaleSpotting.Repositories
                 .Where(s => s.Species.Id == speciesId)
                 .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
                 .OrderByDescending(s => s.SeenOn);
+        }
+        public Sighting GetSightingById(int sightingId)
+        {
+            return _context.Sightings
+                .Include(s => s.Species)
+                .Include(s => s.Location)
+                .Include(s => s.ConfirmationStatus)
+                .Where(s => s.Id == sightingId)
+                .Single();
         }
     }
 }
