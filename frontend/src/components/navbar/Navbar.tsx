@@ -24,40 +24,43 @@ export const Navbar: React.FunctionComponent = () => {
           alt="Whale Spotting logo"
         />
       </Link>
-      <Link to="/" className="desktop-menu">
-        <h1>WHALESPOTTING</h1>
-      </Link>
-      <Link to="/browse-sightings" className="desktop-menu">
-        <h1>Sightings</h1>
-      </Link>
-      <Link to="/whaleopedia" className="desktop-menu">
-        <h1>Whaleopedia</h1>
-      </Link>
-      <Link to="/videos" className="desktop-menu">
-        <h1>Videos</h1>
-      </Link>
+      {/* <div className={`mobile-menu-background ${isExpanded ? "expanded" : "closed"}`} /> */}
+      <ul className={`menu-items ${isExpanded ? "expanded" : ""}`}>
+        <Link to="/">
+          <h1>WHALESPOTTING</h1>
+        </Link>
+        <Link to="/browse-sightings">
+          <h1>Sightings</h1>
+        </Link>
+        <Link to="/whaleopedia">
+          <h1>Whaleopedia</h1>
+        </Link>
+        <Link to="/videos">
+          <h1>Videos</h1>
+        </Link>
 
-      <div className="admin-links desktop-menu">
-        {!loginContext.isLoggedIn ? (
-          <Link to="/login">
-            <h1>Log On</h1>
-          </Link>
-        ) : (
-          <div className="admin-only-links desktop-menu">
-            <Link to="/sightings/pending">
-              <h1>Pending</h1>
+        <div className="admin-links">
+          {!loginContext.isLoggedIn ? (
+            <Link to="/login">
+              <h1>Log On</h1>
             </Link>
-            <Link to="/create-user">
-              <h1>User+</h1>
-            </Link>
-            <Link to="/">
-              <a className="button is-primary" onClick={loginContext.logOut}>
-                <strong>Log Out</strong>
-              </a>
-            </Link>
-          </div>
-        )}
-      </div>
+          ) : (
+            <div className="admin-only-links">
+              <Link to="/sightings/pending">
+                <h1>Pending</h1>
+              </Link>
+              <Link to="/create-user">
+                <h1>User+</h1>
+              </Link>
+              <Link to="/">
+                <a className="button is-primary" onClick={loginContext.logOut}>
+                  <h1>Log Out</h1>
+                </a>
+              </Link>
+            </div>
+          )}
+        </div>
+      </ul>
     </nav>
   );
 };

@@ -7,9 +7,15 @@ nav.navbar {
   padding: 0.5em;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 10px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
 
   a {
     text-decoration: none;
@@ -27,48 +33,72 @@ nav.navbar {
     height: 2em;
   }
 
-  .admin-links {
-    margin-left: auto;
-  }
-
-  .admin-only-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-
   h1 {
     font-size: medium;
   }
-}
-@media only screen and (max-width: 650px) {
-  nav.navbar {
-    justify-content: center;
-  }
 
-  .desktop-menu {
-    display: none;
-    .desktop-menu--expanded {
+  .menu-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+
+    .admin-links {
+      margin-left: auto;
+    }
+
+    .admin-only-links {
       display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      justify-self: flex-start;
-      margin: 0;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
     }
   }
 
-  .mobile-menu {
-    display: block;
+  @media only screen and (max-width: 650px) {
+    .menu-items {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: block;
+      position: fixed;
+      left: 0;
+      z-index: 2;
+    }
+  }
+
+  @media only screen and (min-width: 651px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+
+  .menu-items.expanded {
+    height: 100%;
+    width: 70%;
+    background-color: $secondary;
+    z-index: 1;
     position: fixed;
     left: 0;
-  }
-}
+    top: 0;
+    padding-top: 35px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
-@media only screen and (min-width: 651px) {
-  .mobile-menu {
-    display: none;
+    .admin-links {
+      margin-left: 0;
+    }
+
+    .admin-only-links {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-left: 0;
+    }
   }
 }
