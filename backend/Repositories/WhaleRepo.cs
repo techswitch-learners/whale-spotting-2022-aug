@@ -8,6 +8,7 @@ namespace WhaleSpotting.Repositories
     public interface IWhaleRepo
     {
         IEnumerable<Species> GetAllSpecies();
+        Species GetSpeciesById(int speciesId);
     }
 
     public class WhaleRepo : IWhaleRepo
@@ -18,11 +19,20 @@ namespace WhaleSpotting.Repositories
         {
             _context = context;
         }
-         public IEnumerable<Species> GetAllSpecies()
+        public IEnumerable<Species> GetAllSpecies()
         {
             return _context.Species
                 .Include(s => s.ConservationStatus)
                 .OrderBy(s => s.Name);
         }
+
+        public Species GetSpeciesById(int speciesId) 
+        {
+            return _context.Species
+                .Include(s => s.ConservationStatus)
+                .Where(s => s.Id == speciesId)
+                .Single();
+        }
+
     }
 }

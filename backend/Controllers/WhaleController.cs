@@ -24,10 +24,10 @@ namespace WhaleSpotting.Controllers {
         }
         
         [HttpGet("{speciesId}")]
-        public ActionResult<ListResponse<Species>> GetSpeciesById([FromRoute] int speciesId)
+        public ActionResult<Species> GetSpeciesById([FromRoute] int speciesId)
         {
-            var whales = _whales.GetSpeciesById(speciesId);
-            return new ListResponse<Species>(whales);
+            var whale = _whales.GetSpeciesById(speciesId);
+            return whale;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace WhaleSpotting.Services
     public interface IWhaleService
     {
         IEnumerable<Species> GetAllSpecies();
+        Species GetSpeciesById(int speciesId);
     }
     
     public class WhaleService : IWhaleService
@@ -23,7 +24,7 @@ namespace WhaleSpotting.Services
             return _whales.GetAllSpecies();
         }
 
-        public IEnumerable<Species> GetSpeciesById(speciesId) 
+        public Species GetSpeciesById(int speciesId) 
         {
             return _whales.GetSpeciesById(speciesId);
         }
