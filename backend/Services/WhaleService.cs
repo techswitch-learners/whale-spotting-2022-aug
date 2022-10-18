@@ -22,5 +22,10 @@ namespace WhaleSpotting.Services
         {
             return _whales.GetAllSpecies();
         }
+
+        public IEnumerable<Species> GetSpeciesById(speciesId) 
+        {
+            return _whales.GetSpeciesById(speciesId);
+        }
     }
 }
