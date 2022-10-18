@@ -9,7 +9,9 @@ export const Navbar: React.FunctionComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   function toggleMenu() {
-    setIsExpanded((current) => !current);
+    if (isExpanded) {
+      setIsExpanded(false);
+    }
   }
 
   return (
@@ -24,35 +26,34 @@ export const Navbar: React.FunctionComponent = () => {
           alt="Whale Spotting logo"
         />
       </Link>
-      {/* <div className={`mobile-menu-background ${isExpanded ? "expanded" : "closed"}`} /> */}
       <ul className={`menu-items ${isExpanded ? "expanded" : ""}`}>
-        <Link to="/">
+        <Link to="/" onClick={() => toggleMenu()}>
           <h1>WHALESPOTTING</h1>
         </Link>
-        <Link to="/browse-sightings">
+        <Link to="/browse-sightings" onClick={() => toggleMenu()}>
           <h1>Sightings</h1>
         </Link>
-        <Link to="/whaleopedia">
+        <Link to="/whaleopedia" onClick={() => toggleMenu()}>
           <h1>Whaleopedia</h1>
         </Link>
-        <Link to="/videos">
+        <Link to="/videos" onClick={() => toggleMenu()}>
           <h1>Videos</h1>
         </Link>
 
         <div className="admin-links">
           {!loginContext.isLoggedIn ? (
-            <Link to="/login">
+            <Link to="/login" onClick={() => toggleMenu()}>
               <h1>Log On</h1>
             </Link>
           ) : (
             <div className="admin-only-links">
-              <Link to="/sightings/pending">
+              <Link to="/sightings/pending" onClick={() => toggleMenu()}>
                 <h1>Pending</h1>
               </Link>
-              <Link to="/create-user">
+              <Link to="/create-user" onClick={() => toggleMenu()}>
                 <h1>User+</h1>
               </Link>
-              <Link to="/">
+              <Link to="/" onClick={() => toggleMenu()}>
                 <a className="button is-primary" onClick={loginContext.logOut}>
                   <h1>Log Out</h1>
                 </a>
