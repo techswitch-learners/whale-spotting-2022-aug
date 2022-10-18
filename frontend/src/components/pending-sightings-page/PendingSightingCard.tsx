@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import { LoginContext } from "../login/LoginManager";
-import { useState, useContext } from "react";
-import {
-  PendingSighting,
-  ConfirmationRequest,
-  confirmOrRejectSighting,
-} from "../../clients/apiClient";
+import { PendingSighting, ConfirmationRequest } from "../../clients/apiClient";
 
 interface PendingSightingCardProps {
   sighting: PendingSighting;
@@ -22,8 +16,6 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
   confirmationRequests,
   setConfirmationRequests,
 }) => {
-  const [status, setStatus] = useState<string>("");
-
   const updateList = (sightingId: number, confirmationStatus: number) => {
     const newConfirmationRequestsArr = confirmationRequests.filter(
       (item) => item.SightingId != sightingId
@@ -53,31 +45,26 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
         <li>Location: {sighting.location}</li>
         <li>Latitude: {sighting.latitude}</li>
         <li>Longitude: {sighting.longitude}</li>
-
-        {status == "" ? (
-          <div>
-            <fieldset>
-              <input
-                type="radio"
-                name={sighting.id.toString()}
-                onClick={() => {
-                  updateList(sighting.id, 2);
-                }}
-              />
-              Approve
-              <input
-                type="radio"
-                name={sighting.id.toString()}
-                onClick={() => {
-                  updateList(sighting.id, 1);
-                }}
-              />
-              Reject
-            </fieldset>
-          </div>
-        ) : (
-          <p>{status}</p>
-        )}
+        <div>
+          <fieldset>
+            <input
+              type="radio"
+              name={sighting.id.toString()}
+              onClick={() => {
+                updateList(sighting.id, 2);
+              }}
+            />
+            Approve
+            <input
+              type="radio"
+              name={sighting.id.toString()}
+              onClick={() => {
+                updateList(sighting.id, 1);
+              }}
+            />
+            Reject
+          </fieldset>
+        </div>
       </ul>
     </div>
   );

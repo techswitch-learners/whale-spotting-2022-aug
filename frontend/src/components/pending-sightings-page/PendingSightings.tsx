@@ -24,17 +24,7 @@ export const PendingSightings: React.FunctionComponent = () => {
   }, []);
 
   const approveOrReject = (confirmationRequests: ConfirmationRequest[]) => {
-    // confirmationRequests.forEach(request => {
-    //   confirmOrRejectSighting(
-    //     request,
-    //     loginContext.username,
-    //     loginContext.password
-    //   );
-    // })
-    // [], [] ,[]
-    // confirmOrRejectSighting([])
-    //
-    const notSuccessRequest = confirmationRequests.map((request) => {
+    const RequestResponse = confirmationRequests.map((request) => {
       const result = confirmOrRejectSighting(
         request,
         loginContext.username,
@@ -42,7 +32,7 @@ export const PendingSightings: React.FunctionComponent = () => {
       );
       return result;
     });
-    console.log(notSuccessRequest);
+    console.log(RequestResponse);
   };
 
   return (
