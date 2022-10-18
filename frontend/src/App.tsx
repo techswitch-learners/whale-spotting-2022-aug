@@ -8,7 +8,6 @@ import { BrowseSightings } from "./components/browse-sightings-page/BrowseSighti
 import { CreateUser } from "./components/create-user-page/CreateUser";
 import { News } from "./components/news-page/News";
 import { PendingSightings } from "./components/pending-sightings-page/PendingSightings";
-import { ReportSightings } from "./components/report-sightings-page/ReportSightings";
 import { Whaleopedia } from "./components/whaleopedia-page/Whaleopedia";
 import { Login } from "./components/login/Login";
 
@@ -17,9 +16,6 @@ const Routes: React.FunctionComponent = () => {
     <Switch>
       <Route exact path="/">
         <Home />
-      </Route>
-      <Route exact path="/report-sightings">
-        <ReportSightings />
       </Route>
       <Route exact path="/browse-sightings">
         <BrowseSightings />
