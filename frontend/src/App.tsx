@@ -6,7 +6,7 @@ import { LoginManager } from "./components/login/LoginManager";
 import { Footer } from "./components/footer/Footer";
 import { BrowseSightings } from "./components/browse-sightings-page/BrowseSightings";
 import { CreateUser } from "./components/create-user-page/CreateUser";
-import { News } from "./components/news-page/News";
+import { Videos } from "./components/videos-page/Videos";
 import { PendingSightings } from "./components/pending-sightings-page/PendingSightings";
 import { ReportSightings } from "./components/report-sightings-page/ReportSightings";
 import { Whaleopedia } from "./components/whaleopedia-page/Whaleopedia";
@@ -27,8 +27,8 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path="/whaleopedia">
         <Whaleopedia />
       </Route>
-      <Route exact path="/news">
-        <News />
+      <Route exact path="/videos">
+        <Videos />
       </Route>
       <Route exact path="/login">
         <Login />

@@ -1,18 +1,18 @@
 import React from "react";
 import { RedditVideo } from "../../clients/redditApiClient";
 import { Card } from "../card/Card";
-import "./NewsCard.scss";
+import "./VideoCard.scss";
 
-interface NewsCardProps {
+interface VideoCardProps {
   video: RedditVideo;
 }
 
-export const NewsCard: React.FC<NewsCardProps> = ({ video }) => {
+export const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
   return (
     <Card title={video.title}>
-      <div className="video-container">
+      <div>
         <video
-          key={video.media.reddit_video.fallback_url}
+          className="reddit-whale-video"
           src={video.media.reddit_video.fallback_url}
           controls
         />
