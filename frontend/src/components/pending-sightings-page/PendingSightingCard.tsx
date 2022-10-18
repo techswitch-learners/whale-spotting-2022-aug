@@ -27,6 +27,7 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
     newConfirmationRequestsArr.push(newConfirmationRequest);
     setConfirmationRequests(newConfirmationRequestsArr);
   };
+
   useEffect(() => {
     console.log(confirmationRequests);
   }, [confirmationRequests]);
