@@ -1,6 +1,8 @@
+@import "../../constants.scss";
+
 nav.navbar {
   height: 4em;
-  background-color: #bbffff;
+  background-color: $primary-light;
   padding: 0.5em;
 
   img.navbar__logo {
