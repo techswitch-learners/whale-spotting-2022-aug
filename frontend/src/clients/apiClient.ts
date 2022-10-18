@@ -21,7 +21,7 @@ export interface Species {
 
 export interface Sighting {
   id: number;
-  species: string;
+  species: Species;
   imageUrl: string;
   description: string;
   whaleCount: number;
