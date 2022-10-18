@@ -4,16 +4,15 @@ import { LoginContext } from "../login/LoginManager";
 export const CreateUser: React.FunctionComponent = () => {
   const loginContext = useContext(LoginContext);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [formName, setFormName] = useState("");
+  const [formUsername, setFormUsername] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPassword, setFormPassword] = useState("");
+
   const validatePassword = (passwordToCheck: string) => {
-    const upper = /(.*[A-Z].*)/;
-    const lower = /(.*[a-z].*)/;
-    const number = /[0-9]/;
+    const upper = /[A-Z]/;
+    const lower = /[a-z]/;
+    const number = /\d/;
     const special = /[-+_!@#$%^&*.,?]/;
 
     if (passwordToCheck.length < 8) {
@@ -47,25 +46,23 @@ export const CreateUser: React.FunctionComponent = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
-      formData.name === "" ||
-      formData.username === "" ||
-      formData.email === "" ||
-      formData.password === ""
+      formName === "" ||
+      formUsername === "" ||
+      formEmail === "" ||
+      formPassword === ""
     ) {
       alert("All fields required!");
     } else {
       fetch("https://localhost:5001/users/create", {
         method: "POST",
         headers: {
-          // 'Accept': 'application/json',
           "Content-Type": "application/json",
           Authorization: `Basic ${btoa(
             `${loginContext.username}:${loginContext.password}`
           )}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(FormData),
       }).then((res) => res.json());
-      //.then(() => setRedirectTarget("/users"));
     }
   };
 
@@ -73,45 +70,39 @@ export const CreateUser: React.FunctionComponent = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          Name :
+          Name:
           <input
             type="text"
             name="Name"
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => setFormName(e.target.value)}
           />
         </label>
         <label>
-          Username :
+          Username:
           <input
             type="text"
             name="Username"
-            onChange={(e) =>
-              setFormData({ ...formData, username: e.target.value })
-            }
+            onChange={(e) => setFormUsername(e.target.value)}
           />
         </label>
         <label>
-          Email :
+          Email:
           <input
             type="email"
             name="Email"
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
+            onChange={(e) => setFormEmail(e.target.value)}
           />
         </label>
         <label>
-          Password :
+          Password:
           <input
             type="password"
             name="Password"
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
+            onChange={(e) => setFormPassword(e.target.value)}
             onBlur={(e) => validatePassword(e.target.value)}
           />
         </label>
-        <button>Create User</button>
+        <input type="submit" value="Create User" />
       </form>
     </div>
   );
