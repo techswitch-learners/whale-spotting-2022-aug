@@ -11,7 +11,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 }) => {
   return (
     <div className="sighting-card">
-      <div className="header fade-in">{sighting.species}</div>
+      <div className="header fade-in">{sighting.speciesId}</div>
       <img
         className="image fade-in"
         src={sighting.imageUrl}

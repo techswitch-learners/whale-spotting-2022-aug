@@ -16,11 +16,14 @@ namespace WhaleSpotting.Services
     public class SightingService : ISightingService
     {
         private readonly ISightingRepo _sightings;
+        private readonly IWhaleRepo _whales;
 
-        public SightingService(ISightingRepo sightings)
+        public SightingService(ISightingRepo sightings, IWhaleRepo whales)
         {
             _sightings = sightings;
+            _whales = whales;
         }
+     
 
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
         {
@@ -43,14 +46,13 @@ namespace WhaleSpotting.Services
             //logic, change request to include locationID
             var newSighting = new Sighting
             {
-                Species = request.Species,
+                Species = _whales.GetSpeciesById(request.SpeciesId),
                 SeenBy = request.SeenBy,
                 SeenOn = request.SeenOn,
                 ImageUrl = request.ImageUrl,
                 Description = request.Description,
                 WhaleCount = request. WhaleCount,
-                ConfirmationStatus = ConfirmationStatus.Pending,
-                Location= request.Location,
+                ConfirmationStatus = ConfirmationStatus.Pending,               
                 Latitude = request.Latitude,
                 Longitude = request.Longitude
             };

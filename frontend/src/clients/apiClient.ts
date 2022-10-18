@@ -22,12 +22,10 @@ export interface Species {
 export interface Sighting {
   seenBy: string;
   seenOn: string;
-  species: string;
+  speciesId: number;
   imageUrl: string;
   description: string;
   whaleCount: number;
-  confirmationStatus: string;
-  location: string;
   latitude: number;
   longitude: number;
 }
@@ -46,11 +44,8 @@ export const getSightings = async (): Promise<Sighting[]> => {
 
 export async function createSighting(createSightingRequest: Sighting) {
   const response = await fetch(`${backendUrl}/sightings`, {
-    // Todo: change to default path before pushing
     method: "POST",
     body: JSON.stringify(createSightingRequest),
     headers: { "Content-Type": "application/json" },
   });
-
-  // Todo: if no errors return something positive.
 }

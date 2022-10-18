@@ -17,7 +17,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   const [longitude, setLongitude] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [species, setSpecies] = useState("Unknown");
+  const [speciesId, setSpeciesId] = useState(0);
   const [whaleCount, setWhaleCount] = useState("");
   const [seenByError, setSeenByError] = useState("");
   const [dateError, setDateError] = useState("");
@@ -32,7 +32,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   const whaleSpeciesMenu: any[] = [];
   if (whaleSpecies !== undefined) {
     whaleSpecies.forEach((species, index) => {
-      whaleSpeciesMenu.push({ value: species.name, label: species.name });
+      whaleSpeciesMenu.push({ value: species.id, label: species.name }); // use id to retrieve the species!
     });
   }
 
@@ -80,7 +80,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
       const createSightingRequest: Sighting = {
         seenBy: seenBy,
         seenOn: date,
-        species: species,
+        speciesId: speciesId,
         imageUrl: imageUrl,
         description: description,
         whaleCount: Number.parseInt(whaleCount),
@@ -179,7 +179,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         {whaleSpecies !== undefined ? (
           <Select
             onChange={(e) => {
-              setSpecies(e.value);
+              setSpeciesId(e.value);
             }}
             options={whaleSpeciesMenu}
           />
