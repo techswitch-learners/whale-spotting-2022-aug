@@ -53,8 +53,11 @@ namespace WhaleSpotting.Controllers
             return Created("/api", createdSighting);
         }
 
-        [HttpPatch]
-        public ActionResult ConfirmOrRejectSighting([FromHeader] string authorization, [FromBody] ConfirmOrRejectRequest confirmOrRejectRequest)
+        [HttpPatch("{sightingId}/confirmation")]
+        public ActionResult ChangeConfirmationStatus(
+            [FromHeader] string authorization, 
+            [FromRoute] int sightingId,
+            [FromBody] ConfirmOrRejectRequest confirmOrRejectRequest)
         {
             if (authorization is null)
             {
@@ -72,8 +75,8 @@ namespace WhaleSpotting.Controllers
                     return Unauthorized();
                 }
 
-                var result = _sightings.ConfirmOrRejectSighting(confirmOrRejectRequest);
-                if (result)
+                var result = _sightings.ConfirmOrRejectSighting(confirmOrRejectRequest, sightingId);
+                if (result != null)
                 {
                     return NoContent();
                 }

@@ -57,7 +57,7 @@ namespace WhaleSpotting.Repositories
         }
         public Sighting ConfirmRequest(int sightingId)
         {
-            var sighting = _context.Sightings.Find(sightingId);
+            var sighting = _context.Sightings.Single(s => s.Id == sightingId);
             if (sighting != null)
             {
                 sighting.ConfirmationStatus = ConfirmationStatus.Approved;
@@ -68,7 +68,7 @@ namespace WhaleSpotting.Repositories
         }
         public Sighting RejectRequest(int sightingId)
         {
-            var sighting = _context.Sightings.Find(sightingId);
+            var sighting = _context.Sightings.Single(s => s.Id == sightingId);
             if (sighting != null)
             {
                 sighting.ConfirmationStatus = ConfirmationStatus.Rejected;

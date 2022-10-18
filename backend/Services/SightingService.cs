@@ -13,7 +13,7 @@ namespace WhaleSpotting.Services
         IEnumerable<Sighting> GetPendingSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         Sighting CreateSighting(CreateSightingRequest request);
-        bool ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting);
+        Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId);
     }
 
     public class SightingService : ISightingService
@@ -57,17 +57,18 @@ namespace WhaleSpotting.Services
             return _sightings.CreateSighting(newSighting);
         }
 
-        public Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting)
+        public Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId)
         {
             if (confirmOrRejectSighting.NewConfirmationStatus == ConfirmationStatus.Approved)
             {
-                return _sightings.ConfirmRequest(confirmOrRejectSighting.SightingId);
+                return _sightings.ConfirmRequest(sightingId);
             }
             else if (confirmOrRejectSighting.NewConfirmationStatus == ConfirmationStatus.Rejected)
             {
-                return _sightings.RejectRequest(confirmOrRejectSighting.SightingId);
+                return _sightings.RejectRequest(sightingId);
             }
-            throw new BadRequestException
+            throw new ArgumentOutOfRangeException("The confirmation request was not to approve or reject the sighting." +
+                "To approve, the NewConfirmationStatus of the request should be 2. To reject, it should be 1.");
         }
     }
 }
