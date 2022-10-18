@@ -51,6 +51,9 @@ nav.navbar {
 
   .desktop-menu {
     display: none;
+    .desktop-menu--expanded {
+      display: block;
+    }
   }
 
   .mobile-menu {
