@@ -57,17 +57,17 @@ namespace WhaleSpotting.Services
             return _sightings.CreateSighting(newSighting);
         }
 
-        public bool ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting)
+        public Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting)
         {
-            if (confirmOrRejectSighting.isApproved == true)
+            if (confirmOrRejectSighting.NewConfirmationStatus == ConfirmationStatus.Approved)
             {
                 return _sightings.ConfirmRequest(confirmOrRejectSighting.SightingId);
             }
-            else if (confirmOrRejectSighting.isApproved == false)
+            else if (confirmOrRejectSighting.NewConfirmationStatus == ConfirmationStatus.Rejected)
             {
                 return _sightings.RejectRequest(confirmOrRejectSighting.SightingId);
             }
-            return false;
+            throw new BadRequestException
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,8 @@ namespace WhaleSpotting.Repositories
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         IEnumerable<Sighting> GetPendingSightings();
         Sighting CreateSighting(Sighting createSightingRequest);
-        bool ConfirmRequest(int SightingId);
-        bool RejectRequest(int SightingId);
+        Sighting ConfirmRequest(int sightingId);
+        Sighting RejectRequest(int sightingId);
     }
 
     public class SightingRepo : ISightingRepo
@@ -54,27 +55,27 @@ namespace WhaleSpotting.Repositories
                 .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
                 .OrderByDescending(s => s.SeenOn);
         }
-        public bool ConfirmRequest(int SightingId)
+        public Sighting ConfirmRequest(int sightingId)
         {
-            var sighting = _context.Sightings.Find(SightingId);
+            var sighting = _context.Sightings.Find(sightingId);
             if (sighting != null)
             {
                 sighting.ConfirmationStatus = ConfirmationStatus.Approved;
                 _context.SaveChanges();
-                return true;
+                return sighting;
             }
-            return false;
+            throw new ArgumentException($"The sighting with ID {sightingId} could not be found");
         }
-        public bool RejectRequest(int SightingId)
+        public Sighting RejectRequest(int sightingId)
         {
-            var sighting = _context.Sightings.Find(SightingId);
+            var sighting = _context.Sightings.Find(sightingId);
             if (sighting != null)
             {
                 sighting.ConfirmationStatus = ConfirmationStatus.Rejected;
                 _context.SaveChanges();
-                return true;
+                return sighting;
             }
-            return false;
+            throw new ArgumentException($"The sighting with ID {sightingId} could not be found");
         }
     }
 }

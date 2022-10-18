@@ -69,19 +69,19 @@ namespace WhaleSpotting.Controllers
                 var check = _authService.IsValidLoginInfo(username, password);
                 if (!check)
                 {
-                    return new UnauthorizedResult();
+                    return Unauthorized();
                 }
 
                 var result = _sightings.ConfirmOrRejectSighting(confirmOrRejectRequest);
                 if (result)
                 {
-                    return Ok();
+                    return NoContent();
                 }
-                return StatusCode(400);
+                return NotFound();
             }
             catch (Exception)
             {
-                return new UnauthorizedResult();
+                return Unauthorized();
             }
 
         }

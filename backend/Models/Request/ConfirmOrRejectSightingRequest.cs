@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System;
+using WhaleSpotting.Models.Database;
 
 namespace WhaleSpotting.Models.Request
 {
@@ -11,6 +12,6 @@ namespace WhaleSpotting.Models.Request
         // true == approved
         // false == rejected
         [Required]
-        public bool isApproved { get; set; }
+        public ConfirmationStatus NewConfirmationStatus{ get; set; }
     }
 }
