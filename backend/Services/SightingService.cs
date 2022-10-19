@@ -67,8 +67,9 @@ namespace WhaleSpotting.Services
             {
                 return _sightings.RejectRequest(sightingId);
             }
-            throw new ArgumentOutOfRangeException("The confirmation request was not to approve or reject the sighting." +
-                "To approve, the NewConfirmationStatus of the request should be 2. To reject, it should be 1.");
+            throw new ArgumentOutOfRangeException("The confirmation request was not to approve or reject the sighting. " +
+                $"To approve, the NewConfirmationStatus of the request should be {(int) ConfirmationStatus.Approved}." +
+                $"To reject, it should be {(int) ConfirmationStatus.Rejected}.");
         }
     }
 }

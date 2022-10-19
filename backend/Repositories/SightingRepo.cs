@@ -55,6 +55,7 @@ namespace WhaleSpotting.Repositories
                 .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
                 .OrderByDescending(s => s.SeenOn);
         }
+
         public Sighting ConfirmRequest(int sightingId)
         {
             var sighting = _context.Sightings.Single(s => s.Id == sightingId);
@@ -66,6 +67,7 @@ namespace WhaleSpotting.Repositories
             }
             throw new ArgumentException($"The sighting with ID {sightingId} could not be found");
         }
+        
         public Sighting RejectRequest(int sightingId)
         {
             var sighting = _context.Sightings.Single(s => s.Id == sightingId);

@@ -19,7 +19,7 @@ namespace WhaleSpotting.Helpers
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
-        public static (string username, string password) GetUsernameAndPassword(string authorization)
+        public static (string Username, string Password) GetUsernameAndPassword(string authorization)
         {
                 var encodedUsernamePassword = authorization.Substring("Basic ".Length).Trim();
                 string usernamePassword = AuthHelper.Base64Decode(encodedUsernamePassword);
@@ -28,7 +28,5 @@ namespace WhaleSpotting.Helpers
                 var password = splitUsernamePassword[1];
                 return (username, password); 
         }
-
-
     }
 }

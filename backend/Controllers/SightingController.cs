@@ -12,8 +12,8 @@ namespace WhaleSpotting.Controllers
     [Route("/sightings")]
     public class SightingController : ControllerBase
     {
-        private readonly ISightingService _sightings;
         private readonly IAuthService _authService;
+        private readonly ISightingService _sightings;
 
         public SightingController
         (
@@ -65,9 +65,7 @@ namespace WhaleSpotting.Controllers
             }
             try
             {
-                (string, string) usernamePassword = AuthHelper.GetUsernameAndPassword(authorization);
-                string username = usernamePassword.Item1;
-                string password = usernamePassword.Item2;
+                (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
 
                 var check = _authService.IsValidLoginInfo(username, password);
                 if (!check)
@@ -86,7 +84,6 @@ namespace WhaleSpotting.Controllers
             {
                 return Unauthorized();
             }
-
         }
     }
 }
