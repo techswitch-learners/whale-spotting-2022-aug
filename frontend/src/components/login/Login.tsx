@@ -12,7 +12,7 @@ export const Login: React.FunctionComponent = () => {
   async function tryLogin(event: FormEvent) {
     event.preventDefault();
     if (!(await loginContext.logIn(username, password))) {
-      setError("LogIn Failed!");
+      setError(" Login details Invalid!!! ");
     }
   }
 
