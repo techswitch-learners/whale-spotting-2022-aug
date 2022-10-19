@@ -1,4 +1,6 @@
+import { stringify } from "querystring";
 import React, { createContext, useState } from "react";
+import { checkLogInDetails, User } from "../../clients/apiClient";
 
 type LoginContextType = {
   isLoggedIn: boolean;
@@ -28,11 +30,18 @@ export const LoginManager: React.FunctionComponent = ({ children }) => {
   const [contextPassword, setPassword] = useState("");
   const [Admin, setAdmin] = useState(false);
 
-  function logIn(username: string, password: string) {
-    setUsername(username);
-    setPassword(password);
-    setLoggedIn(true);
-    setAdmin(true);
+  async function tryLogIn(
+    username: string,
+    password: string
+  ): Promise<boolean> {
+    if (await checkLogInDetails(username, password)) {
+      setUsername(username);
+      setPassword(password);
+      setLoggedIn(true);
+      setAdmin(true);
+      return true;
+    }
+    return false;
   }
 
   function logOut() {
@@ -47,7 +56,7 @@ export const LoginManager: React.FunctionComponent = ({ children }) => {
     isAdmin: Admin,
     username: contextusername,
     password: contextPassword,
-    logIn: logIn,
+    logIn: tryLogIn,
     logOut: logOut,
   };
 
