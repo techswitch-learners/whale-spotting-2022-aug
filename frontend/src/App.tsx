@@ -7,7 +7,7 @@ import { Footer } from "./components/footer/Footer";
 import { BrowseSightings } from "./components/browse-sightings-page/BrowseSightings";
 import { CreateUser } from "./components/create-user-page/CreateUser";
 import { News } from "./components/news-page/News";
-import { PendingSightings } from "./components/pending-sightings-page/PendingSightings";
+import { UnreviewedSightings } from "./components/unreviewed-sightings-page/UnreviewedSightings";
 import { ReportSightings } from "./components/report-sightings-page/ReportSightings";
 import { Whaleopedia } from "./components/whaleopedia-page/Whaleopedia";
 import { Login } from "./components/login/Login";
@@ -34,7 +34,7 @@ const Routes: React.FunctionComponent = () => {
         <Login />
       </Route>
       <Route exact path="/approve-sightings">
-        <PendingSightings />
+        <UnreviewedSightings />
       </Route>
       <Route exact path="/create-user">
         <CreateUser />

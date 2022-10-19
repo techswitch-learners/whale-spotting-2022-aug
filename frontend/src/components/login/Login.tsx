@@ -1,6 +1,5 @@
 import React, { FormEvent, useState, useContext } from "react";
 import { LoginContext } from "../login/LoginManager";
-import { PendingSightings } from "../pending-sightings-page/PendingSightings";
 import { Redirect } from "react-router-dom";
 
 export const Login: React.FunctionComponent = () => {

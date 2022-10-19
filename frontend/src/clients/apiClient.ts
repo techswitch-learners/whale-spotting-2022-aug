@@ -19,7 +19,7 @@ export interface Species {
   conservationStatus: ConservationStatus;
 }
 
-export interface PendingSighting {
+export interface UnreviewedSighting {
   id: number;
   species?: string;
   seenBy: string;
@@ -32,15 +32,18 @@ export interface PendingSighting {
   longitude: number;
 }
 
-export interface ConfirmationRequest {
-  SightingId: number;
-  ConfirmationStatus: number;
+export interface PendingRequest {
+  sightingId: number;
+  confirmationStatus: number;
 }
 
-export interface ConfirmationRequestResponse {
-  SightingId: number;
-  ConfirmationStatus: number;
-  StatusCode: number;
+export interface ConfirmOrRejectRequest {
+  confirmationStatus: number;
+}
+
+export interface ErrorResponse {
+  sightingId: number;
+  errorMessage: any;
 }
 
 export const getAllSpecies = async (): Promise<Species[]> => {
@@ -49,57 +52,42 @@ export const getAllSpecies = async (): Promise<Species[]> => {
   return whaleListResponse.items;
 };
 
-export const getAllPendingSightings = async (): Promise<PendingSighting[]> => {
+export const getAllPendingSightings = async (): Promise<
+  UnreviewedSighting[]
+> => {
   const response = await fetch(`${backendUrl}/sightings/pending`);
-  const pengingSighting: ListResponse<PendingSighting> = await response.json();
+  const pengingSighting: ListResponse<UnreviewedSighting> =
+    await response.json();
   return pengingSighting.items;
 };
 
-// export const confirmOrRejectSighting = async (
-//   confirmationRequest: ConfirmationRequest,
-//   username: string,
-//   password: string,
-//   setStatus: React.Dispatch<React.SetStateAction<string>>
-// ): Promise<boolean> => {
-//   const response = await fetch(`${backendUrl}/sightings/pending`, {
-//     method: "PATCH",
-//     headers: {
-//       authorization: `Basic ${btoa(`${username}:${password}`)}`,
-//     },
-//     body: JSON.stringify(confirmationRequest),
-//   });
-
-//   if (!response.ok) {
-//     setStatus("Error. Please try again");
-//     return false;
-//   } else {
-//     if(confirmationRequest.ConfirmationStatus === 2){
-//       setStatus("Approved")
-//     } else if(confirmationRequest.ConfirmationStatus === 1){
-//       setStatus("Rejected")
-//     }
-//     return true;
-//   }
-// };
-
-export const confirmOrRejectSighting = (
-  confirmationRequest: ConfirmationRequest,
+export const confirmOrRejectSighting = async (
+  sightingId: number,
+  confirmationRequest: ConfirmOrRejectRequest,
   username: string,
   password: string
-): boolean => {
-  // const response = await fetch(`${backendUrl}/sightings/pending`, {
-  //   method: "PATCH",
-  //   headers: {
-  //     authorization: `Basic ${btoa(`${username}:${password}`)}`,
-  //   },
-  //   body: JSON.stringify(confirmationRequest),
-  // });
-
-  // if (!response.ok) {
-  //   setStatus("Error. Please try again");
-  //   return false;
-  // } else {
-  console.log("Print Request", confirmationRequest);
-  return true;
-  // }
+): Promise<void> => {
+  const response = await fetch(
+    `${backendUrl}/sightings/${sightingId}/confirmation`,
+    {
+      method: "PATCH",
+      headers: {
+        authorization: `Basic ${btoa(`${username}:${password}`)}`,
+      },
+      body: JSON.stringify(confirmationRequest),
+    }
+  );
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error("Couldn't connect to database");
+    }
+    if (response.status === 401) {
+      throw new Error(
+        "Unauthorised - please check your login info and try again"
+      );
+    }
+    if (response.status === 400) {
+      throw new Error("Bad request - please contact Nick & Leo");
+    }
+  }
 };
