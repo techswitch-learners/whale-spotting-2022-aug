@@ -1,11 +1,15 @@
 @charset "utf-8";
 
-html {
-  height: 100%;
-}
-
 body {
   margin: 0;
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600&display=swap");
+  font-family: "Poppins", sans-serif;
+}
+
+.page-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   height: 100%;
 }
 
