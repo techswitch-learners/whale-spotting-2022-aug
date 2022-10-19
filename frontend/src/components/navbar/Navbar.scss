@@ -11,6 +11,17 @@ nav.navbar {
   align-items: center;
   gap: 10px;
 
+  button {
+    background: transparent;
+    border: transparent;
+    color: $text-color-light;
+    font: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   ul {
     padding: 0;
     margin: 0;
@@ -33,10 +44,6 @@ nav.navbar {
     height: 2em;
   }
 
-  h1 {
-    font-size: medium;
-  }
-
   .menu-items {
     display: flex;
     flex-direction: row;
@@ -47,7 +54,7 @@ nav.navbar {
       margin-left: auto;
     }
 
-    .admin-only-links {
+    .logged-in-links {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -94,7 +101,7 @@ nav.navbar {
       margin-left: 0;
     }
 
-    .admin-only-links {
+    .logged-in-links {
       display: flex;
       flex-direction: column;
       justify-content: space-around;

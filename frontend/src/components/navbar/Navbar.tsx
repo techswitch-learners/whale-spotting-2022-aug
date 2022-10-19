@@ -8,12 +8,6 @@ export const Navbar: React.FunctionComponent = () => {
   const loginContext = useContext(LoginContext);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  function toggleMenu() {
-    if (isExpanded) {
-      setIsExpanded(false);
-    }
-  }
-
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="mobile-menu">
@@ -27,37 +21,43 @@ export const Navbar: React.FunctionComponent = () => {
         />
       </Link>
       <ul className={`menu-items ${isExpanded ? "expanded" : ""}`}>
-        <Link to="/" onClick={() => toggleMenu()}>
-          <h1>WHALESPOTTING</h1>
+        <Link to="/" onClick={() => setIsExpanded(false)}>
+          Home
         </Link>
-        <Link to="/browse-sightings" onClick={() => toggleMenu()}>
-          <h1>Sightings</h1>
+        <Link to="/browse-sightings" onClick={() => setIsExpanded(false)}>
+          Sightings
         </Link>
-        <Link to="/whaleopedia" onClick={() => toggleMenu()}>
-          <h1>Whaleopedia</h1>
+        <Link to="/whaleopedia" onClick={() => setIsExpanded(false)}>
+          Whaleopedia
         </Link>
-        <Link to="/videos" onClick={() => toggleMenu()}>
-          <h1>Videos</h1>
+        <Link to="/videos" onClick={() => setIsExpanded(false)}>
+          Videos
         </Link>
 
         <div className="admin-links">
           {!loginContext.isLoggedIn ? (
-            <Link to="/login" onClick={() => toggleMenu()}>
-              <h1>Log On</h1>
+            <Link to="/login" onClick={() => setIsExpanded(false)}>
+              Log In
             </Link>
           ) : (
-            <div className="admin-only-links">
-              <Link to="/sightings/pending" onClick={() => toggleMenu()}>
-                <h1>Pending</h1>
+            <div className="logged-in-links">
+              <Link
+                to="/sightings/pending"
+                onClick={() => setIsExpanded(false)}
+              >
+                Pending
               </Link>
-              <Link to="/create-user" onClick={() => toggleMenu()}>
-                <h1>User+</h1>
+              <Link to="/create-user" onClick={() => setIsExpanded(false)}>
+                User +
               </Link>
-              <Link to="/" onClick={() => toggleMenu()}>
-                <a className="button is-primary" onClick={loginContext.logOut}>
-                  <h1>Log Out</h1>
-                </a>
-              </Link>
+              <button
+                onClick={() => {
+                  setIsExpanded(false);
+                  loginContext.logOut();
+                }}
+              >
+                Log Out
+              </button>
             </div>
           )}
         </div>
