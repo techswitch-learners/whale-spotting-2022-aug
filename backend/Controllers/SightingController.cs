@@ -80,10 +80,19 @@ namespace WhaleSpotting.Controllers
                 }
                 return NotFound();
             }
-            catch (Exception)
+            catch (ArgumentOutOfRangeException)
             {
-                return Unauthorized();
+                return BadRequest();
             }
+            catch (ArgumentException)
+            {
+                return BadRequest();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+
         }
     }
 }

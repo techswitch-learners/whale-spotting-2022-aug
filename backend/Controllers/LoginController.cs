@@ -34,9 +34,7 @@ namespace WhaleSpotting.Controllers {
 
             try
             {
-                (string, string) usernamePassword = AuthHelper.GetUsernameAndPassword(authHeader);
-                string username = usernamePassword.Item1;
-                string password = usernamePassword.Item2;
+                (string username, string password) = AuthHelper.GetUsernameAndPassword(authHeader);
 
                 var check = _authService.IsValidLoginInfo(username, password);
                 if (!check)
