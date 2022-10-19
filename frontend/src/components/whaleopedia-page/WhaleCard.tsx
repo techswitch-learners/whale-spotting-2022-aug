@@ -1,6 +1,7 @@
 import React from "react";
 import { Species } from "../../clients/apiClient";
-import "./Whaleopedia.scss";
+import { Card } from "../card/Card";
+import "./WhaleCard.scss";
 
 interface WhaleCardProps {
   whale: Species;
@@ -8,9 +9,7 @@ interface WhaleCardProps {
 
 export const WhaleCard: React.FC<WhaleCardProps> = ({ whale }) => {
   return (
-    <div className="whale-card">
-      <div className="whale-card__common-name">{whale.name}</div>
-      <img className="whale-card__image" src={whale.photoUrl} />
+    <Card title={whale.name} imageUrl={whale.photoUrl}>
       <div className="whale-card__scientific">
         Scientific Name: {whale.scientificName}
       </div>
@@ -20,6 +19,6 @@ export const WhaleCard: React.FC<WhaleCardProps> = ({ whale }) => {
       <div className="whale-card__conservation">
         Conservation Status: {whale.conservationStatus.code}
       </div>
-    </div>
+    </Card>
   );
 };
