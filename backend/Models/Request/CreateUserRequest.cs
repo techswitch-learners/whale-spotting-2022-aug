@@ -11,7 +11,7 @@ namespace WhaleSpotting.Models.Request
         [Required]
         [StringLength(70)]
         public string Username { get; set; }
-
+        
         [Required]
         [RegularExpression(
             // Microsoft's recommended email address validation Regex (absolutely disgusting, I know)
@@ -21,8 +21,9 @@ namespace WhaleSpotting.Models.Request
         public string Email { get; set; }
 
         [Required]
-        [DataType(DataType.Password)]
-        [StringLength(70)]
+        [RegularExpression(
+            @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+        )]
         public string Password { get; set; }
     }
 }
