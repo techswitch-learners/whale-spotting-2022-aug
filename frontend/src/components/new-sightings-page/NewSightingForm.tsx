@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { createSighting, Sighting, Species } from "../../clients/apiClient";
+import {
+  createSighting,
+  CreateSightingRequest,
+  Sighting,
+  Species,
+} from "../../clients/apiClient";
 import Select from "react-select";
 import { isUndefined } from "util";
 
@@ -77,15 +82,13 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm() === 0) {
-      const createSightingRequest: Sighting = {
+      const createSightingRequest: CreateSightingRequest = {
         seenBy: seenBy,
         seenOn: date,
         speciesId: speciesId,
         imageUrl: imageUrl,
         description: description,
         whaleCount: Number.parseInt(whaleCount),
-        confirmationStatus: "Pending",
-        location: "default", //Todo: temporarily hardcoded - FIX IT !.
         latitude: Number.parseFloat(latitude),
         longitude: Number.parseFloat(longitude),
       };

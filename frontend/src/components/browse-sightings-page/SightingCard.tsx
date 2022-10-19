@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Sighting } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
@@ -11,24 +11,30 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 }) => {
   return (
     <div className="sighting-card">
-      <div className="header fade-in">{sighting.speciesId}</div>
-      <img
-        className="image fade-in"
-        src={sighting.imageUrl}
-        alt="image of whale"
-      />
-      <div className="cardData fade-in">
+      <h3 className="fade-in">Sighting #{sighting.id}</h3>
+
+      {sighting.imageUrl !== "" ? (
+        <img
+          className="image fade-in"
+          src={sighting.imageUrl}
+          alt={
+            sighting.species?.name != null
+              ? `${sighting.species?.name}`
+              : "Picture of a whale of unknown species"
+          }
+        />
+      ) : (
+        <></>
+      )}
+
+      <div className="card-data fade-in">
         <p>
-          <strong>description: </strong>
+          <span className="sighting-card-information">Description: </span>
           {sighting.description}
         </p>
         <p>
-          <strong>No. whales: </strong>
+          <span className="sighting-card-information">No. whales: </span>
           {sighting.whaleCount}
-        </p>
-        <p>
-          <strong>location: </strong>
-          {sighting.location}
         </p>
       </div>
     </div>

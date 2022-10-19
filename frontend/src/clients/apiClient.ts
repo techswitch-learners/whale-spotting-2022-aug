@@ -20,9 +20,21 @@ export interface Species {
 }
 
 export interface Sighting {
+  id: number;
   seenBy: string;
   seenOn: string;
-  speciesId: number;
+  species?: Species;
+  imageUrl: string;
+  description: string;
+  whaleCount: number;
+  latitude: number;
+  longitude: number;
+}
+
+export interface CreateSightingRequest {
+  seenBy: string;
+  seenOn: string;
+  speciesId?: number;
   imageUrl: string;
   description: string;
   whaleCount: number;
@@ -42,7 +54,9 @@ export const getSightings = async (): Promise<Sighting[]> => {
   return sightingsListResponse.items;
 };
 
-export async function createSighting(createSightingRequest: Sighting) {
+export async function createSighting(
+  createSightingRequest: CreateSightingRequest
+) {
   const response = await fetch(`${backendUrl}/sightings`, {
     method: "POST",
     body: JSON.stringify(createSightingRequest),

@@ -15,13 +15,13 @@ export const BrowseSightings: React.FC = () => {
   }
 
   return (
-    <div className="feed">
-      <h1 className="title">Reported Sightings</h1>
-      <div>
+    <>
+      <h1>Reported Sightings</h1>
+      <ul>
         {sightings.map((sighting, index) => (
-          <SightingCard sighting={sighting} key={index} />
+          <SightingCard sighting={sighting} key={sighting.id} />
         ))}
-      </div>
-    </div>
+      </ul>
+    </>
   );
 };
