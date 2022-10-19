@@ -11,6 +11,7 @@ namespace WhaleSpotting.Repositories
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         IEnumerable<Sighting> GetPendingSightings();
         Sighting CreateSighting(Sighting createSightingRequest);
+        IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
     }
 
     public class SightingRepo : ISightingRepo
@@ -48,6 +49,16 @@ namespace WhaleSpotting.Repositories
                 .Include(s => s.Species)
                 .Include(s => s.Location)
                 .Where(s => s.Species.Id == speciesId)
+                .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
+                .OrderByDescending(s => s.SeenOn);
+        }
+
+        public IEnumerable<Sighting> GetSightingsByLocationId(int locationId)
+        {
+            return _context.Sightings
+                .Include(s => s.Species)
+                .Include(s => s.Location)
+                .Where(s => s.Location.Id == locationId)
                 .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
                 .OrderByDescending(s => s.SeenOn);
         }
