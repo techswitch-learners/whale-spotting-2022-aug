@@ -6,9 +6,8 @@ import { LoginManager } from "./components/login/LoginManager";
 import { Footer } from "./components/footer/Footer";
 import { BrowseSightings } from "./components/browse-sightings-page/BrowseSightings";
 import { CreateUser } from "./components/create-user-page/CreateUser";
-import { News } from "./components/news-page/News";
 import { UnreviewedSightings } from "./components/unreviewed-sightings-page/UnreviewedSightings";
-import { ReportSightings } from "./components/report-sightings-page/ReportSightings";
+import { Videos } from "./components/videos-page/Videos";
 import { Whaleopedia } from "./components/whaleopedia-page/Whaleopedia";
 import { Login } from "./components/login/Login";
 
@@ -18,22 +17,19 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/report-sightings">
-        <ReportSightings />
-      </Route>
       <Route exact path="/browse-sightings">
         <BrowseSightings />
       </Route>
       <Route exact path="/whaleopedia">
         <Whaleopedia />
       </Route>
-      <Route exact path="/news">
-        <News />
+      <Route exact path="/videos">
+        <Videos />
       </Route>
       <Route exact path="/login">
         <Login />
       </Route>
-      <Route exact path="/approve-sightings">
+      <Route exact path="/sightings/pending">
         <UnreviewedSightings />
       </Route>
       <Route exact path="/create-user">
@@ -48,7 +44,7 @@ const App: React.FunctionComponent = () => {
     <Router>
       <LoginManager>
         <Navbar />
-        <main>
+        <main className="page-content">
           <Routes />
         </main>
         <Footer />

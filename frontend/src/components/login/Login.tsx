@@ -15,7 +15,7 @@ export const Login: React.FunctionComponent = () => {
   }
 
   if (loginContext.isLoggedIn) {
-    return <Redirect to="/approve-sightings" />;
+    return <Redirect to="/sightings/pending" />;
   }
 
   return (

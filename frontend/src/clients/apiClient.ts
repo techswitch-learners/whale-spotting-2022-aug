@@ -32,6 +32,20 @@ export interface UnreviewedSighting {
   longitude: number;
 }
 
+export interface Sighting {
+  id: number;
+  seenBy: string;
+  seenOn: string;
+  species?: Species;
+  imageUrl: string;
+  description: string;
+  whaleCount: number;
+  confirmationStatus: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+}
+
 export interface PendingRequest {
   sightingId: number;
   confirmationStatus: number;
@@ -90,4 +104,10 @@ export const confirmOrRejectSighting = async (
       throw new Error("Bad request - please contact Nick & Leo");
     }
   }
+};
+
+export const getSightings = async (): Promise<Sighting[]> => {
+  const response = await fetch(`${backendUrl}/sightings`);
+  const sightingsListResponse: ListResponse<Sighting> = await response.json();
+  return sightingsListResponse.items;
 };
