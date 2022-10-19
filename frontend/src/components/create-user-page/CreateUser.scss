@@ -1,0 +1,58 @@
+@import "../../constants.scss";
+
+// * {
+//   border: solid 1px red;
+// }
+
+.form {
+  width: 280px;
+  margin: auto;
+  background-color: $primary-light;
+  padding: 10px;
+  border: 1px solid $primary-dark;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.form_heading {
+  text-align: center;
+}
+
+.form_field {
+  margin: 10px;
+}
+
+.form_field--label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  width: 80px;
+  text-align: right;
+  padding: 0px 5px;
+}
+
+.form_field--input {
+  display: inline-block;
+  float: left;
+}
+
+.form_button {
+  text-align: center;
+  input {
+    background-color: $primary-dark;
+    color: $white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin: auto;
+  }
+}
+
+.message {
+  min-height: 10px;
+  clear: left;
+  font-size: 8px;
+  color: red;
+  margin: 2px;
+  padding-left: 90px;
+}
