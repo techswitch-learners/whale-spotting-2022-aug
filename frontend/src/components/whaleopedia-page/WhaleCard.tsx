@@ -8,8 +8,10 @@ interface WhaleCardProps {
 }
 
 export const WhaleCard: React.FC<WhaleCardProps> = ({ whale }) => {
+  const whaleImagesUrl = whale.photoUrl.split(",");
+
   return (
-    <Card title={whale.name} imageUrl={whale.photoUrl}>
+    <Card title={whale.name} imageUrls={whaleImagesUrl}>
       <div className="whale-card__scientific">
         Scientific Name: {whale.scientificName}
       </div>

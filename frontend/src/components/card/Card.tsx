@@ -3,21 +3,32 @@ import "./Card.scss";
 
 interface CardProps {
   title: string;
-  imageUrl?: string;
+  imageUrls?: string[];
 }
 
-export const Card: React.FC<CardProps> = ({ title, imageUrl, children }) => {
+export const Card: React.FC<CardProps> = ({ title, imageUrls, children }) => {
   return (
     <div className="card">
       <h3
         className="card__title"
         dangerouslySetInnerHTML={{ __html: title }}
       ></h3>
-      {imageUrl ? (
-        <img className="card__image" src={imageUrl} alt={title} />
-      ) : (
-        <></>
-      )}
+      <div>
+        {imageUrls ? (
+          imageUrls.map((imageUrl) => {
+            return (
+              <img
+                key={imageUrl}
+                className="card__image"
+                src={imageUrl}
+                alt={title}
+              />
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </div>
       <div className="card__contents">{children}</div>
     </div>
   );
