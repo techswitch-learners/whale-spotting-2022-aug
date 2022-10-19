@@ -55,6 +55,7 @@ namespace WhaleSpotting.Services
 
             return _sightings.CreateSighting(newSighting);
         }
+
         public Sighting GetSightingById(int sightingId)
         {
             return _sightings.GetSightingById(sightingId);
