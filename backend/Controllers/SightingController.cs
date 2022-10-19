@@ -92,7 +92,6 @@ namespace WhaleSpotting.Controllers
             {
                 return NotFound();
             }
-
         }
     }
 }
