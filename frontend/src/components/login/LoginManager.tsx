@@ -1,4 +1,3 @@
-import { stringify } from "querystring";
 import React, { createContext, useState } from "react";
 import { checkLogInDetails, User } from "../../clients/apiClient";
 
