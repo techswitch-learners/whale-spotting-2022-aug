@@ -55,7 +55,6 @@ namespace WhaleSpotting.Controllers
                 }
                 
                 User createdUser = _userService.Create(newUserRequest);
-
                 return new UserResponse(newUserRequest);  
             }
             catch (Exception)
