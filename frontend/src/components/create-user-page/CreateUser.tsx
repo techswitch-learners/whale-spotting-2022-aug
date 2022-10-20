@@ -163,7 +163,7 @@ export const CreateUser: React.FunctionComponent = () => {
               className="form_field--input"
               type="password"
               name="Password"
-              onChange={(e) => validatePassword(e.target.value)}
+              onBlur={(e) => validatePassword(e.target.value)}
             />
           </div>
           <p className="message">{passwordMessage}</p>
