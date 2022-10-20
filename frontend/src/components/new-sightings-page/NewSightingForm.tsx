@@ -7,6 +7,7 @@ import {
 } from "../../clients/apiClient";
 import Select from "react-select";
 import { isUndefined } from "util";
+import "./NewSightingForm.scss";
 
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
@@ -97,18 +98,18 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   };
 
   return (
-    <div className="homePage">
+    <>
       <h1>Whale Spotting</h1>
       <p>Spot whales!</p>
-      <form className="newSightingForm" method="post" onSubmit={handleSubmit}>
+      <form className="new-sighting-form" method="post" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="seenBy"
+          placeholder="Name"
           onChange={(e) => {
             setSeenBy(e.target.value);
           }}
         />
-        <p>{seenByError}</p>
+        {seenByError !== "" ? { seenByError } : <></>}
 
         <input
           type="datetime-local"
@@ -116,68 +117,61 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
             setDate(e.target.value);
           }}
         />
-        <p>{dateError}</p>
+        {dateError !== "" ? { dateError } : <></>}
 
-        <ul>
-          <li>
-            <input
-              type="radio"
-              value="automatic"
-              checked={locationInputType === "automatic"}
-              onChange={handleChange}
-              disabled
-            />
-            Use my location
-          </li>
-
-          <li>
-            <input
-              type="radio"
-              value="manual"
-              checked={locationInputType === "manual"}
-              onChange={handleChange}
-            />{" "}
-            Enter latitude and longitude
-            {locationInputType === "manual" && (
-              <div className="latAndLongInputs">
-                <input
-                  type="number"
-                  placeholder="Latitude"
-                  min="-90"
-                  max="90"
-                  step="0.1"
-                  onChange={(e) => {
-                    setLatitude(e.target.value);
-                  }}
-                />
-                <p>{latError}</p>
-                <input
-                  type="number"
-                  placeholder="Longitude"
-                  min="-180"
-                  max="180"
-                  step="0.1"
-                  onChange={(e) => {
-                    setLongitude(e.target.value);
-                  }}
-                />
-                <p>{longError}</p>
-              </div>
-            )}
-          </li>
-
-          <li>
-            <input
-              type="radio"
-              value="autocomplete"
-              checked={locationInputType === "autocomplete"}
-              onChange={handleChange}
-              disabled
-            />
-            Start typing a location
-          </li>
-        </ul>
-        <p>{locationInputTypeError}</p>
+        <fieldset className="location-input-choices">
+          <legend>Choose how to input your location:</legend>
+          <input
+            type="radio"
+            value="automatic"
+            checked={locationInputType === "automatic"}
+            onChange={handleChange}
+            disabled
+          />
+          Use my location
+          <br />
+          <input
+            type="radio"
+            value="manual"
+            checked={locationInputType === "manual"}
+            onChange={handleChange}
+          />{" "}
+          Enter latitude and longitude
+          <br />
+          {locationInputType === "manual" && (
+            <div className="lat-and-long-inputs">
+              <input
+                type="number"
+                placeholder="Latitude"
+                min="-90"
+                max="90"
+                onChange={(e) => {
+                  setLatitude(e.target.value);
+                }}
+              />
+              {latError !== "" ? { latError } : <></>}
+              <input
+                type="number"
+                placeholder="Longitude"
+                min="-180"
+                max="180"
+                onChange={(e) => {
+                  setLongitude(e.target.value);
+                }}
+              />
+              {longError !== "" ? { longError } : <></>}
+            </div>
+          )}
+          <input
+            type="radio"
+            value="autocomplete"
+            checked={locationInputType === "autocomplete"}
+            onChange={handleChange}
+            disabled
+          />
+          Start typing a location
+          {locationInputTypeError !== "" ? { locationInputTypeError } : <></>}
+        </fieldset>
 
         {whaleSpecies !== undefined ? (
           <Select
@@ -217,6 +211,6 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         <button type="submit">Submit sighting</button>
       </form>
-    </div>
+    </>
   );
 };

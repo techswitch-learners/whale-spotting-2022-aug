@@ -26,7 +26,6 @@ namespace WhaleSpotting.Services
             _sightings = sightings;
             _whales = whales;
         }
-     
 
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
         {
