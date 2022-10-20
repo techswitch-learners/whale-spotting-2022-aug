@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { NewSightingForm } from "./NewSightingForm";
-import "./NewSightingForm.tsx";
 import { getAllSpecies, Species } from "../../clients/apiClient";
 
 export const NewSightings: React.FunctionComponent = () => {
@@ -10,9 +9,5 @@ export const NewSightings: React.FunctionComponent = () => {
     getAllSpecies().then(setWhaleSpecies);
   }, []);
 
-  return (
-    <div>
-      <NewSightingForm whaleSpecies={whaleSpecies} />
-    </div>
-  );
+  return <NewSightingForm whaleSpecies={whaleSpecies} />;
 };

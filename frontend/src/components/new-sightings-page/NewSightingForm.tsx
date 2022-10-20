@@ -2,96 +2,141 @@ import React, { useState } from "react";
 import {
   createSighting,
   CreateSightingRequest,
-  Sighting,
   Species,
 } from "../../clients/apiClient";
 import Select from "react-select";
-import { isUndefined } from "util";
 import "./NewSightingForm.scss";
 
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
 }
 
+interface FormValues {
+  seenBy: string;
+  date: string;
+  latitude: string;
+  longitude: string;
+  description: string;
+  imageUrl: string;
+  speciesId: number;
+  whaleCount: string;
+}
+
+interface FormErrors {
+  seenBy: string;
+  date: string;
+  latitude: string;
+  longitude: string;
+  imageUrl: string;
+  speciesId: string;
+  whaleCount: string;
+}
+
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   whaleSpecies,
 }) => {
-  const [seenBy, setSeenBy] = useState("");
-  const [date, setDate] = useState("");
+  const [formValues, setFormValues] = useState<FormValues>({
+    seenBy: "",
+    date: "",
+    latitude: "",
+    longitude: "",
+    description: "",
+    imageUrl: "",
+    speciesId: 0,
+    whaleCount: "",
+  });
+  const [formErrors, setFormErrors] = useState<FormErrors>({
+    seenBy: "",
+    date: "",
+    latitude: "",
+    longitude: "",
+    imageUrl: "",
+    speciesId: "",
+    whaleCount: "",
+  });
   const [locationInputType, setLocationInputType] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [speciesId, setSpeciesId] = useState(0);
-  const [whaleCount, setWhaleCount] = useState("");
-  const [seenByError, setSeenByError] = useState("");
-  const [dateError, setDateError] = useState("");
   const [locationInputTypeError, setLocationInputTypeError] = useState("");
-  const [latError, setLatError] = useState("");
-  const [longError, setLongError] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value);
   };
-
-  const whaleSpeciesMenu: any[] = [];
+  let whaleSpeciesMenu: Species[] | undefined = undefined;
   if (whaleSpecies !== undefined) {
-    whaleSpecies.forEach((species, index) => {
-      whaleSpeciesMenu.push({ value: species.id, label: species.name }); // use id to retrieve the species!
-    });
+    whaleSpeciesMenu = whaleSpecies.map((species) => ({
+      id: species.id,
+      name: species.name,
+    }));
   }
 
   const validateForm = () => {
     let numberOfErrors = 0;
-    setSeenByError("");
-    setDateError("");
-    setLocationInputTypeError("");
-    setLatError("");
-    setLongError("");
-    setImageUrl("");
+    setFormErrors({
+      ...formErrors,
+      seenBy: "",
+      date: "",
+      latitude: "",
+      longitude: "",
+      imageUrl: "",
+      speciesId: "",
+      whaleCount: "",
+    });
 
-    if (seenBy === "") {
-      setSeenByError("Please enter a seenBy");
+    if (formValues.seenBy === "") {
+      setFormErrors({
+        ...formErrors,
+        seenBy: "Please enter a seenBy",
+      });
       numberOfErrors++;
     }
-    if (date === "") {
-      setDateError("Please enter date");
+    if (formValues.date === "") {
+      setFormErrors({
+        ...formErrors,
+        date: "Please enter date",
+      });
       numberOfErrors++;
     }
     if (locationInputType === "") {
       setLocationInputTypeError("Please select a way to input your location");
       numberOfErrors++;
     } else {
-      if (latitude === "") {
-        setLatError("Please enter a latitude");
+      if (formValues.latitude === "") {
+        setFormErrors({
+          ...formErrors,
+          latitude: "Please enter a latitude",
+        });
         numberOfErrors++;
       }
-      if (longitude === "") {
-        setLongError("Please enter a longitude");
+      if (formValues.longitude === "") {
+        setFormErrors({
+          ...formErrors,
+          longitude: "Please enter a longitude",
+        });
         numberOfErrors++;
       }
     }
-    if (imageUrl && imageUrl.includes(" ")) {
-      setImageUrl("URL cannot contain spaces");
+    if (formValues.imageUrl && formValues.imageUrl.includes(" ")) {
+      setFormErrors({
+        ...formErrors,
+        imageUrl: "Please enter a longitude",
+      });
       numberOfErrors++;
     }
 
     return numberOfErrors;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     if (validateForm() === 0) {
       const createSightingRequest: CreateSightingRequest = {
-        seenBy: seenBy,
-        seenOn: date,
-        speciesId: speciesId,
-        imageUrl: imageUrl,
-        description: description,
-        whaleCount: Number.parseInt(whaleCount),
-        latitude: Number.parseFloat(latitude),
-        longitude: Number.parseFloat(longitude),
+        seenBy: formValues.seenBy,
+        seenOn: formValues.date,
+        speciesId: formValues.speciesId,
+        imageUrl: formValues.imageUrl,
+        description: formValues.description,
+        whaleCount: Number.parseInt(formValues.whaleCount),
+        latitude: Number.parseFloat(formValues.latitude),
+        longitude: Number.parseFloat(formValues.longitude),
       };
       createSighting(createSightingRequest);
     }
@@ -106,77 +151,87 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           type="text"
           placeholder="Name"
           onChange={(e) => {
-            setSeenBy(e.target.value);
+            setFormValues({
+              ...formValues,
+              seenBy: e.target.value,
+            });
           }}
         />
-        {seenByError !== "" ? { seenByError } : <></>}
+        {formErrors.seenBy !== "" ? <>{formErrors.seenBy}</> : <></>}
 
         <input
           type="datetime-local"
           onChange={(e) => {
-            setDate(e.target.value);
+            setFormValues({
+              ...formValues,
+              date: e.target.value,
+            });
           }}
         />
         {dateError !== "" ? { dateError } : <></>}
 
-        <fieldset className="location-input-choices">
+        <fieldset>
           <legend>Choose how to input your location:</legend>
-          <input
-            type="radio"
-            value="automatic"
-            checked={locationInputType === "automatic"}
-            onChange={handleChange}
-            disabled
-          />
-          Use my location
-          <br />
-          <input
-            type="radio"
-            value="manual"
-            checked={locationInputType === "manual"}
-            onChange={handleChange}
-          />{" "}
-          Enter latitude and longitude
-          <br />
-          {locationInputType === "manual" && (
-            <div className="lat-and-long-inputs">
-              <input
-                type="number"
-                placeholder="Latitude"
-                min="-90"
-                max="90"
-                onChange={(e) => {
-                  setLatitude(e.target.value);
-                }}
-              />
-              {latError !== "" ? { latError } : <></>}
-              <input
-                type="number"
-                placeholder="Longitude"
-                min="-180"
-                max="180"
-                onChange={(e) => {
-                  setLongitude(e.target.value);
-                }}
-              />
-              {longError !== "" ? { longError } : <></>}
-            </div>
-          )}
-          <input
-            type="radio"
-            value="autocomplete"
-            checked={locationInputType === "autocomplete"}
-            onChange={handleChange}
-            disabled
-          />
-          Start typing a location
-          {locationInputTypeError !== "" ? { locationInputTypeError } : <></>}
+          <div className="location-input-choice">
+            <input
+              type="radio"
+              value="automatic"
+              checked={locationInputType === "automatic"}
+              onChange={handleChange}
+              disabled
+            />
+            <label htmlFor="automatic">Use my location</label>
+          </div>
+          <div className="location-input-choice">
+            <input
+              type="radio"
+              value="manual"
+              checked={locationInputType === "manual"}
+              onChange={handleChange}
+            />{" "}
+            <label htmlFor="manual">Enter latitude and longitude</label>
+            {locationInputType === "manual" && (
+              <div className="lat-and-long-inputs">
+                <input
+                  type="number"
+                  placeholder="Latitude"
+                  min="-90"
+                  max="90"
+                  onChange={(e) => {
+                    setLatitude(e.target.value);
+                  }}
+                />
+                {latError !== "" ? { latError } : <></>}
+                <input
+                  type="number"
+                  placeholder="Longitude"
+                  min="-180"
+                  max="180"
+                  onChange={(e) => {
+                    setLongitude(e.target.value);
+                  }}
+                />
+                {longError !== "" ? { longError } : <></>}
+              </div>
+            )}
+          </div>
+          <div className="location-input-choice">
+            <input
+              type="radio"
+              value="autocomplete"
+              checked={locationInputType === "autocomplete"}
+              onChange={handleChange}
+              disabled
+            />
+            <label htmlFor="autocomplete">Start typing a location</label>
+            {locationInputTypeError !== "" ? { locationInputTypeError } : <></>}
+          </div>
         </fieldset>
 
         {whaleSpecies !== undefined ? (
           <Select
             onChange={(e) => {
-              setSpeciesId(e.value);
+              setSpeciesId(e.id);
             }}
             options={whaleSpeciesMenu}
           />
@@ -202,14 +257,14 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         />
 
         <input
-          type="text"
+          type="url"
           placeholder="Image Url"
           onChange={(e) => {
             setImageUrl(e.target.value);
           }}
         />
 
-        <button type="submit">Submit sighting</button>
+        <input type="submit" value="Submit sighting" />
       </form>
     </>
   );
