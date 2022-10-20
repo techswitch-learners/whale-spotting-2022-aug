@@ -44,13 +44,15 @@ namespace WhaleSpotting.Controllers
                 (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
 
                 var check = _authService.IsValidLoginInfo(username, password);
-                var usernameCheck = _authService.IsExistingUsername(username);
 
-                if (check && !usernameCheck)
+                if (check)
                 {
-                    User createdUser = _userService.Create(newUserRequest);
-
-                    return new UserResponse(newUserRequest);
+                    if (!_authService.IsExistingUsername(newUserRequest.Username))
+                    {
+                        User createdUser = _userService.Create(newUserRequest);
+                        return new UserResponse(newUserRequest);
+                    }
+                    return new ConflictResult();
                 }
                 else
                 {

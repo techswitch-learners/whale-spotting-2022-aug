@@ -43,16 +43,7 @@ namespace WhaleSpotting.Services
 
         public bool IsExistingUsername (string username)
         {
-            var foundUser = _users.GetByUsername(username);
-
-            if (foundUser == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return _users.GetByUsername(username) != null;
         }
     }
 }
