@@ -29,15 +29,25 @@ nav.navbar {
   }
 
   a {
-    text-decoration: none;
-  }
-
-  a:visited {
     color: $text-color-light;
-  }
+    text-decoration: none;
 
-  a:hover {
-    text-decoration: underline;
+    &:visited {
+      color: $text-color-light;
+    }
+
+    &:hover {
+      color: $text-color-light;
+      text-decoration: underline;
+    }
+
+    &:link {
+      color: $text-color-light;
+    }
+
+    &:active {
+      color: $primary-light;
+    }
   }
 
   img.navbar__logo {
