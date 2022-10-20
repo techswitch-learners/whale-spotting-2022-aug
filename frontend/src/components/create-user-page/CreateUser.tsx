@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import { LoginContext } from "../login/LoginManager";
 import "./CreateUser.scss";
 
@@ -16,6 +16,8 @@ export const CreateUser: React.FunctionComponent = () => {
 
   const [formPassword, setFormPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
+
+  const [addUserMessage, setAddUserMessage] = useState("");
 
   const validateName = (nameToCheck: string) => {
     setFormName(nameToCheck);
@@ -50,7 +52,6 @@ export const CreateUser: React.FunctionComponent = () => {
 
   const validatePassword = (passwordToCheck: string) => {
     setFormPassword(passwordToCheck);
-
     const requiredLength = 8;
     const upper = /[A-Z]/;
     const lower = /[a-z]/;
@@ -91,21 +92,36 @@ export const CreateUser: React.FunctionComponent = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("https://localhost:5001/users/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Basic ${btoa(
-          `${loginContext.username}:${loginContext.password}`
-        )}`,
-      },
-      body: JSON.stringify({
-        name: formName,
-        username: formUsername,
-        email: formEmail,
-        password: formPassword,
-      }),
-    }).then((res) => res.json());
+    if (
+      validateName(formName) &&
+      validateUsername(formUsername) &&
+      validateEmail(formEmail) &&
+      validatePassword(formPassword)
+    ) {
+      fetch("https://localhost:5001/users/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${btoa(
+            `${loginContext.username}:${loginContext.password}`
+          )}`,
+        },
+        body: JSON.stringify({
+          name: formName,
+          username: formUsername,
+          email: formEmail,
+          password: formPassword,
+        }),
+      })
+        .then((res) => {
+          setAddUserMessage(
+            res.status == 200
+              ? "User added successfully!"
+              : "Sorry, Couldn't add the user!"
+          );
+        })
+        .then(() => (e.target as HTMLFormElement).reset());
+    }
   };
 
   return (
@@ -113,56 +129,58 @@ export const CreateUser: React.FunctionComponent = () => {
       <form onSubmit={handleSubmit}>
         <h1 className="form_heading">Create New User</h1>
         <div className="form_field">
-          <label className="form_field--label">Name:</label>
-          <input
-            className="form_field--input"
-            type="text"
-            name="Name"
-            onChange={(e) => validateName(e.target.value)}
-            onBlur={(e) => validateName(e.target.value)}
-          />
+          <div className="form_field--row">
+            <label className="form_field--label">Name:</label>
+            <input
+              className="form_field--input"
+              type="text"
+              name="Name"
+              onChange={(e) => validateName(e.target.value)}
+            />
+          </div>
           <p className="message">{nameMessage}</p>
         </div>
-
         <div className="form_field">
-          <label className="form_field--label">Username:</label>
-          <input
-            className="form_field--input"
-            type="text"
-            name="Username"
-            onChange={(e) => validateUsername(e.target.value)}
-            onBlur={(e) => validateUsername(e.target.value)}
-          />
+          <div className="form_field--row">
+            <label className="form_field--label">Username:</label>
+            <input
+              className="form_field--input"
+              type="text"
+              name="Username"
+              onChange={(e) => validateUsername(e.target.value)}
+            />
+          </div>
           <p className="message">{usernameMessage}</p>
         </div>
-
         <div className="form_field">
-          <label className="form_field--label">Email:</label>
-          <input
-            className="form_field--input"
-            type="email"
-            name="Email"
-            onChange={(e) => validateEmail(e.target.value)}
-            onBlur={(e) => validateEmail(e.target.value)}
-          />
+          <div className="form_field--row">
+            <label className="form_field--label">Email:</label>
+            <input
+              className="form_field--input"
+              type="email"
+              name="Email"
+              onChange={(e) => validateEmail(e.target.value)}
+            />
+          </div>
           <p className="message">{emailMessage}</p>
         </div>
-
         <div className="form_field">
-          <label className="form_field--label">Password:</label>
-          <input
-            className="form_field--input"
-            type="password"
-            name="Password"
-            onChange={(e) => validatePassword(e.target.value)}
-            onBlur={(e) => validatePassword(e.target.value)}
-          />
+          <div className="form_field--row">
+            <label className="form_field--label">Password:</label>
+            <input
+              className="form_field--input"
+              type="password"
+              name="Password"
+              onChange={(e) => validatePassword(e.target.value)}
+            />
+          </div>
           <p className="message">{passwordMessage}</p>
         </div>
         <div className="form_button">
           <input type="submit" value="Create User" />
         </div>
       </form>
+      {addUserMessage}
     </div>
   );
 };

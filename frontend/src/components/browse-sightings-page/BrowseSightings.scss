@@ -1,0 +1,89 @@
+@import "../../constants";
+
+.sighting-card {
+  margin-bottom: 2rem;
+  position: relative;
+  max-width: 600px;
+  background-color: $primary-dark;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  color: $text-color-light;
+
+  .warning {
+    align-self: center;
+  }
+
+  h3 {
+    animation: normal;
+    background-color: $primary;
+    font-size: xx-large;
+    font-kerning: normal;
+    font-weight: bold;
+    padding: 1rem;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+  }
+
+  .card-data {
+    font-kerning: none;
+    padding: 0rem 2rem 0rem 2rem;
+  }
+
+  .fade-in {
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+    -o-animation: fadeIn 5s;
+    -ms-animation: fadeIn 5s;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-o-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-ms-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
