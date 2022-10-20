@@ -6,7 +6,8 @@ body {
 }
 
 .form {
-  max-width: 360px;
+  max-width: 290px;
+  width: 290px;
   margin: auto;
   background-color: $primary-light;
   padding: 10px;
@@ -21,7 +22,7 @@ body {
 }
 
 .form_field--label {
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .form_field--input {
@@ -43,10 +44,10 @@ body {
 }
 
 .message {
-  min-height: 16px;
+  min-height: 20px;
   clear: left;
   font-size: 12px;
   color: red;
   margin: 2px;
-  padding-left: 50px;
+  // padding-left: 50px;
 }

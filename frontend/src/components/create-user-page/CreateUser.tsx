@@ -59,31 +59,23 @@ export const CreateUser: React.FunctionComponent = () => {
     const special = /[-+_!@#$%^&*.,?]/;
 
     if (passwordToCheck.length < requiredLength) {
-      setPasswordMessage(
-        "Please make sure password is longer than 8 characters."
-      );
+      setPasswordMessage("Ensure password length is more than 8");
       return false;
     }
     if (!upper.test(passwordToCheck)) {
-      setPasswordMessage(
-        "Please make sure Password Includes an UpperCase character"
-      );
+      setPasswordMessage("Ensure password includes an upper case letter");
       return false;
     }
     if (!lower.test(passwordToCheck)) {
-      setPasswordMessage(
-        "Please make sure Password Includes a LowerCase character"
-      );
+      setPasswordMessage("Ensure password includes a lower case letter");
       return false;
     }
     if (!number.test(passwordToCheck)) {
-      setPasswordMessage("Please make sure Password Includes a Digit");
+      setPasswordMessage("Ensure password includes a digit");
       return false;
     }
     if (!special.test(passwordToCheck)) {
-      setPasswordMessage(
-        "Please make sure Password Includes a special character from -+_!@#$%^&*.,?"
-      );
+      setPasswordMessage("Ensure password includes a special character");
       return false;
     }
     setPasswordMessage("");
