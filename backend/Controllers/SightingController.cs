@@ -100,5 +100,19 @@ namespace WhaleSpotting.Controllers
                 return NotFound();
             }
         }
+        
+        [HttpGet("{sightingId}")]
+        public ActionResult<Sighting> GetSightingById([FromRoute] int sightingId)
+        {
+            try
+            {
+                var sighting = _sightings.GetSightingById(sightingId);
+                return sighting;
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+        }
     }
 }
