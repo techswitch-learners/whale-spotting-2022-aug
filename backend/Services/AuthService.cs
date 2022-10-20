@@ -39,5 +39,19 @@ namespace WhaleSpotting.Services
                 return false;
             }
         }
+
+        public bool IsExistingUsername (string username)
+        {
+            var foundUser = _users.GetByUsername(username);
+
+            if (foundUser == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
