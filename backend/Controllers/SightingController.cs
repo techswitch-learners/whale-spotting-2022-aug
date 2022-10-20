@@ -53,6 +53,13 @@ namespace WhaleSpotting.Controllers
             return Created("/api", createdSighting);
         }
 
+        [HttpGet("locations/{locationId}")]
+        public ActionResult<ListResponse<Sighting>> GetSightingsByLocationId([FromRoute] int locationId)
+        {
+            var sightings = _sightings.GetSightingsByLocationId(locationId);
+            return new ListResponse<Sighting>(sightings);
+        }
+
         [HttpPatch("{sightingId}/confirmation")]
         public ActionResult ChangeConfirmationStatus(
             [FromHeader] string authorization, 
