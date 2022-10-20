@@ -21,6 +21,7 @@ namespace WhaleSpotting.Repositories
         public Location GetLocationById(int locationId)
         {
             return _context.Locations
+                .Include(l => l.Species)
                 .Single(l => l.Id == locationId);
         }
     }
