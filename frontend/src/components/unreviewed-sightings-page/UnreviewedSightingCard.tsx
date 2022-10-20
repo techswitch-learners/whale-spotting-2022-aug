@@ -36,10 +36,6 @@ export const UnreviewedSightingCard: React.FC<UnreviewedSightingCardProps> = ({
     setConfirmationRequests(newConfirmationRequestsArr);
   };
 
-  useEffect(() => {
-    console.log(confirmationRequests);
-  }, [confirmationRequests]);
-
   return (
     <div
       className={
@@ -52,7 +48,7 @@ export const UnreviewedSightingCard: React.FC<UnreviewedSightingCardProps> = ({
       <p>Post ID: {sighting.id}</p>
       <p>Species: {sighting.species}</p>
       <p>Seen By: {sighting.seenBy}</p>
-      <p>Soon On: {sighting.seenOn}</p>
+      <p>Seen On: {sighting.seenOn}</p>
       <p>ImageUrl: {sighting.imageUrl}</p>
       <p>Description: {sighting.description}</p>
       <p>Whale Count: {sighting.whaleCount}</p>

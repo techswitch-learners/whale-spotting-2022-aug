@@ -30,12 +30,10 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
   }, []);
 
   const submitRequests = async (pendingRequests: PendingRequest[]) => {
-    const successArray: number[] = successes;
+    const successArray: number[] = [...successes];
     const errorsArray: ErrorResponse[] = [];
-    console.log(pendingRequests);
     const requestPromises = pendingRequests.map(async (request) => {
       try {
-        console.log("Trying ", request.sightingId);
         const result = await confirmOrRejectSighting(
           request.sightingId,
           { NewConfirmationStatus: request.confirmationStatus },
@@ -48,14 +46,29 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
           sightingId: request.sightingId,
           errorMessage: err,
         };
-        errorsArray.push(error);
+        if (
+          !errorsArray.some((error) => error.sightingId === request.sightingId)
+        ) {
+          errorsArray.push(error);
+        }
       }
     });
     await Promise.all(requestPromises);
+    successArray.sort((a, b) => a - b);
     setSuccesses(successArray);
     errorsArray.sort((a, b) => a.sightingId - b.sightingId);
     setErrors(errorsArray);
+    setPendingRequests([]);
   };
+
+  if (sightings?.length === 0) {
+    return (
+      <>
+        <h1>Unreviewed Sightings</h1>
+        <p>No unreviewed sightings to display</p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -63,7 +76,7 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
 
       {successes.length != 0 ? (
         <>
-          <p>The following sightings were successfully approved: </p>
+          <p>The following sightings were successfully reviewed: </p>
           <ul>
             {successes.map((Id) => {
               return <li key={Id}> Sighting #{Id} </li>;
@@ -105,9 +118,14 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
               errors={errors}
             />
           ))}
-      <button onClick={() => submitRequests(pendingRequests)}>
-        Submit All Selected Choicse
-      </button>
+
+      {successes?.length != sightings?.length ? (
+        <button onClick={() => submitRequests(pendingRequests)}>
+          Submit All
+        </button>
+      ) : (
+        <p>No unreviewed sightings to display</p>
+      )}
     </>
   );
 };
