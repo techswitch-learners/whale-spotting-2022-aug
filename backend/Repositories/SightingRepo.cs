@@ -15,6 +15,7 @@ namespace WhaleSpotting.Repositories
         Sighting CreateSighting(Sighting createSightingRequest);
         Sighting ConfirmRequest(int sightingId);
         Sighting RejectRequest(int sightingId);
+        IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
     }
 
     public class SightingRepo : ISightingRepo
@@ -79,6 +80,16 @@ namespace WhaleSpotting.Repositories
                 return sighting;
             }
             throw new ArgumentException($"The sighting with ID {sightingId} could not be found");
+        }
+
+        public IEnumerable<Sighting> GetSightingsByLocationId(int locationId)
+        {
+            return _context.Sightings
+                .Include(s => s.Species)
+                .Include(s => s.Location)
+                .Where(s => s.Location.Id == locationId)
+                .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
+                .OrderByDescending(s => s.SeenOn);
         }
     }
 }
