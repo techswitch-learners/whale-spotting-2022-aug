@@ -7,8 +7,9 @@ namespace WhaleSpotting.Services
     public interface IWhaleService
     {
         IEnumerable<Species> GetAllSpecies();
+        Species GetSpeciesById(int speciesId);
     }
-    
+
     public class WhaleService : IWhaleService
     {
         private readonly IWhaleRepo _whales;
@@ -18,9 +19,14 @@ namespace WhaleSpotting.Services
             _whales = whales;
         }
 
-        public IEnumerable<Species> GetAllSpecies() 
+        public IEnumerable<Species> GetAllSpecies()
         {
             return _whales.GetAllSpecies();
+        }
+
+        public Species GetSpeciesById(int speciesId)
+        {
+            return _whales.GetSpeciesById(speciesId);
         }
     }
 }

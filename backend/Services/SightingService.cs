@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using WhaleSpotting.Repositories;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WhaleSpotting.Services
 {
@@ -11,6 +13,7 @@ namespace WhaleSpotting.Services
         IEnumerable<Sighting> GetPendingSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         Sighting CreateSighting(CreateSightingRequest request);
+        Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId);
         Sighting GetSightingById(int sightingId);
     }
 
@@ -52,8 +55,22 @@ namespace WhaleSpotting.Services
                 Longitude = request.Longitude,
                 ConfirmationStatus = ConfirmationStatus.Pending,
             };
-
             return _sightings.CreateSighting(newSighting);
+        }
+
+        public Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId)
+        {
+            if (confirmOrRejectSighting.NewConfirmationStatus == ConfirmationStatus.Approved)
+            {
+                return _sightings.ConfirmRequest(sightingId);
+            }
+            else if (confirmOrRejectSighting.NewConfirmationStatus == ConfirmationStatus.Rejected)
+            {
+                return _sightings.RejectRequest(sightingId);
+            }
+            throw new ArgumentOutOfRangeException("The confirmation request was not to approve or reject the sighting. " +
+                $"To approve, the NewConfirmationStatus of the request should be {(int) ConfirmationStatus.Approved}." +
+                $"To reject, it should be {(int) ConfirmationStatus.Rejected}.");
         }
 
         public Sighting GetSightingById(int sightingId)

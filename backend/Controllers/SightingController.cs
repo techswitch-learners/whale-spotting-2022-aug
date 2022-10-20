@@ -3,6 +3,7 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.Response;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
+using WhaleSpotting.Helpers;
 using System;
 
 namespace WhaleSpotting.Controllers
@@ -11,10 +12,16 @@ namespace WhaleSpotting.Controllers
     [Route("/sightings")]
     public class SightingController : ControllerBase
     {
+        private readonly IAuthService _authService;
         private readonly ISightingService _sightings;
 
-        public SightingController(ISightingService sightings)
+        public SightingController
+        (
+            IAuthService authService,
+            ISightingService sightings
+        )
         {
+            _authService = authService;
             _sightings = sightings;
         }
 
@@ -32,7 +39,7 @@ namespace WhaleSpotting.Controllers
             return new ListResponse<Sighting>(sightings);
         }
 
-        [HttpGet("/pending")]
+        [HttpGet("pending")]
         public ActionResult<ListResponse<Sighting>> GetPendingSightings()
         {
             var pendingSightings = _sightings.GetPendingSightings();
@@ -45,6 +52,48 @@ namespace WhaleSpotting.Controllers
             var createdSighting = _sightings.CreateSighting(createSightingRequest);
             return Created("/api", createdSighting);
         }
+
+        [HttpPatch("{sightingId}/confirmation")]
+        public ActionResult ChangeConfirmationStatus(
+            [FromHeader] string authorization, 
+            [FromRoute] int sightingId,
+            [FromBody] ConfirmOrRejectRequest confirmOrRejectRequest)
+        {
+            if (authorization is null)
+            {
+                return new UnauthorizedResult();
+            }
+            try
+            {
+                (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
+
+                var check = _authService.IsValidLoginInfo(username, password);
+                if (!check)
+                {
+                    return Unauthorized();
+                }
+
+                var result = _sightings.ConfirmOrRejectSighting(confirmOrRejectRequest, sightingId);
+                if (result != null)
+                {
+                    return NoContent();
+                }
+                return NotFound();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return BadRequest();
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+        }
+        
         [HttpGet("{sightingId}")]
         public ActionResult<Sighting> GetSightingById([FromRoute] int sightingId)
         {

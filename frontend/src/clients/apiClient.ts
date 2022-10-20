@@ -19,8 +19,28 @@ export interface Species {
   conservationStatus: ConservationStatus;
 }
 
+export interface Sighting {
+  id: number;
+  seenBy: string;
+  seenOn: string;
+  species?: Species;
+  imageUrl: string;
+  description: string;
+  whaleCount: number;
+  confirmationStatus: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+}
+
 export const getAllSpecies = async (): Promise<Species[]> => {
   const response = await fetch(`${backendUrl}/whales`);
   const whaleListResponse: ListResponse<Species> = await response.json();
   return whaleListResponse.items;
+};
+
+export const getSightings = async (): Promise<Sighting[]> => {
+  const response = await fetch(`${backendUrl}/sightings`);
+  const sightingsListResponse: ListResponse<Sighting> = await response.json();
+  return sightingsListResponse.items;
 };
