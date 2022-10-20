@@ -7,6 +7,7 @@ namespace WhaleSpotting.Services
     public interface IAuthService
     {
         bool IsValidLoginInfo(string username, string password);
+        bool IsExistingUsername(string username);
     }
     public class AuthService : IAuthService
     {

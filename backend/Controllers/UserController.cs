@@ -6,11 +6,11 @@ using WhaleSpotting.Models.Request;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Response;
 
-namespace WhaleSpotting.Controllers 
+namespace WhaleSpotting.Controllers
 {
     [ApiController]
     [Route("/users")]
-    public class UserController : ControllerBase 
+    public class UserController : ControllerBase
     {
 
         private readonly IAuthService _authService;
@@ -20,7 +20,8 @@ namespace WhaleSpotting.Controllers
         (
             IAuthService authService,
             IUserService userService
-        ) {
+        )
+        {
             _authService = authService;
             _userService = userService;
         }
@@ -43,14 +44,18 @@ namespace WhaleSpotting.Controllers
                 (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
 
                 var check = _authService.IsValidLoginInfo(username, password);
-                if (!check)
+                var usernameCheck = _authService.IsExistingUsername(username);
+
+                if (check && !usernameCheck)
+                {
+                    User createdUser = _userService.Create(newUserRequest);
+
+                    return new UserResponse(newUserRequest);
+                }
+                else
                 {
                     return new UnauthorizedResult();
                 }
-                
-                User createdUser = _userService.Create(newUserRequest);
-
-                return new UserResponse(newUserRequest);  
             }
             catch (Exception)
             {
