@@ -24,7 +24,7 @@ export const Navbar: React.FunctionComponent = () => {
         <Link to="/" onClick={() => setIsExpanded(false)}>
           Home
         </Link>
-        <Link to="/browse-sightings" onClick={() => setIsExpanded(false)}>
+        <Link to="/sightings" onClick={() => setIsExpanded(false)}>
           Sightings
         </Link>
         <Link to="/whaleopedia" onClick={() => setIsExpanded(false)}>
@@ -47,7 +47,7 @@ export const Navbar: React.FunctionComponent = () => {
               >
                 Pending
               </Link>
-              <Link to="/create-user" onClick={() => setIsExpanded(false)}>
+              <Link to="/users/create" onClick={() => setIsExpanded(false)}>
                 User +
               </Link>
               <button
