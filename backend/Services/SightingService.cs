@@ -15,6 +15,7 @@ namespace WhaleSpotting.Services
         Sighting CreateSighting(CreateSightingRequest request);
         IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
         Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId);
+        Sighting GetSightingById(int sightingId);
     }
 
     public class SightingService : ISightingService
@@ -77,6 +78,11 @@ namespace WhaleSpotting.Services
         public IEnumerable<Sighting> GetSightingsByLocationId(int locationId)
         {
             return _sightings.GetSightingsByLocationId(locationId);
+        }
+
+        public Sighting GetSightingById(int sightingId)
+        {
+            return _sightings.GetSightingById(sightingId);
         }
     }
 }
