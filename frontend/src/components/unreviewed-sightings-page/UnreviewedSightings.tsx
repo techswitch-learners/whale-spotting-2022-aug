@@ -32,11 +32,13 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
   const submitRequests = async (pendingRequests: PendingRequest[]) => {
     const successArray: number[] = successes;
     const errorsArray: ErrorResponse[] = [];
+    console.log(pendingRequests);
     const requestPromises = pendingRequests.map(async (request) => {
       try {
+        console.log("Trying ", request.sightingId);
         const result = await confirmOrRejectSighting(
           request.sightingId,
-          { confirmationStatus: request.confirmationStatus },
+          { NewConfirmationStatus: request.confirmationStatus },
           loginContext.username,
           loginContext.password
         );

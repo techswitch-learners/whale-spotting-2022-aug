@@ -52,7 +52,7 @@ export interface PendingRequest {
 }
 
 export interface ConfirmOrRejectRequest {
-  confirmationStatus: number;
+  NewConfirmationStatus: number;
 }
 
 export interface ErrorResponse {
@@ -87,6 +87,7 @@ export const confirmOrRejectSighting = async (
       method: "PATCH",
       headers: {
         authorization: `Basic ${btoa(`${username}:${password}`)}`,
+        "content-type": "application/json",
       },
       body: JSON.stringify(confirmationRequest),
     }
