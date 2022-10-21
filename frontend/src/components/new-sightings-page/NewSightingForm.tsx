@@ -7,6 +7,8 @@ import {
 import Select from "react-select";
 import "./NewSightingForm.scss";
 
+type LocationInputType = "automatic" | "manual" | "autocomplete";
+
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
 }
@@ -18,7 +20,7 @@ interface FormValues {
   longitude: string;
   description: string;
   imageUrl: string;
-  speciesId: number;
+  speciesId?: number;
   whaleCount: string;
 }
 
@@ -54,19 +56,13 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
     speciesId: "",
     whaleCount: "",
   });
-  const [locationInputType, setLocationInputType] = useState("");
+  const [locationInputType, setLocationInputType] =
+    useState<LocationInputType>();
   const [locationInputTypeError, setLocationInputTypeError] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocationInputType(event.target.value);
+    setLocationInputType(event.target.value as LocationInputType);
   };
-  let whaleSpeciesMenu: Species[] | undefined = undefined;
-  if (whaleSpecies !== undefined) {
-    whaleSpeciesMenu = whaleSpecies.map((species) => ({
-      id: species.id,
-      name: species.name,
-    }));
-  }
 
   const validateForm = () => {
     let numberOfErrors = 0;
@@ -95,7 +91,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
       });
       numberOfErrors++;
     }
-    if (locationInputType === "") {
+    if (!locationInputType) {
       setLocationInputTypeError("Please select a way to input your location");
       numberOfErrors++;
     } else {
@@ -139,6 +135,8 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         longitude: Number.parseFloat(formValues.longitude),
       };
       createSighting(createSightingRequest);
+    } else {
+      return <>Please enter valid information</>;
     }
   };
 
@@ -168,7 +166,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
             });
           }}
         />
-        {dateError !== "" ? { dateError } : <></>}
+        {formErrors.date !== "" ? <>{formErrors.date}</> : <></>}
 
         <fieldset>
           <legend>Choose how to input your location:</legend>
@@ -198,20 +196,34 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
                   min="-90"
                   max="90"
                   onChange={(e) => {
-                    setLatitude(e.target.value);
+                    setFormValues({
+                      ...formValues,
+                      latitude: e.target.value,
+                    });
                   }}
                 />
-                {latError !== "" ? { latError } : <></>}
+                {formErrors.latitude !== "" ? (
+                  <>{formErrors.latitude}</>
+                ) : (
+                  <></>
+                )}
                 <input
                   type="number"
                   placeholder="Longitude"
                   min="-180"
                   max="180"
                   onChange={(e) => {
-                    setLongitude(e.target.value);
+                    setFormValues({
+                      ...formValues,
+                      longitude: e.target.value,
+                    });
                   }}
                 />
-                {longError !== "" ? { longError } : <></>}
+                {formErrors.longitude !== "" ? (
+                  <>{formErrors.longitude}</>
+                ) : (
+                  <></>
+                )}
               </div>
             )}
           </div>
@@ -231,9 +243,15 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         {whaleSpecies !== undefined ? (
           <Select
             onChange={(e) => {
-              setSpeciesId(e.id);
+              setFormValues({
+                ...formValues,
+                speciesId: e?.value,
+              });
             }}
-            options={whaleSpeciesMenu}
+            options={whaleSpecies.map((species) => ({
+              value: species.id,
+              label: species.name,
+            }))}
           />
         ) : (
           <p>Loading...</p>
@@ -244,7 +262,10 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           placeholder="Number of whales"
           step="1"
           onChange={(e) => {
-            setWhaleCount(e.target.value);
+            setFormValues({
+              ...formValues,
+              whaleCount: e.target.value,
+            });
           }}
         />
 
@@ -252,7 +273,10 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           type="text"
           placeholder="Description"
           onChange={(e) => {
-            setDescription(e.target.value);
+            setFormValues({
+              ...formValues,
+              description: e.target.value,
+            });
           }}
         />
 
@@ -260,7 +284,10 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           type="url"
           placeholder="Image Url"
           onChange={(e) => {
-            setImageUrl(e.target.value);
+            setFormValues({
+              ...formValues,
+              imageUrl: e.target.value,
+            });
           }}
         />
 

@@ -13,10 +13,10 @@ export interface ConservationStatus {
 export interface Species {
   id: number;
   name: string;
-  scientificName?: string;
-  description?: string;
-  photoUrl?: string;
-  conservationStatus?: ConservationStatus;
+  scientificName: string;
+  description: string;
+  photoUrl: string;
+  conservationStatus: ConservationStatus;
 }
 
 export interface Sighting {
