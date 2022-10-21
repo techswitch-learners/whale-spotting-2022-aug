@@ -33,6 +33,26 @@ export interface Sighting {
   longitude: number;
 }
 
+export interface SightingWithLocations {
+  id: number;
+  seenBy: string;
+  seenOn: string;
+  species?: Species;
+  imageUrl: string;
+  description: string;
+  whaleCount: number;
+  confirmationStatus: string;
+  location: LocationInformation;
+  latitude: number;
+  longitude: number;
+}
+
+interface LocationInformation {
+  id: number;
+  description: string;
+  species: string;
+}
+
 export interface User {
   id: number;
   name: string;
@@ -62,4 +82,13 @@ export const checkLogInDetails = async (
     },
   });
   return response.ok;
+};
+
+export const getSightingsBySpeciesId = async (
+  speciesId: string
+): Promise<SightingWithLocations[]> => {
+  const response = await fetch(`${backendUrl}/sightings/species/${speciesId}`);
+  const sightingsListResponse: ListResponse<SightingWithLocations> =
+    await response.json();
+  return sightingsListResponse.items;
 };
