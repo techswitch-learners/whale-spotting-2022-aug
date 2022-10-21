@@ -3,77 +3,131 @@ import { Redirect } from "react-router-dom";
 import {
   getAllPendingSightings,
   confirmOrRejectSighting,
-  PendingRequest,
-  UnreviewedSighting,
-  ErrorResponse,
+  Sighting,
 } from "../../clients/apiClient";
 import { LoginContext } from "../login/LoginManager";
 import { UnreviewedSightingCard } from "./UnreviewedSightingCard";
 
+export type ConfirmationStatus = 1 | 2;
+
+interface SightingReport {
+  sighting: Sighting;
+  success?: boolean;
+  errorMessage?: string;
+  pendingStatusChange?: ConfirmationStatus;
+}
+
 export const UnreviewedSightings: React.FunctionComponent = () => {
-  const [successes, setSuccesses] = useState<number[]>([]);
-  const [errors, setErrors] = useState<ErrorResponse[]>([]);
-  const [sightings, setSighting] = useState<UnreviewedSighting[]>();
-  const [pendingRequests, setPendingRequests] = useState<PendingRequest[]>([]);
+  const [sightingReports, setSightingReports] = useState<SightingReport[]>();
+
   const loginContext = useContext(LoginContext);
 
   if (!loginContext.isLoggedIn) {
     return <Redirect to="/login" />;
   }
 
-  const updateList = (sightingId: number, confirmationStatus: number): void => {
-    const newRequests = pendingRequests.filter(
-      (request) => request.sightingId != sightingId
+  const getSightingReport = (sightingId: number): SightingReport => {
+    if (sightingReports === undefined)
+      throw new Error(
+        "Cannot retrieve individual report until the sightings are loaded"
+      );
+    const foundReport = sightingReports.find(
+      (report) => report.sighting.id === sightingId
     );
-    const newRequest: PendingRequest = {
-      sightingId: sightingId,
-      confirmationStatus: confirmationStatus,
-    };
-    newRequests.push(newRequest);
-    setPendingRequests(newRequests);
+    if (foundReport === undefined)
+      throw new Error(
+        `Cannot find sighting report with sighting ID ${sightingId}`
+      );
+    return foundReport;
+  };
+
+  const setSightingReport = (sightingId: number, newReport: SightingReport) => {
+    const newSightingReports = sightingReports?.map((report) =>
+      report.sighting.id !== sightingId ? report : newReport
+    );
+
+    setSightingReports(newSightingReports);
+  };
+
+  const setSuccess = (sightingId: number, isSuccess: boolean): void => {
+    setSightingReport(sightingId, {
+      ...getSightingReport(sightingId),
+      success: isSuccess,
+    });
+  };
+
+  const setErrorMessage = (sightingId: number, message: string): void => {
+    setSightingReport(sightingId, {
+      ...getSightingReport(sightingId),
+      errorMessage: message,
+    });
+  };
+
+  const setPendingStatus = (
+    sightingId: number,
+    newStatus: ConfirmationStatus
+  ): void => {
+    setSightingReport(sightingId, {
+      ...getSightingReport(sightingId),
+      pendingStatusChange: newStatus,
+    });
   };
 
   useEffect(() => {
     const getPendingSightings = async () => {
       const pendingSightings = await getAllPendingSightings();
-      setSighting(pendingSightings);
+      setSightingReports(
+        pendingSightings.map((pendingSighting) => ({
+          sighting: pendingSighting,
+        }))
+      );
     };
     getPendingSightings();
   }, []);
 
-  const submitRequests = async (pendingRequests: PendingRequest[]) => {
-    const successArray: number[] = [...successes];
-    const errorsArray: ErrorResponse[] = [];
-    const requestPromises = pendingRequests.map(async (request) => {
-      try {
-        await confirmOrRejectSighting(
-          request.sightingId,
-          { NewConfirmationStatus: request.confirmationStatus },
-          loginContext.username,
-          loginContext.password
-        );
-        successArray.push(request.sightingId);
-      } catch (err) {
-        const error: ErrorResponse = {
-          sightingId: request.sightingId,
-          errorMessage: err,
-        };
-        if (
-          !errorsArray.some((error) => error.sightingId === request.sightingId)
-        ) {
-          errorsArray.push(error);
+  const submitRequests: React.MouseEventHandler<
+    HTMLButtonElement
+  > = async () => {
+    if (sightingReports === undefined) {
+      console.warn("Requests were submitted before sightings were loaded.");
+      return;
+    }
+
+    const requestPromises = sightingReports
+      .filter(
+        (sightingReport) => sightingReport.pendingStatusChange !== undefined
+      )
+      .map(async (sightingReport) => {
+        if (sightingReport.pendingStatusChange === undefined) return;
+        try {
+          await confirmOrRejectSighting(
+            sightingReport.sighting.id,
+            { NewConfirmationStatus: sightingReport.pendingStatusChange },
+            loginContext.username,
+            loginContext.password
+          );
+          setSuccess(sightingReport.sighting.id, true);
+        } catch (err) {
+          setSuccess(sightingReport.sighting.id, false);
+          setErrorMessage(
+            sightingReport.sighting.id,
+            (err as Error).toString()
+          );
         }
-      }
-    });
+      });
     await Promise.all(requestPromises);
-    successArray.sort((a, b) => a - b);
-    setSuccesses(successArray);
-    errorsArray.sort((a, b) => a.sightingId - b.sightingId);
-    setErrors(errorsArray);
-    setPendingRequests([]);
   };
 
-  if (sightings?.length === 0) {
+  if (sightingReports === undefined) {
+    return (
+      <>
+        <h1>Unreviewed Sightings</h1>
+        <p>Loading...</p>
+      </>
+    );
+  }
+
+  if (sightingReports?.length === 0) {
     return (
       <>
         <h1>Unreviewed Sightings</h1>
@@ -86,54 +140,62 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
     <>
       <h1>Unreviewed Sightings</h1>
 
-      {successes.length != 0 ? (
+      {sightingReports.filter((report) => report.success).length !== 0 ? (
         <>
           <p>The following sightings were successfully reviewed: </p>
           <ul>
-            {successes.map((Id) => {
-              return <li key={Id}> Sighting #{Id} </li>;
-            })}
+            {sightingReports
+              .filter((report) => report.success)
+              .map((report) => {
+                return (
+                  <li key={report.sighting.id}>
+                    {" "}
+                    Sighting #{report.sighting.id}{" "}
+                  </li>
+                );
+              })}
           </ul>
         </>
       ) : (
         <></>
       )}
 
-      {errors.length != 0 ? (
+      {sightingReports.filter((report) => report.success === false).length !==
+      0 ? (
         <>
           <p>The following errors occured: </p>
           <ul>
-            {errors.map((error) => {
-              return (
-                <li key={error.sightingId}>
-                  {" "}
-                  Sighting #{error.sightingId}: {error.errorMessage.toString()}
-                </li>
-              );
-            })}
+            {sightingReports
+              .filter((report) => !report.success)
+              .map((report) => {
+                return (
+                  <li key={report.sighting.id}>
+                    Sighting #{report.sighting.id}:{" "}
+                    {report.errorMessage ?? "No error message"}
+                  </li>
+                );
+              })}
           </ul>
         </>
       ) : (
         <></>
       )}
 
-      {sightings &&
-        sightings
-          .filter((sighting) => !successes.includes(sighting.id))
-          .map((sighting: UnreviewedSighting, index) => (
-            <UnreviewedSightingCard
-              sighting={sighting}
-              key={index}
-              setConfirmationStatus={(newStatus) =>
-                updateList(sighting.id, newStatus)
-              }
-            />
-          ))}
+      {sightingReports
+        .filter((report) => report.success !== true)
+        .map((report) => (
+          <UnreviewedSightingCard
+            sighting={report.sighting}
+            key={report.sighting.id}
+            setConfirmationStatus={(newStatus) =>
+              setPendingStatus(report.sighting.id, newStatus)
+            }
+          />
+        ))}
 
-      {successes?.length != sightings?.length ? (
-        <button onClick={() => submitRequests(pendingRequests)}>
-          Submit All
-        </button>
+      {sightingReports.filter((report) => report.success !== true).length !==
+      0 ? (
+        <button onClick={submitRequests}>Submit All</button>
       ) : (
         <p>No unreviewed sightings to display</p>
       )}

@@ -1,10 +1,11 @@
 import React from "react";
-import { UnreviewedSighting } from "../../clients/apiClient";
+import { Sighting } from "../../clients/apiClient";
 import "./UnreviewedSightingCard.scss";
+import { ConfirmationStatus } from "./UnreviewedSightings";
 
 interface UnreviewedSightingCardProps {
-  sighting: UnreviewedSighting;
-  setConfirmationStatus: (newStatus: number) => void;
+  sighting: Sighting;
+  setConfirmationStatus: (newStatus: ConfirmationStatus) => void;
 }
 
 export const UnreviewedSightingCard: React.FC<UnreviewedSightingCardProps> = ({
@@ -17,7 +18,7 @@ export const UnreviewedSightingCard: React.FC<UnreviewedSightingCardProps> = ({
       <p>Species: {sighting.species}</p>
       <p>Seen By: {sighting.seenBy}</p>
       <p>Seen On: {sighting.seenOn}</p>
-      <p>ImageUrl: {sighting.imageUrl}</p>
+      <img src={sighting.imageUrl} />
       <p>Description: {sighting.description}</p>
       <p>Whale Count: {sighting.whaleCount}</p>
       <p>Location: {sighting.location}</p>

@@ -19,29 +19,15 @@ export interface Species {
   conservationStatus: ConservationStatus;
 }
 
-export interface UnreviewedSighting {
+export interface Sighting {
   id: number;
-  species?: string;
+  species?: Species;
   seenBy: string;
   seenOn: Date;
   imageUrl?: string;
   description?: string;
   whaleCount: number;
   location?: string;
-  latitude: number;
-  longitude: number;
-}
-
-export interface Sighting {
-  id: number;
-  seenBy: string;
-  seenOn: string;
-  species?: Species;
-  imageUrl: string;
-  description: string;
-  whaleCount: number;
-  confirmationStatus: string;
-  location: string;
   latitude: number;
   longitude: number;
 }
@@ -66,12 +52,9 @@ export const getAllSpecies = async (): Promise<Species[]> => {
   return whaleListResponse.items;
 };
 
-export const getAllPendingSightings = async (): Promise<
-  UnreviewedSighting[]
-> => {
+export const getAllPendingSightings = async (): Promise<Sighting[]> => {
   const response = await fetch(`${backendUrl}/sightings/pending`);
-  const pengingSighting: ListResponse<UnreviewedSighting> =
-    await response.json();
+  const pengingSighting: ListResponse<Sighting> = await response.json();
   return pengingSighting.items;
 };
 
