@@ -33,6 +33,13 @@ export interface Sighting {
   longitude: number;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  userName: string;
+}
+
 export const getAllSpecies = async (): Promise<Species[]> => {
   const response = await fetch(`${backendUrl}/whales`);
   const whaleListResponse: ListResponse<Species> = await response.json();
@@ -43,4 +50,16 @@ export const getSightings = async (): Promise<Sighting[]> => {
   const response = await fetch(`${backendUrl}/sightings`);
   const sightingsListResponse: ListResponse<Sighting> = await response.json();
   return sightingsListResponse.items;
+};
+
+export const checkLogInDetails = async (
+  username: string,
+  password: string
+): Promise<boolean> => {
+  const response = await fetch(`${backendUrl}/login`, {
+    headers: {
+      Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+    },
+  });
+  return response.ok;
 };
