@@ -26,51 +26,45 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
     return <Redirect to="/login" />;
   }
 
-  const getSightingReport = (sightingId: number): SightingReport => {
-    if (sightingReports === undefined)
-      throw new Error(
-        "Cannot retrieve individual report until the sightings are loaded"
+  const setSightingReport = (
+    sightingId: number,
+    generateNewReportFromOldReport: (
+      oldReport: SightingReport
+    ) => SightingReport
+  ) => {
+    setSightingReports((oldSightingReports) => {
+      const newSightingReports = oldSightingReports?.map((report) =>
+        report.sighting.id !== sightingId
+          ? report
+          : generateNewReportFromOldReport(report)
       );
-    const foundReport = sightingReports.find(
-      (report) => report.sighting.id === sightingId
-    );
-    if (foundReport === undefined)
-      throw new Error(
-        `Cannot find sighting report with sighting ID ${sightingId}`
-      );
-    return foundReport;
-  };
 
-  const setSightingReport = (sightingId: number, newReport: SightingReport) => {
-    const newSightingReports = sightingReports?.map((report) =>
-      report.sighting.id !== sightingId ? report : newReport
-    );
-
-    setSightingReports(newSightingReports);
+      return newSightingReports;
+    });
   };
 
   const setSuccess = (sightingId: number, isSuccess: boolean): void => {
-    setSightingReport(sightingId, {
-      ...getSightingReport(sightingId),
+    setSightingReport(sightingId, (oldReport) => ({
+      ...oldReport,
       success: isSuccess,
-    });
+    }));
   };
 
   const setErrorMessage = (sightingId: number, message: string): void => {
-    setSightingReport(sightingId, {
-      ...getSightingReport(sightingId),
+    setSightingReport(sightingId, (oldReport) => ({
+      ...oldReport,
       errorMessage: message,
-    });
+    }));
   };
 
   const setPendingStatus = (
     sightingId: number,
     newStatus: ConfirmationStatus
   ): void => {
-    setSightingReport(sightingId, {
-      ...getSightingReport(sightingId),
+    setSightingReport(sightingId, (oldReport) => ({
+      ...oldReport,
       pendingStatusChange: newStatus,
-    });
+    }));
   };
 
   useEffect(() => {
