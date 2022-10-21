@@ -21,7 +21,7 @@ export const Whaleopedia: React.FunctionComponent = () => {
       {whales.map((whale, index) => {
         const whaleRoute = "/sightings/" + whale.id;
         return (
-          <Link key={index} to={whaleRoute}>
+          <Link className="whaleopedia-link" key={index} to={whaleRoute}>
             <WhaleCard whale={whale} />
           </Link>
         );

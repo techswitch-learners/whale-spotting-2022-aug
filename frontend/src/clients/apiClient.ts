@@ -19,20 +19,6 @@ export interface Species {
   conservationStatus: ConservationStatus;
 }
 
-export interface Sighting {
-  id: number;
-  seenBy: string;
-  seenOn: string;
-  species?: Species;
-  imageUrl: string;
-  description: string;
-  whaleCount: number;
-  confirmationStatus: string;
-  location: string;
-  latitude: number;
-  longitude: number;
-}
-
 export interface SightingWithLocations {
   id: number;
   seenBy: string;
@@ -42,12 +28,12 @@ export interface SightingWithLocations {
   description: string;
   whaleCount: number;
   confirmationStatus: string;
-  location: LocationInformation;
+  location: Location;
   latitude: number;
   longitude: number;
 }
 
-interface LocationInformation {
+interface Location {
   id: number;
   description: string;
   species: string;
@@ -66,9 +52,19 @@ export const getAllSpecies = async (): Promise<Species[]> => {
   return whaleListResponse.items;
 };
 
-export const getSightings = async (): Promise<Sighting[]> => {
+export const getSightings = async (): Promise<SightingWithLocations[]> => {
   const response = await fetch(`${backendUrl}/sightings`);
-  const sightingsListResponse: ListResponse<Sighting> = await response.json();
+  const sightingsListResponse: ListResponse<SightingWithLocations> =
+    await response.json();
+  return sightingsListResponse.items;
+};
+
+export const getSightingsBySpeciesId = async (
+  speciesId: string
+): Promise<SightingWithLocations[]> => {
+  const response = await fetch(`${backendUrl}/sightings/species/${speciesId}`);
+  const sightingsListResponse: ListResponse<SightingWithLocations> =
+    await response.json();
   return sightingsListResponse.items;
 };
 
@@ -82,13 +78,4 @@ export const checkLogInDetails = async (
     },
   });
   return response.ok;
-};
-
-export const getSightingsBySpeciesId = async (
-  speciesId: string
-): Promise<SightingWithLocations[]> => {
-  const response = await fetch(`${backendUrl}/sightings/species/${speciesId}`);
-  const sightingsListResponse: ListResponse<SightingWithLocations> =
-    await response.json();
-  return sightingsListResponse.items;
 };

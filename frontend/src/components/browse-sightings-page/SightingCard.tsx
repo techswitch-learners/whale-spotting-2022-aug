@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Sighting, SightingWithLocations } from "../../clients/apiClient";
+import { SightingWithLocations } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
 interface SightingProps {
-  sighting: Sighting | SightingWithLocations;
+  sighting: SightingWithLocations;
 }
 
 export const SightingCard: React.FunctionComponent<SightingProps> = ({
@@ -38,7 +38,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
         </p>
         <p>
           <span className="sighting-card-information">Location: </span>
-          {sighting.location}
+          {sighting.location.description}
         </p>
       </div>
     </div>

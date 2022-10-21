@@ -17,10 +17,12 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/sightings" component={BrowseSightings} />
-
-      <Route path="/sightings/:speciesId" component={BrowseSightings} />
-
+      <Route exact path="/sightings">
+        <BrowseSightings />
+      </Route>
+      <Route path="/sightings/:speciesId">
+        <BrowseSightings />
+      </Route>
       <Route exact path="/whaleopedia">
         <Whaleopedia />
       </Route>
