@@ -7,7 +7,10 @@ import {
 import Select from "react-select";
 import "./NewSightingForm.scss";
 
-type LocationInputType = "automatic" | "manual" | "autocomplete";
+type LocationInputType =
+  | "getLocationFromPhone"
+  | "getLocationFromCoordinates"
+  | "getLocationFromName";
 
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
@@ -32,6 +35,7 @@ interface FormErrors {
   imageUrl: string;
   speciesId: string;
   whaleCount: string;
+  anyError: string;
 }
 
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
@@ -55,6 +59,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
     imageUrl: "",
     speciesId: "",
     whaleCount: "",
+    anyError: "",
   });
   const [locationInputType, setLocationInputType] =
     useState<LocationInputType>();
@@ -75,12 +80,13 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
       imageUrl: "",
       speciesId: "",
       whaleCount: "",
+      anyError: "",
     });
 
     if (formValues.seenBy === "") {
       setFormErrors({
         ...formErrors,
-        seenBy: "Please enter a seenBy",
+        seenBy: "Please enter a name",
       });
       numberOfErrors++;
     }
@@ -91,7 +97,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
       });
       numberOfErrors++;
     }
-    if (!locationInputType) {
+    if (locationInputType === undefined) {
       setLocationInputTypeError("Please select a way to input your location");
       numberOfErrors++;
     } else {
@@ -113,7 +119,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
     if (formValues.imageUrl && formValues.imageUrl.includes(" ")) {
       setFormErrors({
         ...formErrors,
-        imageUrl: "Please enter a longitude",
+        imageUrl: "Please enter a valid URL",
       });
       numberOfErrors++;
     }
@@ -136,7 +142,10 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
       };
       createSighting(createSightingRequest);
     } else {
-      return <>Please enter valid information</>;
+      setFormErrors({
+        ...formErrors,
+        anyError: "Please provide valid information",
+      });
     }
   };
 
@@ -173,22 +182,24 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           <div className="location-input-choice">
             <input
               type="radio"
-              value="automatic"
-              checked={locationInputType === "automatic"}
+              value="getLocationFromPhone"
+              checked={locationInputType === "getLocationFromPhone"}
               onChange={handleChange}
               disabled
             />
-            <label htmlFor="automatic">Use my location</label>
+            <label htmlFor="getLocationFromPhone">Use my location</label>
           </div>
           <div className="location-input-choice">
             <input
               type="radio"
-              value="manual"
-              checked={locationInputType === "manual"}
+              value="getLocationFromCoordinates"
+              checked={locationInputType === "getLocationFromCoordinates"}
               onChange={handleChange}
             />{" "}
-            <label htmlFor="manual">Enter latitude and longitude</label>
-            {locationInputType === "manual" && (
+            <label htmlFor="getLocationFromCoordinates">
+              Enter latitude and longitude
+            </label>
+            {locationInputType === "getLocationFromCoordinates" && (
               <div className="lat-and-long-inputs">
                 <input
                   type="number"
@@ -230,13 +241,18 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           <div className="location-input-choice">
             <input
               type="radio"
-              value="autocomplete"
-              checked={locationInputType === "autocomplete"}
+              value="getLocationFromName"
+              checked={locationInputType === "getLocationFromName"}
               onChange={handleChange}
               disabled
             />
-            <label htmlFor="autocomplete">Start typing a location</label>
-            {locationInputTypeError !== "" ? { locationInputTypeError } : <></>}
+            <label htmlFor="getLocationFromName">Start typing a location</label>
+            <br />
+            {locationInputTypeError !== "" ? (
+              <>{locationInputTypeError}</>
+            ) : (
+              <></>
+            )}
           </div>
         </fieldset>
 
@@ -292,6 +308,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         />
 
         <input type="submit" value="Submit sighting" />
+        {formErrors.anyError !== "" ? <>{formErrors.anyError}</> : <></>}
       </form>
     </>
   );

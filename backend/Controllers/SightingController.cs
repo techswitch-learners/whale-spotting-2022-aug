@@ -53,6 +53,13 @@ namespace WhaleSpotting.Controllers
             return Created("/api", createdSighting);
         }
 
+        [HttpGet("locations/{locationId}")]
+        public ActionResult<ListResponse<Sighting>> GetSightingsByLocationId([FromRoute] int locationId)
+        {
+            var sightings = _sightings.GetSightingsByLocationId(locationId);
+            return new ListResponse<Sighting>(sightings);
+        }
+
         [HttpPatch("{sightingId}/confirmation")]
         public ActionResult ChangeConfirmationStatus(
             [FromHeader] string authorization, 
@@ -87,6 +94,20 @@ namespace WhaleSpotting.Controllers
             catch (ArgumentException)
             {
                 return BadRequest();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+        }
+        
+        [HttpGet("{sightingId}")]
+        public ActionResult<Sighting> GetSightingById([FromRoute] int sightingId)
+        {
+            try
+            {
+                var sighting = _sightings.GetSightingById(sightingId);
+                return sighting;
             }
             catch (InvalidOperationException)
             {
