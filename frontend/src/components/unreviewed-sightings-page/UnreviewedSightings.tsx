@@ -21,6 +21,18 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
     return <Redirect to="/login" />;
   }
 
+  const updateList = (sightingId: number, confirmationStatus: number): void => {
+    const newRequests = pendingRequests.filter(
+      (request) => request.sightingId != sightingId
+    );
+    const newRequest: PendingRequest = {
+      sightingId: sightingId,
+      confirmationStatus: confirmationStatus,
+    };
+    newRequests.push(newRequest);
+    setPendingRequests(newRequests);
+  };
+
   useEffect(() => {
     const getPendingSightings = async () => {
       const pendingSightings = await getAllPendingSightings();
@@ -34,7 +46,7 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
     const errorsArray: ErrorResponse[] = [];
     const requestPromises = pendingRequests.map(async (request) => {
       try {
-        const result = await confirmOrRejectSighting(
+        await confirmOrRejectSighting(
           request.sightingId,
           { NewConfirmationStatus: request.confirmationStatus },
           loginContext.username,
@@ -111,11 +123,10 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
           .map((sighting: UnreviewedSighting, index) => (
             <UnreviewedSightingCard
               sighting={sighting}
-              index={index}
               key={index}
-              confirmationRequests={pendingRequests}
-              setConfirmationRequests={setPendingRequests}
-              errors={errors}
+              setConfirmationStatus={(newStatus) =>
+                updateList(sighting.id, newStatus)
+              }
             />
           ))}
 
