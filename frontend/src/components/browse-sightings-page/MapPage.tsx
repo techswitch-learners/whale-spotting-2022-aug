@@ -1,5 +1,7 @@
 import { Sighting } from "../../clients/apiClient";
-import { SlippyMap, Marker, Label, InfoBox } from "react-slippy-map";
+// import { SlippyMap, Marker, Label, InfoBox } from "react-slippy-map";
+import GoogleMapReact from "google-map-react";
+import { Marker } from "./marker";
 import React from "react";
 import { map } from "leaflet";
 import "./mapPage.scss";
@@ -9,26 +11,33 @@ interface MapPageProps {
 }
 
 export const MapPage: React.FC<MapPageProps> = ({ sightingList }) => {
-  const coords = { latitude: 53.90824, longitude: 27.56136 };
+  const points = sightingList.map((sighting, index) => {
+    return {
+      id: sighting.id,
+      title: sighting.seenBy,
+      lat: sighting.latitude,
+      lng: sighting.longitude,
+    };
+  });
+
   return (
-    <SlippyMap
-      className="map"
-      center={coords}
-      zoom={16}
-      baseTilesUrl={"https://a.tile.openstreetmap.org/2/0/0.png"}
-    >
-      {sightingList.map((sighting) => {
-        return (
-          <Label
-            key={sighting.id}
-            coords={{
-              latitude: sighting.latitude,
-              longitude: sighting.longitude,
-            }}
-            text={`${sighting.seenBy}: ${sighting.species} on ${sighting.seenOn}`}
-          />
-        );
-      })}
-    </SlippyMap>
+    <div style={{ height: "100vh", width: "100vh" }}>
+      ;
+      <GoogleMapReact
+        className="map"
+        bootstrapURLKeys={{
+          // remove the key if you want to fork
+          key: "AIzaSyAiX_Ww0KPPTu7QZ2oODx5Jah9Ky1F7QTU",
+          language: "en",
+          region: "US",
+        }}
+        defaultCenter={{ lat: 51.506, lng: -0.169 }}
+        defaultZoom={15}
+      >
+        {points.map(({ lat, lng, id, title }) => {
+          return <Marker text={title} key={id} lat={lat} lng={lng} />;
+        })}
+      </GoogleMapReact>
+    </div>
   );
 };
