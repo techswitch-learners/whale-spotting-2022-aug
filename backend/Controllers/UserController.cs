@@ -5,6 +5,7 @@ using WhaleSpotting.Helpers;
 using WhaleSpotting.Models.Request;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Response;
+using WhaleSpotting.Exceptions;
 
 namespace WhaleSpotting.Controllers
 {
@@ -39,24 +40,26 @@ namespace WhaleSpotting.Controllers
                 return new UnauthorizedResult();
             }
 
-            try
-            {
-                (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
 
-                var check = _authService.IsValidLoginInfo(username, password);
+            (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
 
-                if (!check)
-                {
-                    return new UnauthorizedResult();
-                }
+            var check = _authService.IsValidLoginInfo(username, password);
 
-                User createdUser = _userService.Create(newUserRequest);
-                return new UserResponse(newUserRequest);
-            }
-            catch (Exception)
+            if (!check)
             {
                 return new UnauthorizedResult();
             }
+
+            try
+            {
+                User createdUser = _userService.Create(newUserRequest);
+            }
+            catch (DuplicateUsernameException ex)
+            {
+                throw new Exception("Username already exists", ex);
+            }
+
+            return new UserResponse(newUserRequest);
         }
     }
 }
