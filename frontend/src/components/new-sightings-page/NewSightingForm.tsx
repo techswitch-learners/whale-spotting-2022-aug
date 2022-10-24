@@ -67,6 +67,21 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value as LocationInputType);
+    if (locationInputType === "getLocationFromPhone") {
+      getLocationFromPhone();
+    }
+  };
+
+  const getLocationFromPhone = () => {
+    function success(pos: GeolocationPosition) {
+      const crd = pos.coords;
+      setFormValues({
+        ...formValues,
+        latitude: crd.latitude.toString(),
+        longitude: crd.longitude.toString(),
+      });
+    }
+    navigator.geolocation.getCurrentPosition(success);
   };
 
   const validateForm = () => {
@@ -185,9 +200,10 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
               value="getLocationFromPhone"
               checked={locationInputType === "getLocationFromPhone"}
               onChange={handleChange}
-              disabled
             />
             <label htmlFor="getLocationFromPhone">Use my location</label>
+            <p>{formValues.latitude}</p>
+            <p>{formValues.longitude}</p>
           </div>
           <div className="location-input-choice">
             <input
