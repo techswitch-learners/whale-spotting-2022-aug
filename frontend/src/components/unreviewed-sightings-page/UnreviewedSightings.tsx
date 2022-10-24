@@ -8,7 +8,7 @@ import {
 import { LoginContext } from "../login/LoginManager";
 import { UnreviewedSightingCard } from "./UnreviewedSightingCard";
 
-export type ConfirmationStatus = 1 | 2;
+export type ConfirmationStatus = "rejected" | "approved";
 
 interface SightingReport {
   sighting: Sighting;
@@ -97,7 +97,7 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
         try {
           await confirmOrRejectSighting(
             sightingReport.sighting.id,
-            { NewConfirmationStatus: sightingReport.pendingStatusChange },
+            sightingReport.pendingStatusChange,
             loginContext.username,
             loginContext.password
           );

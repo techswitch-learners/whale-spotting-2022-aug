@@ -29,7 +29,7 @@ export const UnreviewedSightingCard: React.FC<UnreviewedSightingCardProps> = ({
           type="radio"
           name={sighting.id.toString()}
           onClick={() => {
-            setConfirmationStatus(2);
+            setConfirmationStatus("approved");
           }}
         />
         Approve
@@ -37,7 +37,7 @@ export const UnreviewedSightingCard: React.FC<UnreviewedSightingCardProps> = ({
           type="radio"
           name={sighting.id.toString()}
           onClick={() => {
-            setConfirmationStatus(1);
+            setConfirmationStatus("rejected");
           }}
         />
         Reject

@@ -32,18 +32,8 @@ export interface Sighting {
   longitude: number;
 }
 
-export interface PendingRequest {
-  sightingId: number;
-  confirmationStatus: number;
-}
-
 export interface ConfirmOrRejectRequest {
-  NewConfirmationStatus: number;
-}
-
-export interface ErrorResponse {
-  sightingId: number;
-  errorMessage: any;
+  newConfirmationStatus: number;
 }
 
 export const getAllSpecies = async (): Promise<Species[]> => {
@@ -54,16 +44,26 @@ export const getAllSpecies = async (): Promise<Species[]> => {
 
 export const getAllPendingSightings = async (): Promise<Sighting[]> => {
   const response = await fetch(`${backendUrl}/sightings/pending`);
-  const pengingSighting: ListResponse<Sighting> = await response.json();
-  return pengingSighting.items;
+  const pendingSighting: ListResponse<Sighting> = await response.json();
+  return pendingSighting.items;
 };
+
+export type ConfirmationStatus = "pending" | "approved" | "rejected";
 
 export const confirmOrRejectSighting = async (
   sightingId: number,
-  confirmationRequest: ConfirmOrRejectRequest,
+  newStatus: ConfirmationStatus,
   username: string,
   password: string
 ): Promise<void> => {
+  const statusMapping: { [key in ConfirmationStatus]: number } = {
+    pending: 0,
+    rejected: 1,
+    approved: 2,
+  };
+
+  const confirmationCode: number = statusMapping[newStatus];
+
   const response = await fetch(
     `${backendUrl}/sightings/${sightingId}/confirmation`,
     {
@@ -72,7 +72,7 @@ export const confirmOrRejectSighting = async (
         authorization: `Basic ${btoa(`${username}:${password}`)}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify(confirmationRequest),
+      body: JSON.stringify({ newConfirmationStatus: confirmationCode }),
     }
   );
   if (!response.ok) {
