@@ -88,6 +88,7 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
     }
 
     const requestPromises = sightingReports
+      .filter((report) => report.success !== true)
       .filter(
         (sightingReport) => sightingReport.pendingStatusChange !== undefined
       )
