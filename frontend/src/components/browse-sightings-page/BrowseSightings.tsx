@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getSightings, Sighting } from "../../clients/apiClient";
 import { SightingCard } from "./SightingCard";
+// import {useNavigate} from "react-router-dom";
 import "./BrowseSightings.scss";
+import { MapPage } from "./MapPage";
 
 export const BrowseSightings: React.FC = () => {
   const [sightings, setSightings] = useState<Sighting[]>();
+  const [mapToggle, setMapToggle] = useState(false);
 
   useEffect(() => {
     getSightings().then(setSightings);
@@ -17,11 +20,22 @@ export const BrowseSightings: React.FC = () => {
   return (
     <>
       <h1>Reported Sightings</h1>
-      <ul>
-        {sightings.map((sighting, index) => (
-          <SightingCard sighting={sighting} key={sighting.id} />
-        ))}
-      </ul>
+      <button
+        onClick={() => {
+          setMapToggle(!mapToggle);
+        }}
+      >
+        Sightings Map
+      </button>
+      {!mapToggle ? (
+        <ul>
+          {sightings.map((sighting, index) => (
+            <SightingCard sighting={sighting} key={sighting.id} />
+          ))}
+        </ul>
+      ) : (
+        <MapPage sightingList={sightings} />
+      )}
     </>
   );
 };
