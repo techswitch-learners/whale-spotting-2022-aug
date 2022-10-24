@@ -27,12 +27,12 @@ namespace WhaleSpotting.Services
         
         public Location AddLocation( Location newLocation)
         {
-            var addNewLocation = new Location
+            var addedLocation = new Location
             {
                 Description = newLocation.Description,
             };
 
-            return _locations.AddLocation(addNewLocation);   
+            return _locations.AddLocation(addedLocation);   
         }
     }
 }
