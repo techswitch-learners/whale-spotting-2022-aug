@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getSightings, Sighting } from "../../clients/apiClient";
 import { SightingCard } from "./SightingCard";
+import { SightingsListPage } from "./SightingsListPage";
 import "./BrowseSightings.scss";
 
 export const BrowseSightings: React.FC = () => {
@@ -17,11 +18,7 @@ export const BrowseSightings: React.FC = () => {
   return (
     <>
       <h1>Reported Sightings</h1>
-      <ul>
-        {sightings.map((sighting, index) => (
-          <SightingCard sighting={sighting} key={sighting.id} />
-        ))}
-      </ul>
+      <SightingsListPage sightings={sightings} />
     </>
   );
 };
