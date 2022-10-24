@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Repositories;
 
 namespace WhaleSpotting.Services
@@ -7,7 +8,6 @@ namespace WhaleSpotting.Services
     public interface IAuthService
     {
         bool IsValidLoginInfo(string username, string password);
-        bool IsExistingUsername(string username);
     }
     public class AuthService : IAuthService
     {
@@ -39,11 +39,6 @@ namespace WhaleSpotting.Services
             {
                 return false;
             }
-        }
-
-        public bool IsExistingUsername (string username)
-        {
-            return _users.GetByUsername(username) != null;
         }
     }
 }

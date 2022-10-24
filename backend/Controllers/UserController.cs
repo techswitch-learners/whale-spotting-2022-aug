@@ -45,19 +45,13 @@ namespace WhaleSpotting.Controllers
 
                 var check = _authService.IsValidLoginInfo(username, password);
 
-                if (check)
-                {
-                    if (!_authService.IsExistingUsername(newUserRequest.Username))
-                    {
-                        User createdUser = _userService.Create(newUserRequest);
-                        return new UserResponse(newUserRequest);
-                    }
-                    return new ConflictResult();
-                }
-                else
+                if (!check)
                 {
                     return new UnauthorizedResult();
                 }
+
+                User createdUser = _userService.Create(newUserRequest);
+                return new UserResponse(newUserRequest);
             }
             catch (Exception)
             {

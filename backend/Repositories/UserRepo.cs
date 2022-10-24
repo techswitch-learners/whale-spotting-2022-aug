@@ -20,7 +20,7 @@ namespace WhaleSpotting.Repositories
 
         public User GetByUsername(string username)
         {
-            return _context.Users.SingleOrDefault(user => user.Username == username);
+            return _context.Users.Single(user => user.Username == username);
         }
 
         public User Create(User newUser)
