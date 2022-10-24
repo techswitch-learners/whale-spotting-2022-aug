@@ -2,6 +2,7 @@ import React, { FormEvent, useState, useContext } from "react";
 import { LoginContext } from "../login/LoginManager";
 import { PendingSightings } from "../pending-sightings-page/PendingSightings";
 import { Redirect } from "react-router-dom";
+import "./Login.scss";
 
 export const Login: React.FunctionComponent = () => {
   const [username, setUsername] = useState("");
@@ -21,36 +22,39 @@ export const Login: React.FunctionComponent = () => {
   }
 
   return (
-    <>
-      <div className="admin-message">
-        <h2>ONLY ACCESSIBLE TO ADMINS</h2>
+    <div>
+      <h2 className="admin-message">ONLY ACCESSIBLE TO ADMINS!</h2>
+      <div className="form">
+        <form onSubmit={tryLogin}>
+          <h1>Log In</h1>
+          <div className="form_field">
+            <div className="form_field--row">
+              <label className="form_field--label">Username:</label>
+              <input
+                className="form_field--input"
+                type="text"
+                name="Username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="form_field">
+            <div className="form_field--row">
+              <label className="form_field--label">Password:</label>
+              <input
+                className="form_field--input"
+                type="password"
+                name="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="form_button">
+            <input type="submit" value="Login" />
+          </div>
+        </form>
+        {error && <p className="message">{error}</p>}
       </div>
-      <h1>Log In</h1>
-      <form onSubmit={tryLogin}>
-        <label className="field">
-          Username
-          <input
-            type={"text"}
-            value={username}
-            placeholder="Username"
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-        <label className="field">
-          Password
-          <input
-            type={"password"}
-            value={password}
-            placeholder="Password"
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-
-        <button type="submit">Log In</button>
-      </form>
-      {error && <p>{error}</p>}
-    </>
+    </div>
   );
 };
