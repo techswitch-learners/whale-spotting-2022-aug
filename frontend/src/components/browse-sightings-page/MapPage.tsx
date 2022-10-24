@@ -1,6 +1,8 @@
 import { Sighting } from "../../clients/apiClient";
 import { SlippyMap, Marker, Label, InfoBox } from "react-slippy-map";
 import React from "react";
+import { map } from "leaflet";
+import "./mapPage.scss";
 
 interface MapPageProps {
   sightingList: Sighting[];
@@ -9,7 +11,12 @@ interface MapPageProps {
 export const MapPage: React.FC<MapPageProps> = ({ sightingList }) => {
   const coords = { latitude: 53.90824, longitude: 27.56136 };
   return (
-    <SlippyMap center={coords} zoom={16}>
+    <SlippyMap
+      className="map"
+      center={coords}
+      zoom={16}
+      baseTilesUrl={"https://a.tile.openstreetmap.org/2/0/0.png"}
+    >
       {sightingList.map((sighting) => {
         return (
           <Label

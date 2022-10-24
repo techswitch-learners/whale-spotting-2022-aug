@@ -34,6 +34,7 @@ export const BrowseSightings: React.FC = () => {
           ))}
         </ul>
       ) : (
+        // <h1>HELLO !!!!! </h1>
         <MapPage sightingList={sightings} />
       )}
     </>
