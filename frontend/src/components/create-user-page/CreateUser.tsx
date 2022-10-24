@@ -56,7 +56,7 @@ export const CreateUser: React.FunctionComponent = () => {
     const upper = /[A-Z]/;
     const lower = /[a-z]/;
     const number = /\d/;
-    const special = /[-+_!@#$%^&*.,?]/;
+    const special = /[-+_!@#'"{}$%^&<>=*.,?]/;
 
     if (passwordToCheck.length < requiredLength) {
       setPasswordMessage("Ensure password length is more than 8");
@@ -109,7 +109,7 @@ export const CreateUser: React.FunctionComponent = () => {
           setAddUserMessage(
             res.status == 200
               ? "User added successfully!"
-              : "Sorry, Couldn't add the user!"
+              : "Sorry, couldn't add the user!"
           );
         })
         .then(() => (e.target as HTMLFormElement).reset());
@@ -117,62 +117,78 @@ export const CreateUser: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="form">
+    <div className="create-user-form">
       <form onSubmit={handleSubmit}>
-        <h1 className="form_heading">Create New User</h1>
-        <div className="form_field">
-          <div className="form_field--row">
-            <label className="form_field--label">Name:</label>
+        <h1 className="form-heading">Create New User</h1>
+        <div className="form-field">
+          <label className="form-field__label">
+            Name:
             <input
-              className="form_field--input"
+              className="form-field__input"
               type="text"
               name="Name"
               onChange={(e) => validateName(e.target.value)}
             />
-          </div>
-          <p className="message">{nameMessage}</p>
+          </label>
+          {nameMessage ? <p className="form-message">{nameMessage}</p> : <></>}
         </div>
-        <div className="form_field">
-          <div className="form_field--row">
-            <label className="form_field--label">Username:</label>
+        <div className="form-field">
+          <label className="form-field__label">
+            Username:
             <input
-              className="form_field--input"
+              className="form-field__input"
               type="text"
               name="Username"
               onChange={(e) => validateUsername(e.target.value)}
             />
-          </div>
-          <p className="message">{usernameMessage}</p>
+          </label>
+          {usernameMessage ? (
+            <p className="form-message">{usernameMessage}</p>
+          ) : (
+            <></>
+          )}
         </div>
-        <div className="form_field">
-          <div className="form_field--row">
-            <label className="form_field--label">Email:</label>
+        <div className="form-field">
+          <label className="form-field__label">
+            Email:
             <input
-              className="form_field--input"
+              className="form-field__input"
               type="email"
               name="Email"
               onChange={(e) => validateEmail(e.target.value)}
             />
-          </div>
-          <p className="message">{emailMessage}</p>
+          </label>
+          {emailMessage ? (
+            <p className="form-message">{emailMessage}</p>
+          ) : (
+            <></>
+          )}
         </div>
-        <div className="form_field">
-          <div className="form_field--row">
-            <label className="form_field--label">Password:</label>
+        <div className="form-field">
+          <label className="form-field__label">
+            Password:
             <input
-              className="form_field--input"
+              className="form-field__input"
               type="password"
               name="Password"
-              onBlur={(e) => validatePassword(e.target.value)}
+              onChange={(e) => validatePassword(e.target.value)}
             />
-          </div>
-          <p className="message">{passwordMessage}</p>
+          </label>
+          {passwordMessage ? (
+            <p className="form-message">{passwordMessage}</p>
+          ) : (
+            <></>
+          )}
         </div>
-        <div className="form_button">
+        <div className="form-button">
           <input type="submit" value="Create User" />
         </div>
       </form>
-      {addUserMessage}
+      {addUserMessage ? (
+        <p className="form-add-user-message">{addUserMessage}</p>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

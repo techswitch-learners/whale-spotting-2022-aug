@@ -1,36 +1,37 @@
 @import "../../constants.scss";
 
-body {
-  align-items: center;
+.form-heading {
   text-align: center;
 }
 
-.form {
-  max-width: 290px;
-  width: 290px;
-  margin: auto;
-  background-color: $primary-light;
-  padding: 10px;
-  border: 2px solid $primary-dark;
-  border-radius: 15px;
-  margin-top: 30px;
+.form-field {
+  min-height: 55px;
+  width: 300px;
 }
 
-.form_field--row {
+.form-field__label {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
 
-.form_field--label {
-  font-size: 15px;
-}
-
-.form_field--input {
+.form-field__input {
   width: 60%;
   padding: 5px;
 }
 
-.form_button {
+.form-message {
+  text-align: right;
+  font-size: 12px;
+  color: red;
+  margin: 2px;
+}
+
+.form-add-user-message {
+  text-align: center;
+}
+
+.form-button {
   text-align: center;
   input {
     background-color: $primary-dark;
@@ -39,15 +40,5 @@ body {
     border: none;
     padding: 10px;
     border-radius: 5px;
-    margin-top: 20px;
   }
-}
-
-.message {
-  min-height: 20px;
-  clear: left;
-  font-size: 12px;
-  color: red;
-  margin: 2px;
-  // padding-left: 50px;
 }
