@@ -29,5 +29,12 @@ namespace WhaleSpotting.Controllers {
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        public ActionResult AddLocation([FromBody] Location newLocation)
+        {
+            var createdLocation =_locations.AddLocation(newLocation);
+            return Created("/api", createdLocation);
+        }
     }
 }

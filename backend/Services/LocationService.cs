@@ -8,6 +8,7 @@ namespace WhaleSpotting.Services
     public interface ILocationService
     {
         Location GetLocationById(int locationId);
+        Location AddLocation( Location newLocation);
     }
 
     public class LocationService : ILocationService
@@ -22,6 +23,16 @@ namespace WhaleSpotting.Services
         public Location GetLocationById(int locationId)
         {
             return _locations.GetLocationById(locationId);
+        }
+        
+        public Location AddLocation( Location newLocation)
+        {
+            var addNewLocation = new Location
+            {
+                Description = newLocation.Description,
+            };
+
+            return _locations.AddLocation(addNewLocation);   
         }
     }
 }
