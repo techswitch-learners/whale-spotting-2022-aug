@@ -14,19 +14,27 @@
     align-self: center;
   }
 
-  h3 {
+  .sighting-card_title {
     animation: normal;
     background-color: $primary;
-    font-size: xx-large;
+    font-size: x-large;
     font-kerning: normal;
     font-weight: bold;
     padding: 1rem;
+    padding-left: 2rem;
+    margin-bottom: 0px;
+  }
+
+  .sighting-card_date {
+    padding-left: 2rem;
+    margin: 5px 0px;
   }
 
   .image {
     width: 100%;
     height: auto;
     min-height: 60px;
+    text-align: center;
   }
 
   .card-data {
