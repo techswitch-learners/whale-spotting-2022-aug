@@ -4,6 +4,8 @@ using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace WhaleSpotting.Services
 {
@@ -87,6 +89,37 @@ namespace WhaleSpotting.Services
         public Sighting GetSightingById(int sightingId)
         {
             return _sightings.GetSightingById(sightingId);
+        }
+
+        public async Task GetLongformLocationNameAsync(double latitude, double longitude)
+        {
+            string apiUrl = $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}";
+            try{
+                using (HttpClient client = new HttpClient())
+                {
+                    using (HttpResponseMessage res = await client.GetAsync(apiUrl))
+                    {
+                        
+                        using (HttpContent content = res.Content)
+                        {
+                            var data = await content.ReadAsStringAsync();   
+                            if (data == null)
+                            {
+                                Console.WriteLine("No location found!!");
+                            }
+                            // else
+                            // {
+                            //     return 
+                            // }
+                        }
+
+                    }
+                }
+            }
+            catch(Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }
