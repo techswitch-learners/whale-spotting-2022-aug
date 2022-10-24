@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Sighting } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
@@ -35,10 +35,6 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
         <p>
           <span className="sighting-card-information">No. whales: </span>
           {sighting.whaleCount}
-        </p>
-        <p>
-          <span className="sighting-card-information">Location: </span>
-          {sighting.location}
         </p>
       </div>
     </div>

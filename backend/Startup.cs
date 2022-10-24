@@ -10,6 +10,7 @@ using WhaleSpotting.Repositories;
 using WhaleSpotting.Services;
 using System.Reflection;
 using System.IO;
+using System.Text.Json.Serialization;
 
 namespace WhaleSpotting
 {
@@ -36,9 +37,8 @@ namespace WhaleSpotting
             builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
       });
 
-      services.AddControllers();
-      //     services.AddControllers().AddJsonOptions(x =>
-      //  x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+          services.AddControllers().AddJsonOptions(x =>
+       x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
       services.AddSwaggerGen(c =>
       {

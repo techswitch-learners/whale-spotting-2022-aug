@@ -7,10 +7,10 @@ namespace WhaleSpotting.Models.Request
     {
         [Required]
         [StringLength(70)]
-        public string Name { get; set; }
+        public string SeenBy { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime SeenOn { get; set; }
 
         [Required]
         public float Latitude { get; set; }
@@ -21,5 +21,9 @@ namespace WhaleSpotting.Models.Request
         public string Description { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public int WhaleCount { get; set; }
+
+        public int SpeciesId { get; set; }
     }
 }
