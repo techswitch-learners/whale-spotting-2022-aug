@@ -1,0 +1,19 @@
+.new-sighting-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.new-sighting-form > * {
+  margin: 4px;
+}
+
+.lat-and-long-inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.location-input-choice {
+  display: flex;
+}

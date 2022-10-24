@@ -13,16 +13,20 @@ namespace WhaleSpotting.Services
         IEnumerable<Sighting> GetPendingSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         Sighting CreateSighting(CreateSightingRequest request);
+        IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
         Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId);
+        Sighting GetSightingById(int sightingId);
     }
 
     public class SightingService : ISightingService
     {
         private readonly ISightingRepo _sightings;
+        private readonly IWhaleRepo _whales;
 
-        public SightingService(ISightingRepo sightings)
+        public SightingService(ISightingRepo sightings, IWhaleRepo whales)
         {
             _sightings = sightings;
+            _whales = whales;
         }
 
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
@@ -46,14 +50,17 @@ namespace WhaleSpotting.Services
             //logic, change request to include locationID
             var newSighting = new Sighting
             {
-                SeenBy = request.Name,
-                SeenOn = request.Date,
+                SeenBy = request.SeenBy,
+                SeenOn = request.SeenOn,
                 ImageUrl = request.ImageUrl,
+                Species = _whales.GetSpeciesById(request.SpeciesId),
                 Description = request.Description,
                 Latitude = request.Latitude,
                 Longitude = request.Longitude,
+                WhaleCount = request.WhaleCount,
                 ConfirmationStatus = ConfirmationStatus.Pending,
             };
+
             return _sightings.CreateSighting(newSighting);
         }
 
@@ -70,6 +77,16 @@ namespace WhaleSpotting.Services
             throw new ArgumentOutOfRangeException("The confirmation request was not to approve or reject the sighting. " +
                 $"To approve, the NewConfirmationStatus of the request should be {(int) ConfirmationStatus.Approved}." +
                 $"To reject, it should be {(int) ConfirmationStatus.Rejected}.");
+        }
+
+        public IEnumerable<Sighting> GetSightingsByLocationId(int locationId)
+        {
+            return _sightings.GetSightingsByLocationId(locationId);
+        }
+
+        public Sighting GetSightingById(int sightingId)
+        {
+            return _sightings.GetSightingById(sightingId);
         }
     }
 }

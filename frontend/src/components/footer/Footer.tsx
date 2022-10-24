@@ -1,3 +1,11 @@
+import "./Footer.scss";
+
 export const Footer: React.FunctionComponent = () => (
-  <footer>Created by TechSwitch</footer>
+  <footer>
+    <img
+      className="footer__logo"
+      src="/TechSwitchLogo.svg"
+      alt="TechSwitch logo"
+    />
+  </footer>
 );
