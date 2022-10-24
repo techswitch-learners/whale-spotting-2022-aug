@@ -67,9 +67,11 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value as LocationInputType);
-    if (locationInputType === "getLocationFromPhone") {
-      getLocationFromPhone();
-    }
+    setFormValues({
+      ...formValues,
+      longitude: "",
+      latitude: "",
+    });
   };
 
   const getLocationFromPhone = () => {
@@ -199,11 +201,18 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
               type="radio"
               value="getLocationFromPhone"
               checked={locationInputType === "getLocationFromPhone"}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                getLocationFromPhone();
+              }}
             />
             <label htmlFor="getLocationFromPhone">Use my location</label>
-            <p>{formValues.latitude}</p>
-            <p>{formValues.longitude}</p>
+            {locationInputType === "getLocationFromPhone" && (
+              <div className="location-from-phone">
+                <p>{formValues.latitude}</p>
+                <p>{formValues.longitude}</p>
+              </div>
+            )}
           </div>
           <div className="location-input-choice">
             <input
