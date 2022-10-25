@@ -1,11 +1,13 @@
 using System;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using WhaleSpotting.Models.Database;
 using WhaleSpotting.Repositories;
 
 namespace WhaleSpotting.Services
 {
     public interface ILocationService
     {
+        Location GetLocationById(int locationId);
     }
 
     public class LocationService : ILocationService
@@ -15,6 +17,11 @@ namespace WhaleSpotting.Services
         public LocationService(ILocationRepo locations)
         {
             _locations = locations;
+        }
+
+        public Location GetLocationById(int locationId)
+        {
+            return _locations.GetLocationById(locationId);
         }
     }
 }

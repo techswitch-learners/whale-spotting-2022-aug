@@ -27,8 +27,17 @@ export interface Sighting {
   imageUrl: string;
   description: string;
   whaleCount: number;
-  confirmationStatus: string;
-  location: string;
+  latitude: number;
+  longitude: number;
+}
+
+export interface CreateSightingRequest {
+  seenBy: string;
+  seenOn: string;
+  speciesId?: number;
+  imageUrl: string;
+  description: string;
+  whaleCount: number;
   latitude: number;
   longitude: number;
 }
@@ -63,3 +72,13 @@ export const checkLogInDetails = async (
   });
   return response.ok;
 };
+
+export async function createSighting(
+  createSightingRequest: CreateSightingRequest
+) {
+  const response = await fetch(`${backendUrl}/sightings`, {
+    method: "POST",
+    body: JSON.stringify(createSightingRequest),
+    headers: { "Content-Type": "application/json" },
+  });
+}
