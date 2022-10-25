@@ -206,6 +206,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
                   placeholder="Latitude"
                   min="-90"
                   max="90"
+                  step="any"
                   onChange={(e) => {
                     setFormValues({
                       ...formValues,
@@ -223,6 +224,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
                   placeholder="Longitude"
                   min="-180"
                   max="180"
+                  step="any"
                   onChange={(e) => {
                     setFormValues({
                       ...formValues,
