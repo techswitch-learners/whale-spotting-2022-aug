@@ -5,6 +5,7 @@ import {
   Species,
 } from "../../clients/apiClient";
 import Select from "react-select";
+import { format } from "date-fns";
 import "./NewSightingForm.scss";
 
 type LocationInputType =
@@ -38,6 +39,7 @@ interface FormErrors {
   anyError: string;
 }
 
+const now: string = format(new Date(), "yyyy-MM-dd'T'HH:mm");
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   whaleSpecies,
 }) => {
@@ -168,6 +170,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         <input
           type="datetime-local"
+          max={now}
           onChange={(e) => {
             setFormValues({
               ...formValues,
