@@ -75,15 +75,15 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   };
 
   const getLocationFromPhone = () => {
-    function success(pos: GeolocationPosition) {
-      const crd = pos.coords;
+    const onSuccess = (pos: GeolocationPosition) => {
+      const { latitude, longitude } = pos.coords;
       setFormValues({
         ...formValues,
-        latitude: crd.latitude.toString(),
-        longitude: crd.longitude.toString(),
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
       });
-    }
-    navigator.geolocation.getCurrentPosition(success);
+    };
+    navigator.geolocation.getCurrentPosition(onSuccess);
   };
 
   const validateForm = () => {
