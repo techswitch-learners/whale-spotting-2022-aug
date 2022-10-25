@@ -119,7 +119,7 @@ namespace WhaleSpotting.Controllers
         [HttpGet("location/test")]
         public async Task<ActionResult> TestLocationLookup([FromQuery] double latitude,[FromQuery] double longitude)
         {
-            await  _sightings.GetLocationIdAsync(latitude,longitude);
+            await  _sightings.GetLocationByCoordinatesAsync(latitude,longitude);
             return new OkResult();
         }
     }

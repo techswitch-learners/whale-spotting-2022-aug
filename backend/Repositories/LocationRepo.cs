@@ -7,7 +7,7 @@ namespace WhaleSpotting.Repositories
     public interface ILocationRepo
     {
         Location GetLocationById(int locationId);
-        Location GetLocationByName(string locationName); 
+        Location GetOrCreateLocationByName(string locationName); 
         Location AddLocation(Location newLocation);
     }
 
@@ -27,10 +27,12 @@ namespace WhaleSpotting.Repositories
                 .Single(l => l.Id == locationId);
         }
 
-        public Location GetLocationByName(string locationName) 
+        public Location GetOrCreateLocationByName(string locationName) 
         {
-            return _context.Locations
+            var location = _context.Locations
                 .SingleOrDefault(l => l.Description == locationName);
+            
+            return location ?? AddLocation(new Location { Description = locationName}); 
         }
 
         public Location AddLocation(Location newLocation)

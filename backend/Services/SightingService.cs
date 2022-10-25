@@ -20,18 +20,20 @@ namespace WhaleSpotting.Services
         IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
         Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId);
         Sighting GetSightingById(int sightingId);
-        Task GetLocationIdAsync(double latitude, double longitude);
+        Task<Location> GetLocationByCoordinatesAsync(double latitude, double longitude);
     }
 
     public class SightingService : ISightingService
     {
         private readonly ISightingRepo _sightings;
         private readonly IWhaleRepo _whales;
+        private readonly ILocationRepo _locations;
 
-        public SightingService(ISightingRepo sightings, IWhaleRepo whales)
+        public SightingService(ISightingRepo sightings, IWhaleRepo whales, ILocationRepo locations)
         {
             _sightings = sightings;
             _whales = whales;
+            _locations = locations;
         }
 
         public IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId)
@@ -94,7 +96,7 @@ namespace WhaleSpotting.Services
             return _sightings.GetSightingById(sightingId);
         }
 
-        public async Task GetLocationIdAsync(double latitude, double longitude)
+        public async Task<Location> GetLocationByCoordinatesAsync(double latitude, double longitude)
         {
             var accessKey = Environment.GetEnvironmentVariable("POSITION_STACK_KEY");
             string apiUrl = $"http://api.positionstack.com/v1/reverse?access_key={accessKey}&query={latitude},{longitude}";
@@ -106,14 +108,16 @@ namespace WhaleSpotting.Services
                         using (HttpContent content = res.Content)
                         {
                             var data = JsonConvert.DeserializeObject<PositionStackResponse>(await content.ReadAsStringAsync());
-                            if (data == null)
-                            {
-                                Console.WriteLine("No location found!!");
+                            if (data != null)
+                            {                   
+                                var longFormName = data.Data.First().Country ?? data.Data.First().Name;
+                                var location = _locations.GetOrCreateLocationByName(longFormName);
+                                Console.WriteLine(location.Id);
+                                return location;
                             }
                             else
                             {
-                                var longFormName = data.Data.First().Country ?? data.Data.First().Name;
-                                Console.WriteLine(longFormName);
+                                return null;
                             }
                         }
                     }
@@ -122,6 +126,7 @@ namespace WhaleSpotting.Services
             catch(Exception exception)
             {
                 Console.WriteLine(exception);
+                return null;
             }
         }
     }
