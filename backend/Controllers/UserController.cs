@@ -54,9 +54,9 @@ namespace WhaleSpotting.Controllers
             {
                 User createdUser = _userService.Create(newUserRequest);
             }
-            catch (DuplicateUsernameException ex)
+            catch (DuplicateUsernameException)
             {
-                throw new Exception("Username already exists", ex);
+                return BadRequest("Username already exists");
             }
 
             return new UserResponse(newUserRequest);
