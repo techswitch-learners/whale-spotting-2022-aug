@@ -170,7 +170,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         <input
           type="datetime-local"
-          max={future}
+          max={now}
           onChange={(e) => {
             setFormValues({
               ...formValues,
