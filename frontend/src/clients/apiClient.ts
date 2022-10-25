@@ -81,4 +81,5 @@ export async function createSighting(
     body: JSON.stringify(createSightingRequest),
     headers: { "Content-Type": "application/json" },
   });
+  return response.ok;
 }
