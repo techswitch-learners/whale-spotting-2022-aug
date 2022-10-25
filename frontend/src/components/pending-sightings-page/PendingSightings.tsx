@@ -180,7 +180,7 @@ export const PendingSightings: React.FunctionComponent = () => {
         .filter((report) => report.success !== true)
         .map((report) => (
           <PendingSightingCard
-            sighting={report.sighting}
+            sightingReport={report}
             key={report.sighting.id}
             setConfirmationStatus={(newStatus) =>
               setPendingStatus(report.sighting.id, newStatus)

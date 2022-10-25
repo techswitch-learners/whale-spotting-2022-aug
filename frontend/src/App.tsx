@@ -6,8 +6,8 @@ import { LoginManager } from "./components/login/LoginManager";
 import { Footer } from "./components/footer/Footer";
 import { BrowseSightings } from "./components/browse-sightings-page/BrowseSightings";
 import { CreateUser } from "./components/create-user-page/CreateUser";
-import { PendingSightings } from "./components/pending-sightings-page/PendingSightings";
 import { Videos } from "./components/videos-page/Videos";
+import { PendingSightings } from "./components/pending-sightings-page/PendingSightings";
 import { Whaleopedia } from "./components/whaleopedia-page/Whaleopedia";
 import { Login } from "./components/login/Login";
 
