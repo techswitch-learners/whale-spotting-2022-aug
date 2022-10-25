@@ -38,7 +38,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
         </p>
         <p>
           <span className="sighting-card-information">Location: </span>
-          {sighting.location.description}
+          {sighting.location}
         </p>
       </div>
     </div>
