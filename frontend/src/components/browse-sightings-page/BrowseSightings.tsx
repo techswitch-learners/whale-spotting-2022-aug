@@ -27,9 +27,9 @@ export const BrowseSightings: React.FC = () => {
         {isShowingMap ? "List View" : "Map View"}
       </button>
       {isShowingMap ? (
-        <SightingMap sightingList={sightings} />
+        <SightingMap sightings={sightings} />
       ) : (
-        <SightingList sightingList={sightings} />
+        <SightingList sightings={sightings} />
       )}
     </>
   );

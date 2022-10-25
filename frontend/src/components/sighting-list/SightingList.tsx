@@ -3,13 +3,13 @@ import { SightingCard } from "../browse-sightings-page/SightingCard";
 import { Sighting } from "../../clients/apiClient";
 
 interface SightingListProps {
-  sightingList: Sighting[];
+  sightings: Sighting[];
 }
 
-export const SightingList: React.FC<SightingListProps> = ({ sightingList }) => {
+export const SightingList: React.FC<SightingListProps> = ({ sightings }) => {
   return (
     <ul>
-      {sightingList.map((sighting) => (
+      {sightings.map((sighting) => (
         <SightingCard sighting={sighting} key={sighting.id} />
       ))}
     </ul>

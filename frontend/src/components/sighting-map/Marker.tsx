@@ -7,13 +7,5 @@ interface MarkerProps {
 }
 
 export const Marker: React.FC<MarkerProps> = ({ text }) => {
-  // const handleClick = () => {
-  //   console.log(You clicked on ${tooltip});
-  // };
-
-  return (
-    <div className="circle">
-      <span className="circleText">{text}</span>
-    </div>
-  );
+  return <div>{text}</div>;
 };

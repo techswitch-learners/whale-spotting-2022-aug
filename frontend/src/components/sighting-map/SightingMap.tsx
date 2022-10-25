@@ -5,11 +5,11 @@ import React from "react";
 import "./SightingMap.scss";
 
 interface SightingMapProps {
-  sightingList: Sighting[];
+  sightings: Sighting[];
 }
 
-export const SightingMap: React.FC<SightingMapProps> = ({ sightingList }) => {
-  const points = sightingList.map((sighting, index) => {
+export const SightingMap: React.FC<SightingMapProps> = ({ sightings }) => {
+  const points = sightings.map((sighting) => {
     return {
       id: sighting.id,
       title: sighting.seenBy,
@@ -25,10 +25,9 @@ export const SightingMap: React.FC<SightingMapProps> = ({ sightingList }) => {
       <GoogleMapReact
         className="sighting-map"
         bootstrapURLKeys={{
-          // remove the key if you want to fork
           key: process.env["REACT_APP_MAP_API_KEY"],
           language: "en",
-          region: "US",
+          region: "GB",
         }}
         defaultCenter={{ lat: 51.506, lng: -0.169 }}
         defaultZoom={15}
