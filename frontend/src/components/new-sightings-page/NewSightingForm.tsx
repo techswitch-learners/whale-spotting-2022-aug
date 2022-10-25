@@ -37,6 +37,10 @@ interface FormErrors {
   whaleCount: string;
   anyError: string;
 }
+const today = new Date();
+const future = new Date(today.setDate(today.getDate()))
+  .toISOString()
+  .slice(0, 16);
 
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   whaleSpecies,
@@ -168,6 +172,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         <input
           type="datetime-local"
+          max={future}
           onChange={(e) => {
             setFormValues({
               ...formValues,
