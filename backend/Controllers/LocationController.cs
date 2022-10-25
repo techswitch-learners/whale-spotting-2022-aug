@@ -1,4 +1,6 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
+using WhaleSpotting.Models.Database;
 using WhaleSpotting.Services;
 
 namespace WhaleSpotting.Controllers {
@@ -12,6 +14,20 @@ namespace WhaleSpotting.Controllers {
             ILocationService locations
         ) {
             _locations = locations;
+        }
+        
+        [HttpGet("{locationId}")]
+        public ActionResult<Location> GetLocationById([FromRoute] int locationId)
+        {
+            try
+            {
+                var whale = _locations.GetLocationById(locationId);
+                return whale;
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
         }
     }
 }

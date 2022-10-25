@@ -32,8 +32,26 @@ export interface Sighting {
   longitude: number;
 }
 
+export interface CreateSightingRequest {
+  seenBy: string;
+  seenOn: string;
+  speciesId?: number;
+  imageUrl: string;
+  description: string;
+  whaleCount: number;
+  latitude: number;
+  longitude: number;
+}
+
 export interface ConfirmOrRejectRequest {
   newConfirmationStatus: number;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  userName: string;
 }
 
 export const getAllSpecies = async (): Promise<Species[]> => {
@@ -95,3 +113,25 @@ export const getSightings = async (): Promise<Sighting[]> => {
   const sightingsListResponse: ListResponse<Sighting> = await response.json();
   return sightingsListResponse.items;
 };
+
+export const checkLogInDetails = async (
+  username: string,
+  password: string
+): Promise<boolean> => {
+  const response = await fetch(`${backendUrl}/login`, {
+    headers: {
+      Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+    },
+  });
+  return response.ok;
+};
+
+export async function createSighting(
+  createSightingRequest: CreateSightingRequest
+) {
+  const response = await fetch(`${backendUrl}/sightings`, {
+    method: "POST",
+    body: JSON.stringify(createSightingRequest),
+    headers: { "Content-Type": "application/json" },
+  });
+}

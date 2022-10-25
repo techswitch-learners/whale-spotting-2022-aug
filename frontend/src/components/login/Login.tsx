@@ -5,13 +5,14 @@ import { Redirect } from "react-router-dom";
 export const Login: React.FunctionComponent = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(undefined);
+  const [error, setError] = useState("");
   const loginContext = useContext(LoginContext);
 
-  function tryLogin(event: FormEvent) {
+  async function tryLogin(event: FormEvent) {
     event.preventDefault();
-    loginContext.logIn(username, password);
-    setError(undefined);
+    if (!(await loginContext.logIn(username, password))) {
+      setError(" Login details Invalid!!! ");
+    }
   }
 
   if (loginContext.isLoggedIn) {
@@ -23,7 +24,6 @@ export const Login: React.FunctionComponent = () => {
       <div className="admin-message">
         <h2>ONLY ACCESSIBLE TO ADMINS</h2>
       </div>
-      {error && <p>{error}</p>}
       <h1>Log In</h1>
       <form onSubmit={tryLogin}>
         <label className="field">
@@ -49,6 +49,7 @@ export const Login: React.FunctionComponent = () => {
 
         <button type="submit">Log In</button>
       </form>
+      {error && <p>{error}</p>}
     </>
   );
 };

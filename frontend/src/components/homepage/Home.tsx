@@ -1,6 +1,6 @@
-export const Home: React.FunctionComponent = () => (
-  <>
-    <h1>Whale Spotting</h1>
-    <p>Spot whales!</p>
-  </>
-);
+import React from "react";
+import { NewSightings } from "../new-sightings-page/NewSightings";
+
+export const Home: React.FunctionComponent = () => {
+  return <NewSightings />;
+};
