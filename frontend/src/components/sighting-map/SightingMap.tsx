@@ -1,16 +1,14 @@
 import { Sighting } from "../../clients/apiClient";
-// import { SlippyMap, Marker, Label, InfoBox } from "react-slippy-map";
 import GoogleMapReact from "google-map-react";
-import { Marker } from "./marker";
+import { Marker } from "./Marker";
 import React from "react";
-import { map } from "leaflet";
-import "./mapPage.scss";
+import "./SightingMap.scss";
 
-interface MapPageProps {
+interface SightingMapProps {
   sightingList: Sighting[];
 }
 
-export const MapPage: React.FC<MapPageProps> = ({ sightingList }) => {
+export const SightingMap: React.FC<SightingMapProps> = ({ sightingList }) => {
   const points = sightingList.map((sighting, index) => {
     return {
       id: sighting.id,
@@ -20,14 +18,15 @@ export const MapPage: React.FC<MapPageProps> = ({ sightingList }) => {
     };
   });
 
+  console.log(process.env);
+
   return (
     <div style={{ height: "100vh", width: "100vh" }}>
-      ;
       <GoogleMapReact
-        className="map"
+        className="sighting-map"
         bootstrapURLKeys={{
           // remove the key if you want to fork
-          key: "AIzaSyAiX_Ww0KPPTu7QZ2oODx5Jah9Ky1F7QTU",
+          key: process.env["REACT_APP_MAP_API_KEY"],
           language: "en",
           region: "US",
         }}
