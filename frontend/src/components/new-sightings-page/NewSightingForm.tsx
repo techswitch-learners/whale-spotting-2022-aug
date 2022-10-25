@@ -5,6 +5,7 @@ import {
   Species,
 } from "../../clients/apiClient";
 import Select from "react-select";
+import { format, formatDistance, formatRelative, subDays } from "date-fns";
 import "./NewSightingForm.scss";
 
 type LocationInputType =
@@ -37,11 +38,12 @@ interface FormErrors {
   whaleCount: string;
   anyError: string;
 }
-const today = new Date();
-const future = new Date(today.setDate(today.getDate()))
-  .toISOString()
-  .slice(0, 16);
+// const today = new Date();
+// const future = new Date(today.setDate(today.getDate()))
+//   .toISOString()
+//   .slice(0, 16);
 
+const now: string = format(new Date(), "yyyy-MM-dd'T'HH:mm");
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   whaleSpecies,
 }) => {
@@ -172,7 +174,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         <input
           type="datetime-local"
-          max={future}
+          max={now}
           onChange={(e) => {
             setFormValues({
               ...formValues,
