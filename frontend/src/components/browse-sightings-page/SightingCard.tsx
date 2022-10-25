@@ -11,19 +11,19 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 }) => {
   return (
     <div className="sighting-card">
-      {!sighting.species?.name ? (
-        <h3 className="sighting-card_title fade-in">
-          Sighting recorded by {sighting.seenBy}
+      {sighting.species?.name ? (
+        <h3 className="sighting-card__title fade-in">
+          Sighting of {sighting.species?.name}
         </h3>
       ) : (
-        <h3 className="sighting-card_title fade-in">
-          Sighting of {sighting.species?.name}
+        <h3 className="sighting-card__title fade-in">
+          Sighting recorded by {sighting.seenBy}
         </h3>
       )}
 
-      <h6 className="sighting-card_date fade-in">
+      <p className="sighting-card__date fade-in">
         {new Date(sighting.seenOn).toDateString()}
-      </h6>
+      </p>
       {sighting.imageUrl !== "" ? (
         <img
           className="image fade-in"
@@ -40,14 +40,14 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 
       <div className="card-data fade-in">
         <p>
-          <span className="sighting-card-information">
-            <strong>Description of sighting: </strong>
+          <span className="sighting-card__information">
+            Description of sighting:{" "}
           </span>
           {sighting.description}
         </p>
         <p>
-          <span className="sighting-card-information">
-            <strong>Number of whales seen: </strong>
+          <span className="sighting-card__information">
+            Number of whales seen:{" "}
           </span>
           {sighting.whaleCount}
         </p>
