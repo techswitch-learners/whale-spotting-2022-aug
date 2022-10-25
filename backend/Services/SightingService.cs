@@ -16,7 +16,7 @@ namespace WhaleSpotting.Services
         IEnumerable<Sighting> GetApprovedSightings();
         IEnumerable<Sighting> GetPendingSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
-        Sighting CreateSighting(CreateSightingRequest request);
+        Task<Sighting> CreateSightingAsync(CreateSightingRequest request);
         IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
         Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId);
         Sighting GetSightingById(int sightingId);
@@ -51,10 +51,9 @@ namespace WhaleSpotting.Services
             return _sightings.GetPendingSightings();
         }
 
-        public Sighting CreateSighting(CreateSightingRequest request)
+        public async Task<Sighting> CreateSightingAsync(CreateSightingRequest request)
         {
-            //TODO: WS-40
-            //logic, change request to include locationID
+            var getLocation = await GetLocationByCoordinatesAsync(request.Latitude, request.Longitude);
             var newSighting = new Sighting
             {
                 SeenBy = request.SeenBy,
@@ -62,13 +61,14 @@ namespace WhaleSpotting.Services
                 ImageUrl = request.ImageUrl,
                 Species = _whales.GetSpeciesById(request.SpeciesId),
                 Description = request.Description,
+                Location = getLocation,
                 Latitude = request.Latitude,
                 Longitude = request.Longitude,
                 WhaleCount = request.WhaleCount,
                 ConfirmationStatus = ConfirmationStatus.Pending,
             };
 
-            return _sightings.CreateSighting(newSighting);
+            return await _sightings.CreateSightingAsync(newSighting);
         }
 
         public Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId)
@@ -82,8 +82,8 @@ namespace WhaleSpotting.Services
                 return _sightings.RejectRequest(sightingId);
             }
             throw new ArgumentOutOfRangeException("The confirmation request was not to approve or reject the sighting. " +
-                $"To approve, the NewConfirmationStatus of the request should be {(int) ConfirmationStatus.Approved}." +
-                $"To reject, it should be {(int) ConfirmationStatus.Rejected}.");
+                $"To approve, the NewConfirmationStatus of the request should be {(int)ConfirmationStatus.Approved}." +
+                $"To reject, it should be {(int)ConfirmationStatus.Rejected}.");
         }
 
         public IEnumerable<Sighting> GetSightingsByLocationId(int locationId)
@@ -100,7 +100,8 @@ namespace WhaleSpotting.Services
         {
             var accessKey = Environment.GetEnvironmentVariable("POSITION_STACK_KEY");
             string apiUrl = $"http://api.positionstack.com/v1/reverse?access_key={accessKey}&query={latitude},{longitude}";
-            try{
+            try
+            {
                 using (HttpClient client = new HttpClient())
                 {
                     using (HttpResponseMessage res = await client.GetAsync(apiUrl))
@@ -109,7 +110,7 @@ namespace WhaleSpotting.Services
                         {
                             var data = JsonConvert.DeserializeObject<PositionStackResponse>(await content.ReadAsStringAsync());
                             if (data != null)
-                            {                   
+                            {
                                 var longFormName = data.Data.First().Country ?? data.Data.First().Name;
                                 var location = _locations.GetOrCreateLocationByName(longFormName);
                                 Console.WriteLine(location.Id);
@@ -123,7 +124,7 @@ namespace WhaleSpotting.Services
                     }
                 }
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 Console.WriteLine(exception);
                 return null;

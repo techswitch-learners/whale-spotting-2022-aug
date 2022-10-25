@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.Database;
@@ -12,7 +13,7 @@ namespace WhaleSpotting.Repositories
         IEnumerable<Sighting> GetApprovedSightings();
         IEnumerable<Sighting> GetSightingsBySpeciesId(int speciesId);
         IEnumerable<Sighting> GetPendingSightings();
-        Sighting CreateSighting(Sighting createSightingRequest);
+        Task<Sighting> CreateSightingAsync(Sighting createSightingRequest);
         Sighting ConfirmRequest(int sightingId);
         Sighting RejectRequest(int sightingId);
         IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
@@ -28,7 +29,7 @@ namespace WhaleSpotting.Repositories
             _context = context;
         }
 
-        public Sighting CreateSighting(Sighting newSighting)
+        public async Task<Sighting> CreateSightingAsync(Sighting newSighting)
         {
             var insertedSighting = _context.Sightings.Add(newSighting);
             _context.SaveChanges();
@@ -70,7 +71,7 @@ namespace WhaleSpotting.Repositories
             }
             throw new ArgumentException($"The sighting with ID {sightingId} could not be found");
         }
-        
+
         public Sighting RejectRequest(int sightingId)
         {
             var sighting = _context.Sightings.Single(s => s.Id == sightingId);
@@ -92,7 +93,7 @@ namespace WhaleSpotting.Repositories
                 .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved)
                 .OrderByDescending(s => s.SeenOn);
         }
-        
+
         public Sighting GetSightingById(int sightingId)
         {
             return _context.Sightings

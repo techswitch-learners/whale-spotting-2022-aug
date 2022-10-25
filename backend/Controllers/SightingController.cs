@@ -48,9 +48,9 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateSighting([FromBody] CreateSightingRequest createSightingRequest)
+        public async Task<ActionResult> CreateSightingAsync([FromBody] CreateSightingRequest createSightingRequest)
         {
-            var createdSighting = _sightings.CreateSighting(createSightingRequest);
+            var createdSighting = await _sightings.CreateSightingAsync(createSightingRequest);
             return Created("/api", createdSighting);
         }
 
@@ -63,7 +63,7 @@ namespace WhaleSpotting.Controllers
 
         [HttpPatch("{sightingId}/confirmation")]
         public ActionResult ChangeConfirmationStatus(
-            [FromHeader] string authorization, 
+            [FromHeader] string authorization,
             [FromRoute] int sightingId,
             [FromBody] ConfirmOrRejectRequest confirmOrRejectRequest)
         {
@@ -101,7 +101,7 @@ namespace WhaleSpotting.Controllers
                 return NotFound();
             }
         }
-        
+
         [HttpGet("{sightingId}")]
         public ActionResult<Sighting> GetSightingById([FromRoute] int sightingId)
         {
@@ -114,13 +114,6 @@ namespace WhaleSpotting.Controllers
             {
                 return NotFound();
             }
-        }
-
-        [HttpGet("location/test")]
-        public async Task<ActionResult> TestLocationLookup([FromQuery] double latitude,[FromQuery] double longitude)
-        {
-            await  _sightings.GetLocationByCoordinatesAsync(latitude,longitude);
-            return new OkResult();
         }
     }
 }
