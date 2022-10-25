@@ -6,18 +6,18 @@ import {
   Sighting,
 } from "../../clients/apiClient";
 import { LoginContext } from "../login/LoginManager";
-import { UnreviewedSightingCard } from "./UnreviewedSightingCard";
+import { PendingSightingCard } from "./PendingSightingCard";
 
 export type ConfirmationStatus = "rejected" | "approved";
 
-interface SightingReport {
+export interface SightingReport {
   sighting: Sighting;
   success?: boolean;
   errorMessage?: string;
   pendingStatusChange?: ConfirmationStatus;
 }
 
-export const UnreviewedSightings: React.FunctionComponent = () => {
+export const PendingSightings: React.FunctionComponent = () => {
   const [sightingReports, setSightingReports] = useState<SightingReport[]>();
 
   const loginContext = useContext(LoginContext);
@@ -116,7 +116,7 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
   if (sightingReports === undefined) {
     return (
       <>
-        <h1>Unreviewed Sightings</h1>
+        <h1>Pending Sightings</h1>
         <p>Loading...</p>
       </>
     );
@@ -125,15 +125,15 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
   if (sightingReports?.length === 0) {
     return (
       <>
-        <h1>Unreviewed Sightings</h1>
-        <p>No unreviewed sightings to display</p>
+        <h1>Pending Sightings</h1>
+        <p>No pending sightings to display</p>
       </>
     );
   }
 
   return (
     <>
-      <h1>Unreviewed Sightings</h1>
+      <h1>Pending Sightings</h1>
 
       {sightingReports.filter((report) => report.success).length !== 0 ? (
         <>
@@ -179,7 +179,7 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
       {sightingReports
         .filter((report) => report.success !== true)
         .map((report) => (
-          <UnreviewedSightingCard
+          <PendingSightingCard
             sighting={report.sighting}
             key={report.sighting.id}
             setConfirmationStatus={(newStatus) =>
@@ -192,7 +192,7 @@ export const UnreviewedSightings: React.FunctionComponent = () => {
       0 ? (
         <button onClick={submitRequests}>Submit All</button>
       ) : (
-        <p>No unreviewed sightings to display</p>
+        <p>No pending sightings to display</p>
       )}
     </>
   );

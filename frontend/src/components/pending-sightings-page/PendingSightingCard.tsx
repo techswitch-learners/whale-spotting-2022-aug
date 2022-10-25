@@ -1,19 +1,24 @@
 import React from "react";
-import { Sighting } from "../../clients/apiClient";
-import "./UnreviewedSightingCard.scss";
-import { ConfirmationStatus } from "./UnreviewedSightings";
+import "./PendingSightingCard.scss";
+import { ConfirmationStatus, SightingReport } from "./PendingSightings";
 
-interface UnreviewedSightingCardProps {
-  sighting: Sighting;
+interface PendingSightingCardProps {
+  sightingReport: SightingReport;
   setConfirmationStatus: (newStatus: ConfirmationStatus) => void;
 }
 
-export const UnreviewedSightingCard: React.FC<UnreviewedSightingCardProps> = ({
-  sighting,
+export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
+  sightingReport,
   setConfirmationStatus,
 }) => {
+  const sighting = sightingReport.sighting;
   return (
-    <div className="pending-sighting-card">
+    <div
+      className={
+        "sighting-card" +
+        `${sightingReport.success === false ? " sighting-card--error" : ""}`
+      }
+    >
       <p>Post ID: {sighting.id}</p>
       <p>Species: {sighting.species}</p>
       <p>Seen By: {sighting.seenBy}</p>
