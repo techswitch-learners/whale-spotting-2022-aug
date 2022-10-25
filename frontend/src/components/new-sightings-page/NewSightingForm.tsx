@@ -15,6 +15,7 @@ type LocationInputType =
 
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
+  setSuccess: (success: boolean) => void;
 }
 
 interface FormValues {
@@ -42,6 +43,7 @@ interface FormErrors {
 const now: string = format(new Date(), "yyyy-MM-dd'T'HH:mm");
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   whaleSpecies,
+  setSuccess,
 }) => {
   const [formValues, setFormValues] = useState<FormValues>({
     seenBy: "",
@@ -142,7 +144,8 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         latitude: Number.parseFloat(formValues.latitude),
         longitude: Number.parseFloat(formValues.longitude),
       };
-      createSighting(createSightingRequest);
+
+      createSighting(createSightingRequest).then((r) => setSuccess(r));
     } else {
       setFormErrors({
         ...formErrors,
