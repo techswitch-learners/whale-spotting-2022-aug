@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using WhaleSpotting.Repositories;
+using WhaleSpotting.Models.Api;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
-using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace WhaleSpotting.Services
 {
@@ -18,6 +20,7 @@ namespace WhaleSpotting.Services
         IEnumerable<Sighting> GetSightingsByLocationId(int locationId);
         Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId);
         Sighting GetSightingById(int sightingId);
+        Task GetLocationIdAsync(double latitude, double longitude);
     }
 
     public class SightingService : ISightingService
@@ -91,28 +94,28 @@ namespace WhaleSpotting.Services
             return _sightings.GetSightingById(sightingId);
         }
 
-        public async Task GetLongformLocationNameAsync(double latitude, double longitude)
+        public async Task GetLocationIdAsync(double latitude, double longitude)
         {
-            string apiUrl = $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}";
+            var accessKey = Environment.GetEnvironmentVariable("POSITION_STACK_KEY");
+            string apiUrl = $"http://api.positionstack.com/v1/reverse?access_key={accessKey}&query={latitude},{longitude}";
             try{
                 using (HttpClient client = new HttpClient())
                 {
                     using (HttpResponseMessage res = await client.GetAsync(apiUrl))
                     {
-                        
                         using (HttpContent content = res.Content)
                         {
-                            var data = await content.ReadAsStringAsync();   
+                            var data = JsonConvert.DeserializeObject<PositionStackResponse>(await content.ReadAsStringAsync());
                             if (data == null)
                             {
                                 Console.WriteLine("No location found!!");
                             }
-                            // else
-                            // {
-                            //     return 
-                            // }
+                            else
+                            {
+                                var longFormName = data.Data.First().Country ?? data.Data.First().Name;
+                                Console.WriteLine(longFormName);
+                            }
                         }
-
                     }
                 }
             }

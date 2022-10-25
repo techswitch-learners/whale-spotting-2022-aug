@@ -30,7 +30,7 @@ namespace WhaleSpotting.Repositories
         public Location GetLocationByName(string locationName) 
         {
             return _context.Locations
-                .Single(l => l.Description == locationName);
+                .SingleOrDefault(l => l.Description == locationName);
         }
 
         public Location AddLocation(Location newLocation)

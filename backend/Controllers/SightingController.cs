@@ -5,6 +5,7 @@ using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
 using WhaleSpotting.Helpers;
 using System;
+using System.Threading.Tasks;
 
 namespace WhaleSpotting.Controllers
 {
@@ -113,6 +114,13 @@ namespace WhaleSpotting.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet("location/test")]
+        public async Task<ActionResult> TestLocationLookup([FromQuery] double latitude,[FromQuery] double longitude)
+        {
+            await  _sightings.GetLocationIdAsync(latitude,longitude);
+            return new OkResult();
         }
     }
 }
