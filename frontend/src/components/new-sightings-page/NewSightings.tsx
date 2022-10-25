@@ -13,8 +13,10 @@ export const NewSightings: React.FunctionComponent = () => {
   if (success) {
     return (
       <>
-        <p>Successfully submited</p>
-        <button onClick={() => setSuccess(false)}>submit new</button>
+        <p>Successfully submitted</p>
+        <button onClick={() => setSuccess(false)}>
+          Report another sighting
+        </button>
       </>
     );
   } else {
