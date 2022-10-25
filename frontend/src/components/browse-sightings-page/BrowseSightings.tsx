@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  getExternalApiSightings,
+  getExternalSightings,
   getSightings,
   Sighting,
   SightingFromExternalApi,
@@ -11,32 +11,32 @@ import "./BrowseSightings.scss";
 
 export const BrowseSightings: React.FC = () => {
   const [sightings, setSightings] = useState<Sighting[]>();
-  const [externalApiSightings, SightingFromExternalApi] =
+  const [externalSightings, setExternalSightings] =
     useState<SightingFromExternalApi[]>();
 
   useEffect(() => {
     getSightings().then(setSightings);
-    getExternalApiSightings().then(SightingFromExternalApi);
+    getExternalSightings().then(setExternalSightings);
   }, []);
 
-  if (sightings === undefined || externalApiSightings === undefined) {
+  if (sightings === undefined && externalSightings === undefined) {
     return <p>Loading</p>;
   }
 
   return (
     <>
-      <h1>Reported Sightings From External Api</h1>
+      <h2>Sighting from the Washington Whale Hotline</h2>
       <ul>
-        {externalApiSightings.map((apiSighting, index) => (
+        {externalSightings?.map((apiSighting, index) => (
           <SightingCardForExternalApi
             apiSighting={apiSighting}
             key={apiSighting.id}
           />
         ))}
       </ul>
-      <h1>Reported Sightings</h1>
+      <h2>Reported Sightings</h2>
       <ul>
-        {sightings.map((sighting, index) => (
+        {sightings?.map((sighting, index) => (
           <SightingCard sighting={sighting} key={sighting.id} />
         ))}
       </ul>
