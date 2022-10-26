@@ -68,7 +68,7 @@ namespace WhaleSpotting.Services
                 ConfirmationStatus = ConfirmationStatus.Pending,
             };
 
-            return await _sightings.CreateSightingAsync(newSighting);
+            return _sightings.CreateSighting(newSighting);
         }
 
         public Sighting ConfirmOrRejectSighting(ConfirmOrRejectRequest confirmOrRejectSighting, int sightingId)
