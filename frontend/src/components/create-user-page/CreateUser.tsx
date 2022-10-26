@@ -59,7 +59,9 @@ export const CreateUser: React.FunctionComponent = () => {
     const special = /[-+_!@#'"{}$%^&<>=*.,?]/;
 
     if (passwordToCheck.length < requiredLength) {
-      setPasswordMessage("Ensure password length is more than 8");
+      setPasswordMessage(
+        `Ensure password length is more than ${requiredLength}`
+      );
       return false;
     }
     if (!upper.test(passwordToCheck)) {
@@ -119,73 +121,77 @@ export const CreateUser: React.FunctionComponent = () => {
   return (
     <div className="create-user-form">
       <form onSubmit={handleSubmit}>
-        <h1 className="form-heading">Create New User</h1>
-        <div className="form-field">
-          <label className="form-field__label">
+        <h1 className="create-user-form-heading">Create New User</h1>
+        <div className="create-user-form-field">
+          <label className="create-user-form-field__label">
             Name:
             <input
-              className="form-field__input"
+              className="create-user-form-field__input"
               type="text"
               name="Name"
               onChange={(e) => validateName(e.target.value)}
             />
           </label>
-          {nameMessage ? <p className="form-message">{nameMessage}</p> : <></>}
+          {nameMessage ? (
+            <p className="create-user-form-message">{nameMessage}</p>
+          ) : (
+            <></>
+          )}
         </div>
-        <div className="form-field">
-          <label className="form-field__label">
+        <div className="create-user-form-field">
+          <label className="create-user-form-field__label">
             Username:
             <input
-              className="form-field__input"
+              className="create-user-form-field__input"
               type="text"
               name="Username"
               onChange={(e) => validateUsername(e.target.value)}
             />
           </label>
           {usernameMessage ? (
-            <p className="form-message">{usernameMessage}</p>
+            <p className="create-user-form-message">{usernameMessage}</p>
           ) : (
             <></>
           )}
         </div>
-        <div className="form-field">
-          <label className="form-field__label">
+        <div className="create-user-form-field">
+          <label className="create-user-form-field__label">
             Email:
             <input
-              className="form-field__input"
+              className="create-user-form-field__input"
               type="email"
               name="Email"
               onChange={(e) => validateEmail(e.target.value)}
             />
           </label>
           {emailMessage ? (
-            <p className="form-message">{emailMessage}</p>
+            <p className="create-user-form-message">{emailMessage}</p>
           ) : (
             <></>
           )}
         </div>
-        <div className="form-field">
-          <label className="form-field__label">
+        <div className="create-user-form-field">
+          <label className="create-user-form-field__label">
             Password:
             <input
-              className="form-field__input"
+              className="create-user-form-field__input"
               type="password"
               name="Password"
               onChange={(e) => validatePassword(e.target.value)}
             />
           </label>
           {passwordMessage ? (
-            <p className="form-message">{passwordMessage}</p>
+            <p className="create-user-form-message">{passwordMessage}</p>
           ) : (
             <></>
           )}
         </div>
-        <div className="form-button">
+        <div className="create-user-form-button">
           <input type="submit" value="Create User" />
         </div>
       </form>
       {addUserMessage ? (
-        <p className="form-add-user-message">{addUserMessage}</p>
+        <p className="create-user-form-add-user-message">{addUserMessage}</p>
       ) : (
         <></>
       )}
