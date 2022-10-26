@@ -3,7 +3,7 @@
 .card {
   margin-bottom: 2rem;
   position: relative;
-  width: 80%;
+  width: 90%;
   max-width: 600px;
   background-color: $primary-light;
   color: $text-color;
@@ -26,6 +26,7 @@
   .card__image {
     width: 100%;
     height: auto;
-    min-height: 60px;
+    min-height: 350px;
+    max-height: 350px;
   }
 }

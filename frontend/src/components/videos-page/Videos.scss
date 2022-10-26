@@ -3,6 +3,14 @@
 .news-list {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   flex-direction: column;
   list-style: none;
+}
+
+@media only screen and (min-width: 912px) {
+  .news-list {
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
 }
