@@ -1,22 +1,26 @@
 import React from "react";
-import { Sighting } from "../../clients/apiClient";
+import { Sighting, SightingFromExternalApi } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
 interface SightingProps {
-  sighting: Sighting;
+  sighting: Sighting | SightingFromExternalApi;
 }
 
 export const SightingCard: React.FunctionComponent<SightingProps> = ({
   sighting,
 }) => {
+  const imageUrl: string | undefined =
+    (sighting as Sighting).imageUrl ??
+    (sighting as SightingFromExternalApi).photoUrl;
+
   return (
     <div className="sighting-card">
       <h3 className="fade-in">Sighting #{sighting.id}</h3>
 
-      {sighting.imageUrl !== "" ? (
+      {imageUrl === undefined ? (
         <img
           className="image fade-in"
-          src={sighting.imageUrl}
+          src={imageUrl}
           alt={
             sighting.species?.name != null
               ? `${sighting.species?.name}`
@@ -28,14 +32,22 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       )}
 
       <div className="card-data fade-in">
-        <p>
-          <span className="sighting-card-information">Description: </span>
-          {sighting.description}
-        </p>
-        <p>
-          <span className="sighting-card-information">No. whales: </span>
-          {sighting.whaleCount}
-        </p>
+        {(sighting as SightingFromExternalApi).location.description ? (
+          <p>
+            <span className="sighting-card-information">Description: </span>
+            {sighting.description}
+          </p>
+        ) : (
+          <></>
+        )}
+        {(sighting as Sighting).whaleCount ? (
+          <p>
+            <span className="sighting-card-information">No. whales: </span>
+            {sighting.whaleCount}
+          </p>
+        ) : (
+          <></>
+        )}{" "}
       </div>
     </div>
   );
