@@ -121,77 +121,57 @@ export const CreateUser: React.FunctionComponent = () => {
   return (
     <div className="create-user-form">
       <form onSubmit={handleSubmit}>
-        <h1 className="create-user-form-heading">Create New User</h1>
-        <div className="create-user-form-field">
-          <label className="create-user-form-field__label">
+        <h1 className="create-user-form__heading">Create New User</h1>
+        <div className="create-user-form__field">
+          <label>
             Name:
             <input
-              className="create-user-form-field__input"
               type="text"
               name="Name"
               onChange={(e) => validateName(e.target.value)}
             />
           </label>
-          {nameMessage ? (
-            <p className="create-user-form-message">{nameMessage}</p>
-          ) : (
-            <></>
-          )}
+          {nameMessage ? <p>{nameMessage}</p> : <></>}
         </div>
-        <div className="create-user-form-field">
-          <label className="create-user-form-field__label">
+        <div className="create-user-form__field">
+          <label>
             Username:
             <input
-              className="create-user-form-field__input"
               type="text"
               name="Username"
               onChange={(e) => validateUsername(e.target.value)}
             />
           </label>
-          {usernameMessage ? (
-            <p className="create-user-form-message">{usernameMessage}</p>
-          ) : (
-            <></>
-          )}
+          {usernameMessage ? <p>{usernameMessage}</p> : <></>}
         </div>
-        <div className="create-user-form-field">
-          <label className="create-user-form-field__label">
+        <div className="create-user-form__field">
+          <label>
             Email:
             <input
-              className="create-user-form-field__input"
               type="email"
               name="Email"
               onChange={(e) => validateEmail(e.target.value)}
             />
           </label>
-          {emailMessage ? (
-            <p className="create-user-form-message">{emailMessage}</p>
-          ) : (
-            <></>
-          )}
+          {emailMessage ? <p>{emailMessage}</p> : <></>}
         </div>
-        <div className="create-user-form-field">
-          <label className="create-user-form-field__label">
+        <div className="create-user-form__field">
+          <label>
             Password:
             <input
-              className="create-user-form-field__input"
               type="password"
               name="Password"
               onChange={(e) => validatePassword(e.target.value)}
             />
           </label>
-          {passwordMessage ? (
-            <p className="create-user-form-message">{passwordMessage}</p>
-          ) : (
-            <></>
-          )}
+          {passwordMessage ? <p>{passwordMessage}</p> : <></>}
         </div>
-        <div className="create-user-form-button">
+        <div className="create-user-form__button">
           <input type="submit" value="Create User" />
         </div>
       </form>
       {addUserMessage ? (
-        <p className="create-user-form-add-user-message">{addUserMessage}</p>
+        <p className="create-user-form__add-user-message">{addUserMessage}</p>
       ) : (
         <></>
       )}

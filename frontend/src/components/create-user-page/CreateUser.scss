@@ -1,37 +1,37 @@
 @import "../../constants.scss";
 
-.create-user-form-heading {
+.create-user-form__heading {
   text-align: center;
 }
 
-.create-user-form-field {
+.create-user-form__field {
   min-height: 55px;
   width: 300px;
+
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  input {
+    width: 60%;
+    padding: 5px;
+  }
+
+  p {
+    text-align: right;
+    font-size: 12px;
+    color: red;
+    margin: 2px;
+  }
 }
 
-.create-user-form-field__label {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.create-user-form-field__input {
-  width: 60%;
-  padding: 5px;
-}
-
-.create-user-form-message {
-  text-align: right;
-  font-size: 12px;
-  color: red;
-  margin: 2px;
-}
-
-.create-user-form-add-user-message {
+.create-user-form__add-user-message {
   text-align: center;
 }
 
-.create-user-form-button {
+.create-user-form__button {
   text-align: center;
   input {
     background-color: $primary-dark;
