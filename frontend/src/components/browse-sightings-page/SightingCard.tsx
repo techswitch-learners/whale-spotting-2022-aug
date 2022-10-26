@@ -13,11 +13,19 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
     (sighting as Sighting).imageUrl ??
     (sighting as SightingFromExternalApi).photoUrl;
 
+  const description: string | undefined =
+    (sighting as Sighting).description ??
+    (sighting as SightingFromExternalApi).location.description;
+
+  const whaleCount: number | undefined =
+    (sighting as Sighting).whaleCount ??
+    (sighting as SightingFromExternalApi).species.description;
+
   return (
     <div className="sighting-card">
       <h3 className="fade-in">Sighting #{sighting.id}</h3>
 
-      {imageUrl === undefined ? (
+      {imageUrl != undefined ? (
         <img
           className="image fade-in"
           src={imageUrl}
@@ -32,22 +40,23 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       )}
 
       <div className="card-data fade-in">
-        {(sighting as SightingFromExternalApi).location.description ? (
+        {description != undefined ? (
           <p>
             <span className="sighting-card-information">Description: </span>
-            {sighting.description}
+            {description}
           </p>
         ) : (
           <></>
         )}
-        {(sighting as Sighting).whaleCount ? (
+        {whaleCount != undefined ? (
           <p>
             <span className="sighting-card-information">No. whales: </span>
-            {sighting.whaleCount}
+            {whaleCount}
           </p>
         ) : (
           <></>
-        )}{" "}
+        )}
+        {""}
       </div>
     </div>
   );

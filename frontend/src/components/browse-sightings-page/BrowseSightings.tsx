@@ -6,7 +6,6 @@ import {
   SightingFromExternalApi,
 } from "../../clients/apiClient";
 import { SightingCard } from "./SightingCard";
-import { SightingCardForExternalApi } from "./SightingCardForExternalApi";
 import "./BrowseSightings.scss";
 
 export const BrowseSightings: React.FC = () => {
@@ -28,10 +27,7 @@ export const BrowseSightings: React.FC = () => {
       <h2>Sighting from the Washington Whale Hotline</h2>
       <ul>
         {externalSightings?.map((apiSighting, index) => (
-          <SightingCardForExternalApi
-            apiSighting={apiSighting}
-            key={apiSighting.id}
-          />
+          <SightingCard sighting={apiSighting} key={apiSighting.id} />
         ))}
       </ul>
       <h2>Reported Sightings</h2>
