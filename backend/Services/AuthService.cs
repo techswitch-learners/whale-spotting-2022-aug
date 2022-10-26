@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Repositories;
 
 namespace WhaleSpotting.Services
