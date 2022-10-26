@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React from "react";
 import { Sighting } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
@@ -22,7 +23,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       )}
 
       <p className="sighting-card__date fade-in">
-        {new Date(sighting.seenOn).toDateString()}
+        {format(sighting.seenOn, "do MMM yyyy")}
       </p>
       {sighting.imageUrl !== "" ? (
         <img
