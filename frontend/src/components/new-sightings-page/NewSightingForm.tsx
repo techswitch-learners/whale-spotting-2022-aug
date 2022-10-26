@@ -266,6 +266,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         {whaleSpecies !== undefined ? (
           <Select
+            className="species-dropdown"
             onChange={(e) => {
               setFormValues({
                 ...formValues,
