@@ -7,18 +7,20 @@ import {
 import Select from "react-select";
 import { format } from "date-fns";
 import "./NewSightingForm.scss";
+import { Map } from "./Map";
 
 type LocationInputType =
   | "getLocationFromPhone"
   | "getLocationFromCoordinates"
-  | "getLocationFromName";
+  | "getLocationFromName"
+  | "getLocationFromMap";
 
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
   setSuccess: (success: boolean) => void;
 }
 
-interface FormValues {
+export interface FormValues {
   seenBy: string;
   date: string;
   latitude: string;
@@ -71,6 +73,13 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value as LocationInputType);
+  };
+  const updateFormValuesFromMap = (lat: number, lng: number) => {
+    setFormValues({
+      ...formValues,
+      latitude: lat.toString(),
+      longitude: lng.toString(),
+    });
   };
 
   const validateForm = () => {
@@ -249,15 +258,16 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           <div className="location-input-choice">
             <input
               type="radio"
-              value="getLocationFromName"
-              checked={locationInputType === "getLocationFromName"}
+              value="getLocationFromMap"
+              checked={locationInputType === "getLocationFromMap"}
               onChange={handleChange}
-              disabled
             />
-            <label htmlFor="getLocationFromName">Start typing a location</label>
+            <label htmlFor="getLocationFromMap">Start typing a location</label>
             <br />
-            {locationInputTypeError !== "" ? (
-              <>{locationInputTypeError}</>
+            {locationInputType == "getLocationFromMap" ? (
+              <>
+                <Map formValues={formValues} setFormValues={setFormValues} />
+              </>
             ) : (
               <></>
             )}
