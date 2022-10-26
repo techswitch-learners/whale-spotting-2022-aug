@@ -13,13 +13,9 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
     (sighting as Sighting).imageUrl ??
     (sighting as SightingFromExternalApi).photoUrl;
 
-  const description: string | undefined =
-    (sighting as Sighting).description ??
-    (sighting as SightingFromExternalApi).location.description;
+  const description: string | undefined = (sighting as Sighting).description;
 
-  const whaleCount: number | undefined =
-    (sighting as Sighting).whaleCount ??
-    (sighting as SightingFromExternalApi).species.description;
+  const whaleCount: number | undefined = (sighting as Sighting).whaleCount;
 
   return (
     <div className="sighting-card">
