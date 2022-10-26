@@ -74,13 +74,6 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value as LocationInputType);
   };
-  const updateFormValuesFromMap = (lat: number, lng: number) => {
-    setFormValues({
-      ...formValues,
-      latitude: lat.toString(),
-      longitude: lng.toString(),
-    });
-  };
 
   const validateForm = () => {
     let numberOfErrors = 0;
@@ -262,12 +255,15 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
               checked={locationInputType === "getLocationFromMap"}
               onChange={handleChange}
             />
-            <label htmlFor="getLocationFromMap">Start typing a location</label>
-            <br />
+            <label htmlFor="getLocationFromMap">
+              Choose your location from the map
+            </label>
+          </div>
+          <div>
             {locationInputType == "getLocationFromMap" ? (
-              <>
+              <div className="map">
                 <Map formValues={formValues} setFormValues={setFormValues} />
-              </>
+              </div>
             ) : (
               <></>
             )}
