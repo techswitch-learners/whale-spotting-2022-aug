@@ -1,20 +1,39 @@
-import { Sighting } from "../../clients/apiClient";
+import {
+  ExternalSighting,
+  GenericSighting,
+  isExternalSighting,
+  Sighting,
+} from "../../clients/apiClient";
 import GoogleMapReact from "google-map-react";
 import { Marker } from "./Marker";
 import React from "react";
 import "./SightingMap.scss";
 
 interface SightingMapProps {
-  sightings: Sighting[];
+  sightings: GenericSighting[];
 }
 
 export const SightingMap: React.FC<SightingMapProps> = ({ sightings }) => {
   const points = sightings.map((sighting) => {
+    const id = isExternalSighting(sighting)
+      ? `ext-${sighting.id}`
+      : sighting.id;
+    const title =
+      (sighting as Sighting).seenBy ??
+      (sighting as ExternalSighting).email ??
+      "Anonymous";
+    const latitude =
+      (sighting as Sighting).latitude ??
+      (sighting as ExternalSighting).location.latitude;
+    const longitude =
+      (sighting as Sighting).longitude ??
+      (sighting as ExternalSighting).location.longitude;
+
     return {
-      id: sighting.id,
-      title: sighting.seenBy,
-      lat: sighting.latitude,
-      lng: sighting.longitude,
+      id: id,
+      title: title,
+      lat: latitude,
+      lng: longitude,
     };
   });
 
