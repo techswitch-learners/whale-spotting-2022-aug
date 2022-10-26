@@ -4,10 +4,24 @@ import { getAllSpecies, Species } from "../../clients/apiClient";
 
 export const NewSightings: React.FunctionComponent = () => {
   const [whaleSpecies, setWhaleSpecies] = useState<Species[]>();
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     getAllSpecies().then(setWhaleSpecies);
   }, []);
 
-  return <NewSightingForm whaleSpecies={whaleSpecies} />;
+  if (success) {
+    return (
+      <>
+        <p>Successfully submitted</p>
+        <button onClick={() => setSuccess(false)}>
+          Report another sighting
+        </button>
+      </>
+    );
+  } else {
+    return (
+      <NewSightingForm setSuccess={setSuccess} whaleSpecies={whaleSpecies} />
+    );
+  }
 };
