@@ -1,6 +1,7 @@
 import React from "react";
+import { ConfirmationStatus } from "../../clients/apiClient";
 import "./PendingSightingCard.scss";
-import { ConfirmationStatus, SightingReport } from "./PendingSightings";
+import { SightingReport } from "./PendingSightings";
 
 interface PendingSightingCardProps {
   sightingReport: SightingReport;

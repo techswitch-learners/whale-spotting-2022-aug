@@ -4,11 +4,10 @@ import {
   getAllPendingSightings,
   confirmOrRejectSighting,
   Sighting,
+  ConfirmationStatus,
 } from "../../clients/apiClient";
 import { LoginContext } from "../login/LoginManager";
 import { PendingSightingCard } from "./PendingSightingCard";
-
-export type ConfirmationStatus = "rejected" | "approved";
 
 export interface SightingReport {
   sighting: Sighting;
