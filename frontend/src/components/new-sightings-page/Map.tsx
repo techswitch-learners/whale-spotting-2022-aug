@@ -35,7 +35,12 @@ export const Map: React.FunctionComponent<MapProp> = ({
     { id: 2, title: "The Long Water", lat: 51.508, lng: -0.175 },
     { id: 3, title: "The Serpentine", lat: 51.505, lng: -0.164 },
   ];
-  const [selectedPoint, setSelectedPoint] = useState<Point>();
+  const [selectedPoint, setSelectedPoint] = useState<Point>({
+    id: 1,
+    title: "fsafs",
+    lat: 51.506,
+    lng: -0.169,
+  });
 
   const defaultProps: DefaultProps = {
     center: {
@@ -45,13 +50,17 @@ export const Map: React.FunctionComponent<MapProp> = ({
     zoom: 11,
   };
 
+  const defaultMapOptions = {
+    fullscreenControl: false,
+  };
   return (
     // Important! Always set the container height explicitly
-    <div style={{ height: "100vh", width: "100%" }}>
+    <div style={{ height: "100vh", width: "100vh" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
+        options={defaultMapOptions}
         onClick={(e) => {
           setSelectedPoint({
             id: 1,
@@ -69,11 +78,6 @@ export const Map: React.FunctionComponent<MapProp> = ({
           console.log(e.lat);
         }}
       >
-        {/* {selectedPoint.map(({ lat, lng, id, title }:Point) => {
-          return (
-            <Marker key={id} lat={lat} lng={lng} id={id} title={title} />
-          );
-        })} */}
         <Marker
           lat={selectedPoint?.lat}
           lng={selectedPoint?.lng}
