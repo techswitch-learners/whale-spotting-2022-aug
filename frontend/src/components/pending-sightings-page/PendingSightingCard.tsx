@@ -16,7 +16,7 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
     <div
       className={
         "sighting-card" +
-        `${sightingReport.success === false ? " sighting-card--error" : ""}`
+        `${sightingReport.success === false ? " sighting-card__error" : ""}`
       }
     >
       <p>Post ID: {sighting.id}</p>
