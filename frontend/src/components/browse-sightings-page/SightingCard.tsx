@@ -23,7 +23,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       )}
 
       <p className="sighting-card__date fade-in">
-        {format(sighting.seenOn, "do MMM yyyy")}
+        {format(new Date(sighting.seenOn), "do MMM yyyy")}
       </p>
       {sighting.imageUrl !== "" ? (
         <img
