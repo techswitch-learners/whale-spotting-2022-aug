@@ -8,16 +8,16 @@ export interface SightingListResponse<ExternalSighting> {
   sightings: ExternalSighting[];
 }
 
-export interface SightingFromExternalApi {
+export interface ExternalSighting {
   id: number;
   data: string;
-  location: LocationInfo;
+  location: ExternalLocation;
   species: ExternalSpecies;
   photoUrl: string;
   email: string;
 }
 
-export interface LocationInfo {
+export interface ExternalLocation {
   id: number;
   latitude: number;
   longitude: number;
@@ -113,13 +113,11 @@ export async function createSighting(
   });
 }
 
-export const getExternalSightings = async (): Promise<
-  SightingFromExternalApi[]
-> => {
+export const getExternalSightings = async (): Promise<ExternalSighting[]> => {
   const response = await fetch(
     `https://whale-spotting-external-api.herokuapp.com/api/sightings`
   );
-  const listResponse: SightingListResponse<SightingFromExternalApi> =
+  const listResponse: SightingListResponse<ExternalSighting> =
     await response.json();
   return listResponse.sightings;
 };
