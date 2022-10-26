@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import {
   getSightings,
   getSightingsBySpeciesId,
-  SightingWithLocations,
+  Sighting,
 } from "../../clients/apiClient";
 import { SightingCard } from "./SightingCard";
 import "./BrowseSightings.scss";
 import { useParams } from "react-router-dom";
 
 export const BrowseSightings: React.FC = () => {
-  const [sightings, setSightings] = useState<SightingWithLocations[]>();
+  const [sightings, setSightings] = useState<Sighting[]>();
   const { speciesId } = useParams<{ speciesId: string }>();
 
   if (speciesId === undefined) {
@@ -19,27 +19,35 @@ export const BrowseSightings: React.FC = () => {
   } else {
     useEffect(() => {
       getSightingsBySpeciesId(speciesId).then(setSightings);
-    }, [speciesId]);
+    }, []);
   }
 
-  let pageHeadline = "";
+  const heading = "Reported Sightings";
 
   if (sightings === undefined) {
-    pageHeadline = "Loading";
+    return (
+      <>
+        <h1>{heading}</h1>
+        <p>Loading</p>
+      </>
+    );
   } else if (sightings.length === 0) {
-    pageHeadline = "Sorry, no whales of that species have been seen";
+    return (
+      <>
+        <h1>{heading}</h1>
+        <p>Sorry, we have no sightings of that species!</p>
+      </>
+    );
   } else {
-    pageHeadline = "Reported Sightings";
+    return (
+      <>
+        <h1>{heading}</h1>
+        <ul>
+          {sightings?.map((sighting) => (
+            <SightingCard sighting={sighting} key={sighting.id} />
+          ))}
+        </ul>
+      </>
+    );
   }
-
-  return (
-    <>
-      <h1>{pageHeadline}</h1>
-      <ul>
-        {sightings?.map((sighting, index) => (
-          <SightingCard sighting={sighting} key={index} />
-        ))}
-      </ul>
-    </>
-  );
 };
