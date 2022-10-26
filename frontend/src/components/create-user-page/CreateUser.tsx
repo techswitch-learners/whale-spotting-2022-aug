@@ -109,7 +109,7 @@ export const CreateUser: React.FunctionComponent = () => {
       })
         .then((res) => {
           setAddUserMessage(
-            res.status == 200
+            res.ok
               ? "User added successfully!"
               : "Sorry, couldn't add the user!"
           );
