@@ -5,6 +5,7 @@ using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
 using WhaleSpotting.Helpers;
 using System;
+using System.Threading.Tasks;
 
 namespace WhaleSpotting.Controllers
 {
@@ -47,9 +48,9 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateSighting([FromBody] CreateSightingRequest createSightingRequest)
+        public async Task<ActionResult> CreateSightingAsync([FromBody] CreateSightingRequest createSightingRequest)
         {
-            var createdSighting = _sightings.CreateSighting(createSightingRequest);
+            var createdSighting = await _sightings.CreateSightingAsync(createSightingRequest);
             return Created("/api", createdSighting);
         }
 
