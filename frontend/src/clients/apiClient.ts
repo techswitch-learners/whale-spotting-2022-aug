@@ -4,7 +4,7 @@ export interface ListResponse<T> {
   items: T[];
 }
 
-export interface SightingListResponse<ExternalSighting> {
+export interface SightingListResponse {
   sightings: ExternalSighting[];
 }
 
@@ -171,7 +171,6 @@ export const getExternalSightings = async (): Promise<ExternalSighting[]> => {
   const response = await fetch(
     `https://whale-spotting-external-api.herokuapp.com/api/sightings`
   );
-  const listResponse: SightingListResponse<ExternalSighting> =
-    await response.json();
+  const listResponse: SightingListResponse = await response.json();
   return listResponse.sightings;
 };
