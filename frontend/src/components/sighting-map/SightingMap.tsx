@@ -21,7 +21,7 @@ export const SightingMap: React.FC<SightingMapProps> = ({ sightings }) => {
   console.log(process.env);
 
   return (
-    <div style={{ height: "100vh", width: "100vh" }}>
+    <div className="map-container">
       <GoogleMapReact
         className="sighting-map"
         bootstrapURLKeys={{
