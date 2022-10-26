@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React from "react";
 import { Sighting } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
@@ -11,8 +12,19 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 }) => {
   return (
     <div className="sighting-card">
-      <h3 className="fade-in">Sighting #{sighting.id}</h3>
+      {sighting.species?.name ? (
+        <h3 className="sighting-card__title fade-in">
+          Sighting of {sighting.species?.name}
+        </h3>
+      ) : (
+        <h3 className="sighting-card__title fade-in">
+          Sighting recorded by {sighting.seenBy}
+        </h3>
+      )}
 
+      <p className="sighting-card__date fade-in">
+        {format(new Date(sighting.seenOn), "do MMM yyyy")}
+      </p>
       {sighting.imageUrl !== "" ? (
         <img
           className="image fade-in"
@@ -29,11 +41,15 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 
       <div className="card-data fade-in">
         <p>
-          <span className="sighting-card-information">Description: </span>
+          <span className="sighting-card__information">
+            Description of sighting:{" "}
+          </span>
           {sighting.description}
         </p>
         <p>
-          <span className="sighting-card-information">No. whales: </span>
+          <span className="sighting-card__information">
+            Number of whales seen:{" "}
+          </span>
           {sighting.whaleCount}
         </p>
       </div>
