@@ -74,7 +74,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
     });
   };
 
-  const getLocationFromPhone = () => {
+  const getLocationFromBrowser = () => {
     const onSuccess = (pos: GeolocationPosition) => {
       const { latitude, longitude } = pos.coords;
       setFormValues({
@@ -203,7 +203,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
               checked={locationInputType === "getLocationFromPhone"}
               onChange={(e) => {
                 handleChange(e);
-                getLocationFromPhone();
+                getLocationFromBrowser();
               }}
             />
             <label htmlFor="getLocationFromPhone">Use my location</label>
