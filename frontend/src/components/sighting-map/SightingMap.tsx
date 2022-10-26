@@ -18,14 +18,18 @@ export const SightingMap: React.FC<SightingMapProps> = ({ sightings }) => {
     };
   });
 
-  console.log(process.env);
+  const apiKey = process.env["REACT_APP_MAP_API_KEY"];
+  if (apiKey === undefined) {
+    throw new Error(
+      "Environment variable REACT_APP_MAP_API_KEY is not defined"
+    );
+  }
 
   return (
     <div className="map-container">
       <GoogleMapReact
-        className="sighting-map"
         bootstrapURLKeys={{
-          key: process.env["REACT_APP_MAP_API_KEY"],
+          key: apiKey,
           language: "en",
           region: "GB",
         }}
