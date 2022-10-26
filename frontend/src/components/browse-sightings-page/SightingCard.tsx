@@ -1,17 +1,16 @@
 import React from "react";
-import { Sighting, SightingFromExternalApi } from "../../clients/apiClient";
+import { Sighting, ExternalSighting } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
 interface SightingProps {
-  sighting: Sighting | SightingFromExternalApi;
+  sighting: Sighting | ExternalSighting;
 }
 
 export const SightingCard: React.FunctionComponent<SightingProps> = ({
   sighting,
 }) => {
   const imageUrl: string | undefined =
-    (sighting as Sighting).imageUrl ??
-    (sighting as SightingFromExternalApi).photoUrl;
+    (sighting as Sighting).imageUrl ?? (sighting as ExternalSighting).photoUrl;
 
   const description: string | undefined = (sighting as Sighting).description;
 
