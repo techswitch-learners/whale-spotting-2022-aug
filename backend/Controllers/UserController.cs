@@ -5,12 +5,13 @@ using WhaleSpotting.Helpers;
 using WhaleSpotting.Models.Request;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Response;
+using WhaleSpotting.Exceptions;
 
-namespace WhaleSpotting.Controllers 
+namespace WhaleSpotting.Controllers
 {
     [ApiController]
     [Route("/users")]
-    public class UserController : ControllerBase 
+    public class UserController : ControllerBase
     {
 
         private readonly IAuthService _authService;
@@ -20,7 +21,8 @@ namespace WhaleSpotting.Controllers
         (
             IAuthService authService,
             IUserService userService
-        ) {
+        )
+        {
             _authService = authService;
             _userService = userService;
         }
@@ -38,24 +40,26 @@ namespace WhaleSpotting.Controllers
                 return new UnauthorizedResult();
             }
 
-            try
-            {
-                (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
 
-                var check = _authService.IsValidLoginInfo(username, password);
-                if (!check)
-                {
-                    return new UnauthorizedResult();
-                }
-                
-                User createdUser = _userService.Create(newUserRequest);
+            (string username, string password) = AuthHelper.GetUsernameAndPassword(authorization);
 
-                return new UserResponse(newUserRequest);  
-            }
-            catch (Exception)
+            var check = _authService.IsValidLoginInfo(username, password);
+
+            if (!check)
             {
                 return new UnauthorizedResult();
             }
+
+            try
+            {
+                User createdUser = _userService.Create(newUserRequest);
+            }
+            catch (DuplicateUsernameException)
+            {
+                return BadRequest("Username already exists");
+            }
+
+            return new UserResponse(newUserRequest);
         }
     }
 }
