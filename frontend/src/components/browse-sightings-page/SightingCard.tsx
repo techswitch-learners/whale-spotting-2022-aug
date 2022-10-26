@@ -56,7 +56,6 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
         ) : (
           <></>
         )}
-        {""}
       </div>
     </div>
   );
