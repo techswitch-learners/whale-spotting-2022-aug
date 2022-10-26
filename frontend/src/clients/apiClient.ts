@@ -10,7 +10,7 @@ export interface SightingListResponse<ExternalSighting> {
 
 export interface ExternalSighting {
   id: number;
-  data: string;
+  date: Date;
   location: ExternalLocation;
   species: ExternalSpecies;
   photoUrl: string;
