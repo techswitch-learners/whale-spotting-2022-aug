@@ -13,12 +13,20 @@ export const BrowseSightings: React.FC = () => {
   if (sightings === undefined) {
     return <p>Loading</p>;
   }
+  const cardData: JSX.Element[] = sightings.map((sighting, index) => {
+    return <div>the lot</div>;
+  });
 
   return (
     <>
       <h1>Reported Sightings</h1>
       <ul>
         {sightings.map((sighting, index) => (
+          //   const text:JSX.Element = ()=>{
+          //   return(
+          //     <div> sighting</>
+          //   );
+          // }
           <SightingCard sighting={sighting} key={sighting.id} />
         ))}
       </ul>
