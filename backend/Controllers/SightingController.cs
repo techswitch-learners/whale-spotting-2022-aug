@@ -63,7 +63,7 @@ namespace WhaleSpotting.Controllers
 
         [HttpPatch("{sightingId}/confirmation")]
         public ActionResult ChangeConfirmationStatus(
-            [FromHeader] string authorization,
+            [FromHeader] string authorization, 
             [FromRoute] int sightingId,
             [FromBody] ConfirmOrRejectRequest confirmOrRejectRequest)
         {
@@ -101,7 +101,7 @@ namespace WhaleSpotting.Controllers
                 return NotFound();
             }
         }
-
+        
         [HttpGet("{sightingId}")]
         public ActionResult<Sighting> GetSightingById([FromRoute] int sightingId)
         {
