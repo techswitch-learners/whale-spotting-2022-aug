@@ -24,16 +24,16 @@ export const BrowseSightings: React.FC = () => {
 
   return (
     <>
-      <h2>Sighting from the Washington Whale Hotline</h2>
-      <ul>
-        {externalSightings?.map((apiSighting) => (
-          <SightingCard sighting={apiSighting} key={apiSighting.id} />
-        ))}
-      </ul>
       <h2>Reported Sightings</h2>
       <ul>
         {sightings?.map((sighting) => (
           <SightingCard sighting={sighting} key={sighting.id} />
+        ))}
+      </ul>
+      <h2>Sighting from the Washington Whale Hotline</h2>
+      <ul>
+        {externalSightings?.map((apiSighting) => (
+          <SightingCard sighting={apiSighting} key={apiSighting.id} />
         ))}
       </ul>
     </>
