@@ -54,7 +54,11 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       {imageUrl != undefined ? (
         <img
           className="image fade-in"
-          src={imageUrl}
+          src={
+            imageUrl
+              ? `${imageUrl}`
+              : "https://anomalylifestyle.com/wp-content/uploads/2021/12/whale-1-768x447.jpg"
+          }
           alt={
             speciesName
               ? `${speciesName}`
