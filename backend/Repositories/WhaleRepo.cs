@@ -22,7 +22,7 @@ namespace WhaleSpotting.Repositories
         {
             _context = context;
         }
-        
+
         public IEnumerable<Species> GetAllSpecies()
         {
             return _context.Species
@@ -37,15 +37,11 @@ namespace WhaleSpotting.Repositories
                 .Single(s => s.Id == speciesId);
         }
 
-
-        //public searchSpeciesByKeyword(string keyword)
         public IEnumerable<Species> GetSpeciesByName(string name)
         {
-            Regex reg = new Regex("[:!@#$%^&*()}{|\":?><[]\\;'/.,~ ]");
             var species = _context.Species
                 .Include(s => s.ConservationStatus)
-                // .Where(s => reg.Replace(s.Name, string.Empty).ToLower() == reg.Replace(name, string.Empty).ToLower());
-                .Where(s => s.Name.Contains(name));
+                .Where(s => s.Name.ToLower().Contains(name.ToLower()));
             return species;
         }
     }

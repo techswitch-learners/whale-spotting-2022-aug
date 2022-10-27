@@ -32,10 +32,6 @@ namespace WhaleSpotting.Services
 
         public IEnumerable<Species> GetSpeciesByName(string searchString)
         {
-            //split searchString by " "
-            //for each keyword in splitSearchString
-            //getSpeciesByKeyword (keyword) --> add it to a returnList
-            //eventually return returnList
             return _whales.GetSpeciesByName(searchString);
         }
     }
