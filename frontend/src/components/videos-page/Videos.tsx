@@ -29,7 +29,7 @@ export const Videos: React.FunctionComponent = () => {
     );
   } else {
     pageContent = (
-      <ul className="news-list">
+      <ul className="videos-list">
         {videos &&
           videos?.map((video: RedditVideo) => (
             <li key={video.id}>

@@ -5,6 +5,7 @@ import {
   Species,
 } from "../../clients/apiClient";
 import Select from "react-select";
+import { format } from "date-fns";
 import "./NewSightingForm.scss";
 
 type LocationInputType =
@@ -14,6 +15,7 @@ type LocationInputType =
 
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
+  setSuccess: (success: boolean) => void;
 }
 
 interface FormValues {
@@ -38,8 +40,10 @@ interface FormErrors {
   anyError: string;
 }
 
+const now: string = format(new Date(), "yyyy-MM-dd'T'HH:mm");
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   whaleSpecies,
+  setSuccess,
 }) => {
   const [formValues, setFormValues] = useState<FormValues>({
     seenBy: "",
@@ -67,6 +71,23 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value as LocationInputType);
+    setFormValues({
+      ...formValues,
+      longitude: "",
+      latitude: "",
+    });
+  };
+
+  const getLocationFromBrowser = () => {
+    const onSuccess = (pos: GeolocationPosition) => {
+      const { latitude, longitude } = pos.coords;
+      setFormValues({
+        ...formValues,
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
+      });
+    };
+    navigator.geolocation.getCurrentPosition(onSuccess);
   };
 
   const validateForm = () => {
@@ -140,7 +161,8 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         latitude: Number.parseFloat(formValues.latitude),
         longitude: Number.parseFloat(formValues.longitude),
       };
-      createSighting(createSightingRequest);
+
+      createSighting(createSightingRequest).then((r) => setSuccess(r));
     } else {
       setFormErrors({
         ...formErrors,
@@ -168,6 +190,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         <input
           type="datetime-local"
+          max={now}
           onChange={(e) => {
             setFormValues({
               ...formValues,
@@ -184,10 +207,18 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
               type="radio"
               value="getLocationFromPhone"
               checked={locationInputType === "getLocationFromPhone"}
-              onChange={handleChange}
-              disabled
+              onChange={(e) => {
+                handleChange(e);
+                getLocationFromBrowser();
+              }}
             />
             <label htmlFor="getLocationFromPhone">Use my location</label>
+            {locationInputType === "getLocationFromPhone" && (
+              <div className="location-from-phone">
+                <p>{formValues.latitude}</p>
+                <p>{formValues.longitude}</p>
+              </div>
+            )}
           </div>
           <div className="location-input-choice">
             <input
@@ -206,6 +237,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
                   placeholder="Latitude"
                   min="-90"
                   max="90"
+                  step="any"
                   onChange={(e) => {
                     setFormValues({
                       ...formValues,
@@ -223,6 +255,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
                   placeholder="Longitude"
                   min="-180"
                   max="180"
+                  step="any"
                   onChange={(e) => {
                     setFormValues({
                       ...formValues,
@@ -258,6 +291,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         {whaleSpecies !== undefined ? (
           <Select
+            className="species-dropdown"
             onChange={(e) => {
               setFormValues({
                 ...formValues,
