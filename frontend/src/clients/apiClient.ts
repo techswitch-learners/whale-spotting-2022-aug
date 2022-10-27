@@ -57,7 +57,7 @@ export interface Sighting {
   imageUrl?: string;
   description?: string;
   whaleCount: number;
-  location?: string;
+  location?: Location;
   latitude: number;
   longitude: number;
 }
@@ -83,6 +83,11 @@ export interface CreateSightingRequest {
   whaleCount: number;
   latitude: number;
   longitude: number;
+}
+
+interface Location {
+  id: number;
+  description: string;
 }
 
 export interface ConfirmOrRejectRequest {
@@ -152,6 +157,14 @@ export const confirmOrRejectSighting = async (
 
 export const getSightings = async (): Promise<Sighting[]> => {
   const response = await fetch(`${backendUrl}/sightings`);
+  const sightingsListResponse: ListResponse<Sighting> = await response.json();
+  return sightingsListResponse.items;
+};
+
+export const getSightingsBySpeciesId = async (
+  speciesId: string
+): Promise<Sighting[]> => {
+  const response = await fetch(`${backendUrl}/sightings/species/${speciesId}`);
   const sightingsListResponse: ListResponse<Sighting> = await response.json();
   return sightingsListResponse.items;
 };

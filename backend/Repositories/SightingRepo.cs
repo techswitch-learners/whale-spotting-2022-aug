@@ -41,6 +41,7 @@ namespace WhaleSpotting.Repositories
             return _context
                 .Sightings
                 .Include(s => s.Species)
+                .Include(s => s.Location)
                 .Where(s => s.ConfirmationStatus == ConfirmationStatus.Approved);
         }
 

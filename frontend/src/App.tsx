@@ -20,6 +20,9 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path="/sightings">
         <BrowseSightings />
       </Route>
+      <Route path="/sightings/species/:speciesId">
+        <BrowseSightings />
+      </Route>
       <Route exact path="/whaleopedia">
         <Whaleopedia />
       </Route>

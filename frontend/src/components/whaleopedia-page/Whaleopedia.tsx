@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getAllSpecies, Species } from "../../clients/apiClient";
 import { WhaleCard } from "./WhaleCard";
 import "./Whaleopedia.scss";
@@ -18,8 +19,13 @@ export const Whaleopedia: React.FunctionComponent = () => {
     <>
       <h1>Whaleopedia</h1>
       <div className="whale-list">
-        {whales.map((whale, index) => {
-          return <WhaleCard key={index} whale={whale} />;
+        {whales.map((whale) => {
+          const whaleRoute = "/sightings/species/" + whale.id;
+          return (
+            <Link className="whaleopedia__link" key={whale.id} to={whaleRoute}>
+              <WhaleCard whale={whale} />
+            </Link>
+          );
         })}
       </div>
     </>
