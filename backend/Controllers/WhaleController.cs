@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Response;
@@ -34,6 +35,20 @@ namespace WhaleSpotting.Controllers
             {
                 var whale = _whales.GetSpeciesById(speciesId);
                 return whale;
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("species")]
+        public ActionResult<ListResponse<Species>> GetSpeciesByName([FromQuery] string name)
+        {
+            try
+            {
+                var whale = _whales.GetSpeciesByName(name);
+                return new ListResponse<Species>(whale);
             }
             catch (InvalidOperationException)
             {

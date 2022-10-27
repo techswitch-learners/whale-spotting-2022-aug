@@ -8,6 +8,7 @@ namespace WhaleSpotting.Services
     {
         IEnumerable<Species> GetAllSpecies();
         Species GetSpeciesById(int speciesId);
+        IEnumerable<Species> GetSpeciesByName(string name);
     }
 
     public class WhaleService : IWhaleService
@@ -27,6 +28,15 @@ namespace WhaleSpotting.Services
         public Species GetSpeciesById(int speciesId)
         {
             return _whales.GetSpeciesById(speciesId);
+        }
+
+        public IEnumerable<Species> GetSpeciesByName(string searchString)
+        {
+            //split searchString by " "
+            //for each keyword in splitSearchString
+            //getSpeciesByKeyword (keyword) --> add it to a returnList
+            //eventually return returnList
+            return _whales.GetSpeciesByName(searchString);
         }
     }
 }

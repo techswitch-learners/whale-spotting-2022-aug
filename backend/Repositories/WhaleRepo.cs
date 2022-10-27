@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.Database;
 
@@ -9,6 +10,8 @@ namespace WhaleSpotting.Repositories
     {
         IEnumerable<Species> GetAllSpecies();
         Species GetSpeciesById(int speciesId);
+
+        IEnumerable<Species> GetSpeciesByName(string name);
     }
 
     public class WhaleRepo : IWhaleRepo
@@ -32,6 +35,18 @@ namespace WhaleSpotting.Repositories
             return _context.Species
                 .Include(s => s.ConservationStatus)
                 .Single(s => s.Id == speciesId);
+        }
+
+
+        //public searchSpeciesByKeyword(string keyword)
+        public IEnumerable<Species> GetSpeciesByName(string name)
+        {
+            Regex reg = new Regex("[:!@#$%^&*()}{|\":?><[]\\;'/.,~ ]");
+            var species = _context.Species
+                .Include(s => s.ConservationStatus)
+                // .Where(s => reg.Replace(s.Name, string.Empty).ToLower() == reg.Replace(name, string.Empty).ToLower());
+                .Where(s => s.Name.Contains(name));
+            return species;
         }
     }
 }
