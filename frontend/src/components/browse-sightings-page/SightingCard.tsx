@@ -4,6 +4,7 @@ import {
   Sighting,
   ExternalSighting,
   GenericSighting,
+  isExternalSighting,
 } from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
@@ -27,11 +28,18 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 
   const whaleCount: number | undefined = (sighting as Sighting).whaleCount;
 
+  let speciesName: string | undefined;
+  if (isExternalSighting(sighting)) {
+    speciesName = sighting.species.map((s) => s.name).join(", ");
+  } else {
+    speciesName = sighting.species?.name;
+  }
+
   return (
     <div className="sighting-card">
-      {sighting.species?.name ? (
+      {speciesName ? (
         <h3 className="sighting-card__title fade-in">
-          Sighting of {sighting.species?.name}
+          Sighting of {speciesName}
         </h3>
       ) : (
         <h3 className="sighting-card__title fade-in">
@@ -47,8 +55,8 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
           className="image fade-in"
           src={imageUrl}
           alt={
-            sighting.species?.name != null
-              ? `${sighting.species?.name}`
+            speciesName
+              ? `${speciesName}`
               : "Picture of a whale of unknown species"
           }
         />
