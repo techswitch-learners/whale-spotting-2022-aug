@@ -41,7 +41,7 @@ interface FormErrors {
   anyError: string;
 }
 
-const now: string = format(new Date(), "yyyy-MM-dd'T'HH:mm");
+const now: string = format(new Date(), "yyyy-MM-dd");
 export const NewSightingForm: React.FC<NewSightingFormProps> = ({
   whaleSpecies,
   setSuccess,
@@ -204,7 +204,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         {formErrors.seenBy !== "" ? <>{formErrors.seenBy}</> : <></>}
 
         <input
-          type="datetime-local"
+          type="date"
           max={now}
           onChange={(e) => {
             setFormValues({
