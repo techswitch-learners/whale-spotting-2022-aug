@@ -21,39 +21,37 @@ export const Login: React.FunctionComponent = () => {
   }
 
   return (
-    <div>
-      <h2 className="admin-message">ONLY ACCESSIBLE TO ADMINS!</h2>
-      <div className="form">
+    <>
+      <p className="admin-message">ONLY ACCESSIBLE TO ADMINS!</p>
+      <div className="login-form">
         <form onSubmit={tryLogin}>
           <h1>Log In</h1>
-          <div className="form_field">
-            <div className="form_field--row">
-              <label className="form_field--label">Username:</label>
+          <div className="login-form__field">
+            <label>
+              Username:
               <input
-                className="form_field--input"
                 type="text"
                 name="Username"
                 onChange={(e) => setUsername(e.target.value)}
               />
-            </div>
+            </label>
           </div>
-          <div className="form_field">
-            <div className="form_field--row">
-              <label className="form_field--label">Password:</label>
+          <div className="login-form__field">
+            <label>
+              Password:
               <input
-                className="form_field--input"
                 type="password"
                 name="Password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </div>
+            </label>
           </div>
-          <div className="form_button">
+          <div className="login-form__button">
             <input type="submit" value="Login" />
           </div>
         </form>
-        {error && <p className="message">{error}</p>}
+        {error && <p className="login-form__message">{error}</p>}
       </div>
-    </div>
+    </>
   );
 };
