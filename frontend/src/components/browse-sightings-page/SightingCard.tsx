@@ -29,6 +29,16 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
 
   const whaleCount: number | undefined = (sighting as Sighting).whaleCount;
 
+  let locationName: string | undefined;
+  if (isExternalSighting(sighting)) {
+    locationName = sighting.location.name;
+  } else {
+    locationName = sighting.location?.description;
+  }
+
+  console.log(sighting.location);
+  console.log(locationName);
+
   let speciesName: string | undefined;
   if (isExternalSighting(sighting)) {
     speciesName = sighting.species.map((s) => s.name).join(", ");
@@ -51,7 +61,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       <p className="sighting-card__date fade-in">
         {format(new Date(seenOn), "do MMM yyyy")}
       </p>
-      {imageUrl != undefined ? (
+      {imageUrl ? (
         <img
           className="image fade-in"
           src={imageUrl}
@@ -66,7 +76,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       )}
 
       <div className="card-data fade-in">
-        {description != undefined ? (
+        {description ? (
           <p>
             <span className="sighting-card__information">
               Description of sighting:{" "}
@@ -76,7 +86,7 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
         ) : (
           <></>
         )}
-        {whaleCount != undefined ? (
+        {whaleCount ? (
           <p>
             <span className="sighting-card__information">
               Number of whales seen:{" "}
@@ -86,10 +96,10 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
         ) : (
           <></>
         )}
-        {sighting.location != null ? (
+        {locationName ? (
           <p>
             <span className="sighting-card__information">Location: </span>
-            {sighting.location.description}
+            {locationName}
           </p>
         ) : (
           <></>
