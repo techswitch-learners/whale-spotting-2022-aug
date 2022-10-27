@@ -15,7 +15,8 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
   sighting,
 }) => {
   const seenBy: string | undefined =
-    (sighting as Sighting).seenBy ?? (sighting as ExternalSighting).email;
+    (sighting as Sighting).seenBy ??
+    (sighting as ExternalSighting).email.split("@")[0];
 
   const seenOn: Date | undefined =
     (sighting as Sighting).seenOn ?? (sighting as ExternalSighting).date;
