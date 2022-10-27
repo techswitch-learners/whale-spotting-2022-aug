@@ -4,7 +4,7 @@
       <img src="./logo.png" />
       <div className="pin-info">
         <p>{title}</p>
-        <p>{species}</p>
+        {species ? <p>{species}</p> : <></>}
       </div>
     </div>
   );
