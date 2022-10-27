@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .new-sighting-form {
   display: flex;
   flex-direction: column;
@@ -19,6 +21,26 @@
   flex-direction: column;
 }
 
+.map-box {
+  height: 400px;
+  width: 100%;
+}
+
+.map-pin {
+  transform: translate(-15px, -20px);
+  background-color: $primary-dark;
+  border-radius: 50%;
+  height: 2.5em;
+  width: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 90%;
+    height: calc(90% * 315 / 631);
+  }
+}
+
 .species-dropdown {
   width: 85%;
 }
@@ -27,4 +49,8 @@
   display: flex;
   gap: 10px;
   justify-content: center;
+
+  & p {
+    margin: 0;
+  }
 }

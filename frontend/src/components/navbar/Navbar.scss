@@ -4,12 +4,16 @@ nav.navbar {
   height: 2em;
   background-color: $secondary;
   color: $text-color-light;
-  padding: 0.5em;
+  padding: 0.5em 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  min-width: 100%;
 
   button {
     background: transparent;
@@ -90,6 +94,14 @@ nav.navbar {
   @media only screen and (min-width: 651px) {
     .mobile-menu {
       display: none;
+    }
+
+    .admin-links {
+      padding-right: 0.5em;
+    }
+
+    img.navbar__logo {
+      padding-left: 0.5em;
     }
   }
 
