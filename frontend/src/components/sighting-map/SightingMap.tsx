@@ -53,7 +53,7 @@ export const SightingMap: React.FC<SightingMapProps> = ({ sightings }) => {
           region: "GB",
         }}
         defaultCenter={{ lat: 51.506, lng: -0.169 }}
-        defaultZoom={15}
+        defaultZoom={5}
       >
         {points.map(({ lat, lng, id, title }) => {
           return <Marker text={title} key={id} lat={lat} lng={lng} />;
