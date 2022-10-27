@@ -1,6 +1,7 @@
 import React, { FormEvent, useState, useContext } from "react";
 import { LoginContext } from "../login/LoginManager";
 import { Redirect } from "react-router-dom";
+import "./Login.scss";
 
 export const Login: React.FunctionComponent = () => {
   const [username, setUsername] = useState("");
@@ -21,35 +22,36 @@ export const Login: React.FunctionComponent = () => {
 
   return (
     <>
-      <div className="admin-message">
-        <h2>ONLY ACCESSIBLE TO ADMINS</h2>
+      <p className="admin-message">ONLY ACCESSIBLE TO ADMINS!</p>
+      <div className="login-form">
+        <form onSubmit={tryLogin}>
+          <h1>Log In</h1>
+          <div className="login-form__field">
+            <label>
+              Username:
+              <input
+                type="text"
+                name="Username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+          </div>
+          <div className="login-form__field">
+            <label>
+              Password:
+              <input
+                type="password"
+                name="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+          </div>
+          <div className="login-form__button">
+            <input type="submit" value="Login" />
+          </div>
+        </form>
+        {error && <p className="login-form__message">{error}</p>}
       </div>
-      <h1>Log In</h1>
-      <form onSubmit={tryLogin}>
-        <label className="field">
-          Username
-          <input
-            type={"text"}
-            value={username}
-            placeholder="Username"
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-        <label className="field">
-          Password
-          <input
-            type={"password"}
-            value={password}
-            placeholder="Password"
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-
-        <button type="submit">Log In</button>
-      </form>
-      {error && <p>{error}</p>}
     </>
   );
 };

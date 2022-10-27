@@ -77,6 +77,14 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
         ) : (
           <></>
         )}
+        {sighting.location != null ? (
+          <p>
+            <span className="sighting-card__information">Location: </span>
+            {sighting.location.description}
+          </p>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

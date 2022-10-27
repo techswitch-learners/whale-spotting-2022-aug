@@ -1,11 +1,15 @@
+import React from "react";
 import "./NewSightingForm.scss";
 
-const MyMarker = ({ id, title }: any) => {
+interface MarkerProps {
+  lat: number;
+  lng: number;
+}
+
+export const Marker: React.FC<MarkerProps> = () => {
   return (
     <div className="map-pin">
       <img src="./logo.png" />
     </div>
   );
 };
-
-export default MyMarker;

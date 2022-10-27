@@ -10,6 +10,7 @@ import { Videos } from "./components/videos-page/Videos";
 import { PendingSightings } from "./components/pending-sightings-page/PendingSightings";
 import { Whaleopedia } from "./components/whaleopedia-page/Whaleopedia";
 import { Login } from "./components/login/Login";
+import { Error404Page } from "./components/error-404-page/Error404Page";
 
 const Routes: React.FunctionComponent = () => {
   return (
@@ -18,6 +19,9 @@ const Routes: React.FunctionComponent = () => {
         <Home />
       </Route>
       <Route exact path="/sightings">
+        <BrowseSightings />
+      </Route>
+      <Route path="/sightings/species/:speciesId">
         <BrowseSightings />
       </Route>
       <Route exact path="/whaleopedia">
@@ -34,6 +38,9 @@ const Routes: React.FunctionComponent = () => {
       </Route>
       <Route exact path="/users/create">
         <CreateUser />
+      </Route>
+      <Route>
+        <Error404Page />
       </Route>
     </Switch>
   );

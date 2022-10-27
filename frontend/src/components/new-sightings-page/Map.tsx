@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { FormValues } from "./NewSightingForm";
 import GoogleMapReact from "google-map-react";
-import Marker from "./Marker";
+import { Marker } from "./Marker";
 
 interface LocationInfo {
   lat: number;
@@ -13,14 +12,14 @@ interface DefaultProps {
   zoom: number;
 }
 
-interface MapProp {
-  formValues: FormValues;
-  setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
+interface MapProps {
+  setLatitude: (latitude: number) => void;
+  setLongitude: (longitude: number) => void;
 }
 
-export const Map: React.FunctionComponent<MapProp> = ({
-  formValues,
-  setFormValues,
+export const Map: React.FunctionComponent<MapProps> = ({
+  setLatitude,
+  setLongitude,
 }) => {
   const defaultProps: DefaultProps = {
     center: {
@@ -59,11 +58,8 @@ export const Map: React.FunctionComponent<MapProp> = ({
             lat: e.lat,
             lng: e.lng,
           });
-          setFormValues({
-            ...formValues,
-            latitude: e.lat.toString(),
-            longitude: e.lng.toString(),
-          });
+          setLatitude(e.lat);
+          setLongitude(e.lng);
         }}
       >
         <Marker lat={selectedPoint?.lat} lng={selectedPoint?.lng} />
