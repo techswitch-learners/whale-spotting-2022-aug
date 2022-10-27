@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import GoogleMapReact from "google-map-react";
-import Marker from "./Marker";
+import { Marker } from "./Marker";
 
 interface LocationInfo {
   lat: number;
@@ -12,12 +12,12 @@ interface DefaultProps {
   zoom: number;
 }
 
-interface MapProp {
+interface MapProps {
   setLatitude: (latitude: number) => void;
   setLongitude: (longitude: number) => void;
 }
 
-export const Map: React.FunctionComponent<MapProp> = ({
+export const Map: React.FunctionComponent<MapProps> = ({
   setLatitude,
   setLongitude,
 }) => {
