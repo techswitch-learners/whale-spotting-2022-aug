@@ -341,8 +341,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           }}
         />
 
-        <input
-          type="text"
+        <textarea
           placeholder="Description"
           onChange={(e) => {
             setFormValues({
