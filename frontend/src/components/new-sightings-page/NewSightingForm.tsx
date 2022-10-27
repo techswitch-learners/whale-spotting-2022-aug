@@ -7,18 +7,19 @@ import {
 import Select from "react-select";
 import { format } from "date-fns";
 import "./NewSightingForm.scss";
+import { Map } from "./Map";
 
 type LocationInputType =
   | "getLocationFromPhone"
   | "getLocationFromCoordinates"
-  | "getLocationFromName";
+  | "getLocationFromMap";
 
 interface NewSightingFormProps {
   whaleSpecies?: Species[];
   setSuccess: (success: boolean) => void;
 }
 
-interface FormValues {
+export interface FormValues {
   seenBy: string;
   date: string;
   latitude: string;
@@ -148,6 +149,20 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
     return numberOfErrors;
   };
 
+  const setLatitude = (latitude: number) => {
+    setFormValues((oldFormValues) => ({
+      ...oldFormValues,
+      latitude: latitude.toString(),
+    }));
+  };
+
+  const setLongitude = (longitude: number) => {
+    setFormValues((oldFormValues) => ({
+      ...oldFormValues,
+      longitude: longitude.toString(),
+    }));
+  };
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     if (validateForm() === 0) {
@@ -274,19 +289,26 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
           <div className="location-input-choice">
             <input
               type="radio"
-              value="getLocationFromName"
-              checked={locationInputType === "getLocationFromName"}
+              value="getLocationFromMap"
+              checked={locationInputType === "getLocationFromMap"}
               onChange={handleChange}
-              disabled
             />
-            <label htmlFor="getLocationFromName">Start typing a location</label>
-            <br />
-            {locationInputTypeError !== "" ? (
-              <>{locationInputTypeError}</>
-            ) : (
-              <></>
-            )}
+            <label htmlFor="getLocationFromMap">
+              Choose your location from the map
+            </label>
           </div>
+          {locationInputType == "getLocationFromMap" ? (
+            <div className="map">
+              <Map setLatitude={setLatitude} setLongitude={setLongitude} />
+            </div>
+          ) : (
+            <></>
+          )}
+          {locationInputTypeError !== "" ? (
+            <>{locationInputTypeError}</>
+          ) : (
+            <></>
+          )}
         </fieldset>
 
         {whaleSpecies !== undefined ? (
