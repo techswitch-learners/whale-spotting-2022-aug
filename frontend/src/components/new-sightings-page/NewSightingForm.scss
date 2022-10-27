@@ -18,11 +18,12 @@
 
 .location-input-choice {
   display: flex;
+  flex-direction: column;
 }
 
 .map-box {
   height: 400px;
-  width: 250px;
+  width: 100%;
 }
 
 .map-pin {
@@ -42,4 +43,14 @@
 
 .species-dropdown {
   width: 85%;
+}
+
+.location-from-phone {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
+  & p {
+    margin: 0;
+  }
 }
