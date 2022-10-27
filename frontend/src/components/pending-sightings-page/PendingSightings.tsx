@@ -8,6 +8,7 @@ import {
 } from "../../clients/apiClient";
 import { LoginContext } from "../login/LoginManager";
 import { PendingSightingCard } from "./PendingSightingCard";
+import "./PendingSightings.scss";
 
 export interface SightingReport {
   sighting: Sighting;
@@ -135,9 +136,9 @@ export const PendingSightings: React.FunctionComponent = () => {
       <h1>Pending Sightings</h1>
 
       {sightingReports.filter((report) => report.success).length !== 0 ? (
-        <>
+        <div className="reviewed-sightings">
           <p>The following sightings were successfully reviewed: </p>
-          <ul>
+          <ul className="reviewed-sightings__numbers">
             {sightingReports
               .filter((report) => report.success)
               .map((report) => {
@@ -149,7 +150,7 @@ export const PendingSightings: React.FunctionComponent = () => {
                 );
               })}
           </ul>
-        </>
+        </div>
       ) : (
         <></>
       )}
