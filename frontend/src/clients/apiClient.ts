@@ -12,7 +12,7 @@ export interface ExternalSighting {
   id: number;
   date: Date;
   location: ExternalLocation;
-  species: ExternalSpecies;
+  species: ExternalSpecies[];
   photoUrl: string;
   email: string;
 }
