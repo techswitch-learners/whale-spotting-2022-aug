@@ -4,6 +4,36 @@ export interface ListResponse<T> {
   items: T[];
 }
 
+export interface SightingListResponse {
+  sightings: ExternalSighting[];
+}
+
+export interface ExternalSighting {
+  id: number;
+  date: Date;
+  location: ExternalLocation;
+  species: ExternalSpecies;
+  photoUrl: string;
+  email: string;
+}
+
+export interface ExternalLocation {
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  description: string;
+}
+
+export interface ExternalSpecies {
+  id: number;
+  name: string;
+  latinName: string;
+  photoUrl: string;
+  description: string;
+  endangeredStatus: string;
+}
+
 export interface ConservationStatus {
   id: number;
   code: string;
@@ -27,10 +57,22 @@ export interface Sighting {
   imageUrl?: string;
   description?: string;
   whaleCount: number;
-  location?: string;
+  location?: Location;
   latitude: number;
   longitude: number;
 }
+
+export type GenericSighting = Sighting | ExternalSighting;
+
+export const isExternalSighting = (
+  sighting: GenericSighting
+): sighting is ExternalSighting => {
+  return "date" in sighting;
+};
+
+export const getDate = (sighting: GenericSighting): Date => {
+  return (sighting as Sighting).seenOn ?? (sighting as ExternalSighting).date;
+};
 
 export interface CreateSightingRequest {
   seenBy: string;
@@ -41,6 +83,11 @@ export interface CreateSightingRequest {
   whaleCount: number;
   latitude: number;
   longitude: number;
+}
+
+interface Location {
+  id: number;
+  description: string;
 }
 
 export interface ConfirmOrRejectRequest {
@@ -114,6 +161,14 @@ export const getSightings = async (): Promise<Sighting[]> => {
   return sightingsListResponse.items;
 };
 
+export const getSightingsBySpeciesId = async (
+  speciesId: string
+): Promise<Sighting[]> => {
+  const response = await fetch(`${backendUrl}/sightings/species/${speciesId}`);
+  const sightingsListResponse: ListResponse<Sighting> = await response.json();
+  return sightingsListResponse.items;
+};
+
 export const checkLogInDetails = async (
   username: string,
   password: string
@@ -136,3 +191,11 @@ export async function createSighting(
   });
   return response.ok;
 }
+
+export const getExternalSightings = async (): Promise<ExternalSighting[]> => {
+  const response = await fetch(
+    `https://whale-spotting-external-api.herokuapp.com/api/sightings`
+  );
+  const listResponse: SightingListResponse = await response.json();
+  return listResponse.sightings;
+};

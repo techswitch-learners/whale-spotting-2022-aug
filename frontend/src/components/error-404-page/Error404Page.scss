@@ -1,0 +1,16 @@
+@import "../../constants.scss";
+
+.error-404-image {
+  border-radius: 50%;
+  max-width: 80%;
+  width: 400px;
+  margin-top: 10px;
+}
+
+.back-to-home-button {
+  background-color: $primary;
+  padding: 15px 32px;
+  color: $text-color-light;
+  text-decoration: none;
+  border-radius: 5px;
+}
