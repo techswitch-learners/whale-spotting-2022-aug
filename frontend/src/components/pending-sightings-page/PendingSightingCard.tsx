@@ -16,20 +16,26 @@ export const PendingSightingCard: React.FC<PendingSightingCardProps> = ({
   return (
     <div
       className={
-        "sighting-card" +
-        `${sightingReport.success === false ? " sighting-card__error" : ""}`
+        "pending-sighting-card" +
+        `${
+          sightingReport.success === false
+            ? " pending-sighting-card__error"
+            : ""
+        }`
       }
     >
-      <p>Post ID: {sighting.id}</p>
-      <p>Species: {sighting.species}</p>
-      <p>Seen By: {sighting.seenBy}</p>
-      <p>Seen On: {sighting.seenOn}</p>
-      <img src={sighting.imageUrl} />
-      <p>Description: {sighting.description}</p>
-      <p>Whale Count: {sighting.whaleCount}</p>
-      <p>Location: {sighting.location}</p>
-      <p>Latitude: {sighting.latitude}</p>
-      <p>Longitude: {sighting.longitude}</p>
+      <p className="sighting-card__title">Post ID: {sighting.id}</p>
+      <img className="image" src={sighting.imageUrl} />
+      <div className="card-data">
+        <p>Species: {sighting.species}</p>
+        <p>Seen By: {sighting.seenBy}</p>
+        <p>Seen On: {sighting.seenOn}</p>
+        <p>Description: {sighting.description}</p>
+        <p>Whale Count: {sighting.whaleCount}</p>
+        <p>Location: {sighting.location}</p>
+        <p>Latitude: {sighting.latitude}</p>
+        <p>Longitude: {sighting.longitude}</p>
+      </div>
       <fieldset>
         <input
           type="radio"
