@@ -16,16 +16,18 @@ export const Whaleopedia: React.FunctionComponent = () => {
   }
 
   return (
-    <div className="whale-list">
+    <>
       <h1>Whaleopedia</h1>
-      {whales.map((whale, index) => {
-        const whaleRoute = "/sightings/species/" + whale.id;
-        return (
-          <Link className="whaleopedia__link" key={whale.id} to={whaleRoute}>
-            <WhaleCard whale={whale} />
-          </Link>
-        );
-      })}
-    </div>
+      <div className="whale-list">
+        {whales.map((whale) => {
+          const whaleRoute = "/sightings/species/" + whale.id;
+          return (
+            <Link className="whaleopedia__link" key={whale.id} to={whaleRoute}>
+              <WhaleCard whale={whale} />
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 };

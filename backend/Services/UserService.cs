@@ -1,15 +1,18 @@
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using WhaleSpotting.Models.Database;
 using WhaleSpotting.Models.Request;
 using WhaleSpotting.Repositories;
+using WhaleSpotting.Exceptions;
 
 namespace WhaleSpotting.Services
 {
     public interface IUserService
     {
         User Create(CreateUserRequest newUser);
+        bool IsExistingUsername(string username);
     }
 
     public class UserService : IUserService
@@ -19,6 +22,19 @@ namespace WhaleSpotting.Services
         public UserService(IUserRepo users)
         {
             _users = users;
+        }
+
+        public bool IsExistingUsername(string username)
+        {
+            try
+            {
+                return _users.GetByUsername(username) != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
         public User Create(CreateUserRequest newUserRequest)
@@ -39,6 +55,11 @@ namespace WhaleSpotting.Services
                 numBytesRequested: 256 / 8
             ));
 
+            if (IsExistingUsername(newUserRequest.Username))
+            {
+                throw new DuplicateUsernameException("Username already exists");
+            }
+            
             User newUser = new User
             {
                 Name = newUserRequest.Name,
