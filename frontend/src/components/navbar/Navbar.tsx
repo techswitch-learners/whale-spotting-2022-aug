@@ -50,14 +50,15 @@ export const Navbar: React.FunctionComponent = () => {
               <Link to="/users/create" onClick={() => setIsExpanded(false)}>
                 User +
               </Link>
-              <button
+              <Link
+                to={"/"}
                 onClick={() => {
                   setIsExpanded(false);
                   loginContext.logOut();
                 }}
               >
                 Log Out
-              </button>
+              </Link>
             </div>
           )}
         </div>
