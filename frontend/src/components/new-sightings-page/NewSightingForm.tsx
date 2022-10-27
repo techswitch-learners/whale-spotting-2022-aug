@@ -314,6 +314,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         {whaleSpecies !== undefined ? (
           <Select
             className="species-dropdown"
+            placeholder="Select a species..."
             onChange={(e) => {
               setFormValues({
                 ...formValues,
@@ -330,8 +331,11 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         )}
 
         <input
+          className="whale-number-input"
           type="number"
           placeholder="Number of whales"
+          max="1000"
+          min="1"
           step="1"
           onChange={(e) => {
             setFormValues({
