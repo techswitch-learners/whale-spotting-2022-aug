@@ -1,6 +1,7 @@
 ﻿import React from "react";
 import { SightingCard } from "../browse-sightings-page/SightingCard";
 import { GenericSighting, isExternalSighting } from "../../clients/apiClient";
+import "./SightingList.scss";
 
 interface SightingListProps {
   sightings: GenericSighting[];
@@ -8,7 +9,7 @@ interface SightingListProps {
 
 export const SightingList: React.FC<SightingListProps> = ({ sightings }) => {
   return (
-    <ul>
+    <ul className="sighting-list">
       {sightings.map((sighting) => {
         const id = isExternalSighting(sighting)
           ? `ext-${sighting.id}`
