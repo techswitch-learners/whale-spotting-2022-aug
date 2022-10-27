@@ -12,7 +12,6 @@ import { Map } from "./Map";
 type LocationInputType =
   | "getLocationFromPhone"
   | "getLocationFromCoordinates"
-  | "getLocationFromName"
   | "getLocationFromMap";
 
 interface NewSightingFormProps {
@@ -150,6 +149,20 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
     return numberOfErrors;
   };
 
+  const setLatitude = (latitude: number) => {
+    setFormValues((oldFormValues) => ({
+      ...oldFormValues,
+      latitude: latitude.toString(),
+    }));
+  };
+
+  const setLongitude = (longitude: number) => {
+    setFormValues((oldFormValues) => ({
+      ...oldFormValues,
+      longitude: longitude.toString(),
+    }));
+  };
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     if (validateForm() === 0) {
@@ -284,15 +297,18 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
               Choose your location from the map
             </label>
           </div>
-          <div>
-            {locationInputType == "getLocationFromMap" ? (
-              <div className="map">
-                <Map formValues={formValues} setFormValues={setFormValues} />
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
+          {locationInputType == "getLocationFromMap" ? (
+            <div className="map">
+              <Map setLatitude={setLatitude} setLongitude={setLongitude} />
+            </div>
+          ) : (
+            <></>
+          )}
+          {locationInputTypeError !== "" ? (
+            <>{locationInputTypeError}</>
+          ) : (
+            <></>
+          )}
         </fieldset>
 
         {whaleSpecies !== undefined ? (
