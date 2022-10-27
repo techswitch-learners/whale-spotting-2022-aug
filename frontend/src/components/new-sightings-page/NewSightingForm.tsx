@@ -73,6 +73,23 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocationInputType(event.target.value as LocationInputType);
+    setFormValues({
+      ...formValues,
+      longitude: "",
+      latitude: "",
+    });
+  };
+
+  const getLocationFromBrowser = () => {
+    const onSuccess = (pos: GeolocationPosition) => {
+      const { latitude, longitude } = pos.coords;
+      setFormValues({
+        ...formValues,
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
+      });
+    };
+    navigator.geolocation.getCurrentPosition(onSuccess);
   };
 
   const validateForm = () => {
@@ -192,10 +209,18 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
               type="radio"
               value="getLocationFromPhone"
               checked={locationInputType === "getLocationFromPhone"}
-              onChange={handleChange}
-              disabled
+              onChange={(e) => {
+                handleChange(e);
+                getLocationFromBrowser();
+              }}
             />
             <label htmlFor="getLocationFromPhone">Use my location</label>
+            {locationInputType === "getLocationFromPhone" && (
+              <div className="location-from-phone">
+                <p>{formValues.latitude}</p>
+                <p>{formValues.longitude}</p>
+              </div>
+            )}
           </div>
           <div className="location-input-choice">
             <input
@@ -272,6 +297,7 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
 
         {whaleSpecies !== undefined ? (
           <Select
+            className="species-dropdown"
             onChange={(e) => {
               setFormValues({
                 ...formValues,

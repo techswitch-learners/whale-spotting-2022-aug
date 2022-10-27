@@ -1,22 +1,51 @@
+import { format } from "date-fns";
 import React from "react";
-import { Sighting } from "../../clients/apiClient";
+import {
+  Sighting,
+  ExternalSighting,
+  GenericSighting,
+} from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
 interface SightingProps {
-  sighting: Sighting;
+  sighting: GenericSighting;
 }
 
 export const SightingCard: React.FunctionComponent<SightingProps> = ({
   sighting,
 }) => {
+  const seenBy: string | undefined =
+    (sighting as Sighting).seenBy ?? (sighting as ExternalSighting).email;
+
+  const seenOn: Date | undefined =
+    (sighting as Sighting).seenOn ?? (sighting as ExternalSighting).date;
+
+  const imageUrl: string | undefined =
+    (sighting as Sighting).imageUrl ?? (sighting as ExternalSighting).photoUrl;
+
+  const description: string | undefined = (sighting as Sighting).description;
+
+  const whaleCount: number | undefined = (sighting as Sighting).whaleCount;
+
   return (
     <div className="sighting-card">
-      <h3 className="fade-in">Sighting #{sighting.id}</h3>
+      {sighting.species?.name ? (
+        <h3 className="sighting-card__title fade-in">
+          Sighting of {sighting.species?.name}
+        </h3>
+      ) : (
+        <h3 className="sighting-card__title fade-in">
+          Sighting recorded by {seenBy ?? "an anonymous whale spotter"}
+        </h3>
+      )}
 
-      {sighting.imageUrl !== "" ? (
+      <p className="sighting-card__date fade-in">
+        {format(new Date(seenOn), "do MMM yyyy")}
+      </p>
+      {imageUrl != undefined ? (
         <img
           className="image fade-in"
-          src={sighting.imageUrl}
+          src={imageUrl}
           alt={
             sighting.species?.name != null
               ? `${sighting.species?.name}`
@@ -28,14 +57,26 @@ export const SightingCard: React.FunctionComponent<SightingProps> = ({
       )}
 
       <div className="card-data fade-in">
-        <p>
-          <span className="sighting-card-information">Description: </span>
-          {sighting.description}
-        </p>
-        <p>
-          <span className="sighting-card-information">No. whales: </span>
-          {sighting.whaleCount}
-        </p>
+        {description != undefined ? (
+          <p>
+            <span className="sighting-card__information">
+              Description of sighting:{" "}
+            </span>
+            {description}
+          </p>
+        ) : (
+          <></>
+        )}
+        {whaleCount != undefined ? (
+          <p>
+            <span className="sighting-card__information">
+              Number of whales seen:{" "}
+            </span>
+            {whaleCount}
+          </p>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

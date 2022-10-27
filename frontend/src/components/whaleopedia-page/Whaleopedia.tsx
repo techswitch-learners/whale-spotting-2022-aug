@@ -15,11 +15,13 @@ export const Whaleopedia: React.FunctionComponent = () => {
   }
 
   return (
-    <div className="whale-list">
+    <>
       <h1>Whaleopedia</h1>
-      {whales.map((whale, index) => {
-        return <WhaleCard key={index} whale={whale} />;
-      })}
-    </div>
+      <div className="whale-list">
+        {whales.map((whale, index) => {
+          return <WhaleCard key={index} whale={whale} />;
+        })}
+      </div>
+    </>
   );
 };

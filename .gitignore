@@ -1,4 +1,4 @@
 .vscode
 
 *.pyz
-.idea
+**/.idea/
