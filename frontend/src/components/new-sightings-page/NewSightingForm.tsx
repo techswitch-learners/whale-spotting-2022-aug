@@ -203,33 +203,38 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
         <fieldset>
           <legend>Choose how to input your location:</legend>
           <div className="location-input-choice">
-            <input
-              type="radio"
-              value="getLocationFromPhone"
-              checked={locationInputType === "getLocationFromPhone"}
-              onChange={(e) => {
-                handleChange(e);
-                getLocationFromBrowser();
-              }}
-            />
-            <label htmlFor="getLocationFromPhone">Use my location</label>
+            <div>
+              <input
+                type="radio"
+                value="getLocationFromPhone"
+                checked={locationInputType === "getLocationFromPhone"}
+                onChange={(e) => {
+                  handleChange(e);
+                  getLocationFromBrowser();
+                }}
+              />
+              <label htmlFor="getLocationFromPhone">Use my location</label>
+            </div>
             {locationInputType === "getLocationFromPhone" && (
               <div className="location-from-phone">
-                <p>{formValues.latitude}</p>
-                <p>{formValues.longitude}</p>
+                <p>Lat: {formValues.latitude}</p>
+                <p>Lon: {formValues.longitude}</p>
               </div>
             )}
           </div>
           <div className="location-input-choice">
-            <input
-              type="radio"
-              value="getLocationFromCoordinates"
-              checked={locationInputType === "getLocationFromCoordinates"}
-              onChange={handleChange}
-            />{" "}
-            <label htmlFor="getLocationFromCoordinates">
-              Enter latitude and longitude
-            </label>
+            <div>
+              <input
+                type="radio"
+                value="getLocationFromCoordinates"
+                checked={locationInputType === "getLocationFromCoordinates"}
+                onChange={handleChange}
+              />
+              {""}
+              <label htmlFor="getLocationFromCoordinates">
+                Enter latitude and longitude
+              </label>
+            </div>
             {locationInputType === "getLocationFromCoordinates" && (
               <div className="lat-and-long-inputs">
                 <input
@@ -272,15 +277,18 @@ export const NewSightingForm: React.FC<NewSightingFormProps> = ({
             )}
           </div>
           <div className="location-input-choice">
-            <input
-              type="radio"
-              value="getLocationFromName"
-              checked={locationInputType === "getLocationFromName"}
-              onChange={handleChange}
-              disabled
-            />
-            <label htmlFor="getLocationFromName">Start typing a location</label>
-            <br />
+            <div>
+              <input
+                type="radio"
+                value="getLocationFromName"
+                checked={locationInputType === "getLocationFromName"}
+                onChange={handleChange}
+                disabled
+              />
+              <label htmlFor="getLocationFromName">
+                Start typing a location
+              </label>
+            </div>
             {locationInputTypeError !== "" ? (
               <>{locationInputTypeError}</>
             ) : (

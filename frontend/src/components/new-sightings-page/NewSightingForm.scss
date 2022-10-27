@@ -16,8 +16,15 @@
 
 .location-input-choice {
   display: flex;
+  flex-direction: column;
 }
 
 .species-dropdown {
   width: 85%;
+}
+
+.location-from-phone {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
