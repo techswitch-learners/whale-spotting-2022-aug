@@ -31,16 +31,14 @@ export const BrowseSightings: React.FC = () => {
 
   const { speciesId } = useParams<{ speciesId: string }>();
 
-  if (speciesId === undefined) {
-    useEffect(() => {
+  useEffect(() => {
+    if (speciesId === undefined) {
       getSightings().then(setSightings);
       getExternalSightings().then(setExternalSightings);
-    }, []);
-  } else {
-    useEffect(() => {
+    } else {
       getSightingsBySpeciesId(speciesId).then(setSightings);
-    }, []);
-  }
+    }
+  }, [speciesId]);
 
   let contents = <></>;
 
