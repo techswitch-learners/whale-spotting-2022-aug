@@ -28,10 +28,14 @@ export const SightingMap: React.FC<SightingMapProps> = ({ sightings }) => {
     const longitude =
       (sighting as Sighting).longitude ??
       (sighting as ExternalSighting).location.longitude;
+    const species =
+      (sighting as Sighting).species?.name ??
+      (sighting as ExternalSighting).species?.name;
 
     return {
       id: id,
       title: title,
+      species: species,
       lat: latitude,
       lng: longitude,
     };
@@ -55,8 +59,16 @@ export const SightingMap: React.FC<SightingMapProps> = ({ sightings }) => {
         defaultCenter={{ lat: 51.506, lng: -0.169 }}
         defaultZoom={5}
       >
-        {points.map(({ lat, lng, id, title }) => {
-          return <Marker title={title} key={id} lat={lat} lng={lng} />;
+        {points.map(({ lat, lng, id, species, title }) => {
+          return (
+            <Marker
+              title={title}
+              species={species}
+              key={id}
+              lat={lat}
+              lng={lng}
+            />
+          );
         })}
       </GoogleMapReact>
     </div>
