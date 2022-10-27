@@ -1,4 +1,5 @@
 @import "../../constants";
+$fade-in-time: 0.5s;
 
 .sighting-card {
   margin-bottom: 2rem;
@@ -48,11 +49,11 @@
   }
 
   .fade-in {
-    animation: fadeIn 5s;
-    -webkit-animation: fadeIn 5s;
-    -moz-animation: fadeIn 5s;
-    -o-animation: fadeIn 5s;
-    -ms-animation: fadeIn 5s;
+    animation: fadeIn $fade-in-time;
+    -webkit-animation: fadeIn $fade-in-time;
+    -moz-animation: fadeIn $fade-in-time;
+    -o-animation: fadeIn $fade-in-time;
+    -ms-animation: fadeIn $fade-in-time;
   }
 
   @keyframes fadeIn {
