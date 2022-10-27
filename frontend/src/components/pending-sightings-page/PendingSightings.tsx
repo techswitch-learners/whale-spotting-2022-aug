@@ -21,6 +21,18 @@ export const PendingSightings: React.FunctionComponent = () => {
 
   const loginContext = useContext(LoginContext);
 
+  useEffect(() => {
+    const getPendingSightings = async () => {
+      const pendingSightings = await getAllPendingSightings();
+      setSightingReports(
+        pendingSightings.map((pendingSighting) => ({
+          sighting: pendingSighting,
+        }))
+      );
+    };
+    getPendingSightings();
+  }, []);
+
   if (!loginContext.isLoggedIn) {
     return <Redirect to="/login" />;
   }
@@ -65,18 +77,6 @@ export const PendingSightings: React.FunctionComponent = () => {
       pendingStatusChange: newStatus,
     }));
   };
-
-  useEffect(() => {
-    const getPendingSightings = async () => {
-      const pendingSightings = await getAllPendingSightings();
-      setSightingReports(
-        pendingSightings.map((pendingSighting) => ({
-          sighting: pendingSighting,
-        }))
-      );
-    };
-    getPendingSightings();
-  }, []);
 
   const submitRequests: React.MouseEventHandler<
     HTMLButtonElement
