@@ -1,10 +1,14 @@
 import { format } from "date-fns";
 import React from "react";
-import { Sighting, ExternalSighting } from "../../clients/apiClient";
+import {
+  Sighting,
+  ExternalSighting,
+  GenericSighting,
+} from "../../clients/apiClient";
 import "./BrowseSightings.scss";
 
 interface SightingProps {
-  sighting: Sighting | ExternalSighting;
+  sighting: GenericSighting;
 }
 
 export const SightingCard: React.FunctionComponent<SightingProps> = ({

@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from "react";
 import {
-  getExternalSightings,
   getSightings,
+  getExternalSightings,
   Sighting,
   ExternalSighting,
+  GenericSighting,
+  getDate,
 } from "../../clients/apiClient";
-import { SightingCard } from "./SightingCard";
+import { SightingMap } from "../sighting-map/SightingMap";
+import { SightingList } from "../sighting-list/SightingList";
 import "./BrowseSightings.scss";
+import { compareDesc } from "date-fns";
 
 export const BrowseSightings: React.FC = () => {
   const [sightings, setSightings] = useState<Sighting[]>();
   const [externalSightings, setExternalSightings] =
     useState<ExternalSighting[]>();
+
+  let allSightings: GenericSighting[] = (
+    (sightings as GenericSighting[]) ?? []
+  ).concat(...(externalSightings ?? []));
+
+  allSightings = allSightings.sort((a, b) =>
+    compareDesc(getDate(a), getDate(b))
+  );
+
+  const [isShowingMap, setIsShowingMap] = useState(false);
 
   useEffect(() => {
     getSightings().then(setSightings);
@@ -24,18 +38,19 @@ export const BrowseSightings: React.FC = () => {
 
   return (
     <>
-      <h2>Reported Sightings</h2>
-      <ul>
-        {sightings?.map((sighting) => (
-          <SightingCard sighting={sighting} key={sighting.id} />
-        ))}
-      </ul>
-      <h2>Sighting from the Washington Whale Hotline</h2>
-      <ul>
-        {externalSightings?.map((apiSighting) => (
-          <SightingCard sighting={apiSighting} key={apiSighting.id} />
-        ))}
-      </ul>
+      <h1>Reported Sightings</h1>
+      <button
+        onClick={() => {
+          setIsShowingMap(!isShowingMap);
+        }}
+      >
+        {isShowingMap ? "List View" : "Map View"}
+      </button>
+      {isShowingMap ? (
+        <SightingMap sightings={allSightings} />
+      ) : (
+        <SightingList sightings={allSightings} />
+      )}
     </>
   );
 };

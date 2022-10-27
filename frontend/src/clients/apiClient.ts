@@ -62,6 +62,18 @@ export interface Sighting {
   longitude: number;
 }
 
+export type GenericSighting = Sighting | ExternalSighting;
+
+export const isExternalSighting = (
+  sighting: GenericSighting
+): sighting is ExternalSighting => {
+  return "date" in sighting;
+};
+
+export const getDate = (sighting: GenericSighting): Date => {
+  return (sighting as Sighting).seenOn ?? (sighting as ExternalSighting).date;
+};
+
 export interface CreateSightingRequest {
   seenBy: string;
   seenOn: string;
