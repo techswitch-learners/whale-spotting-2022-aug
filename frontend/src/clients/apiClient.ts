@@ -101,6 +101,13 @@ export interface User {
   userName: string;
 }
 
+export interface CreateUserRequest {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
 export const getAllSpecies = async (): Promise<Species[]> => {
   const response = await fetch(`${backendUrl}/whales`);
   const whaleListResponse: ListResponse<Species> = await response.json();
@@ -198,4 +205,21 @@ export const getExternalSightings = async (): Promise<ExternalSighting[]> => {
   );
   const listResponse: SightingListResponse = await response.json();
   return listResponse.sightings;
+};
+
+export const createUser = async (
+  username: string,
+  password: string,
+  user: CreateUserRequest
+): Promise<boolean> => {
+  const response = await fetch(`${backendUrl}/users/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+    },
+    body: JSON.stringify(user),
+  });
+
+  return response.ok;
 };

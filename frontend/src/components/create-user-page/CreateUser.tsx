@@ -1,4 +1,5 @@
 import React, { FormEvent, useContext, useState } from "react";
+import { createUser } from "../../clients/apiClient";
 import { LoginContext } from "../login/LoginManager";
 import "./CreateUser.scss";
 
@@ -93,24 +94,15 @@ export const CreateUser: React.FunctionComponent = () => {
       validateEmail(formEmail) &&
       validatePassword(formPassword)
     ) {
-      fetch("https://localhost:5001/users/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${btoa(
-            `${loginContext.username}:${loginContext.password}`
-          )}`,
-        },
-        body: JSON.stringify({
-          name: formName,
-          username: formUsername,
-          email: formEmail,
-          password: formPassword,
-        }),
+      createUser(loginContext.username, loginContext.password, {
+        username: formUsername,
+        name: formName,
+        password: formPassword,
+        email: formEmail,
       })
-        .then((res) => {
+        .then((isSuccess) => {
           setAddUserMessage(
-            res.ok
+            isSuccess
               ? "User added successfully!"
               : "Sorry, couldn't add the user!"
           );
