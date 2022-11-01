@@ -2,7 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WhaleSpotting.Models.Database;
-
+using static WhaleSpotting.DotEnv;
 namespace WhaleSpotting
 {
     public class WhaleSpottingDbContext : DbContext
@@ -17,6 +17,7 @@ namespace WhaleSpotting
             DbContextOptionsBuilder optionsBuilder
         )
         {
+            Load(".env");
             optionsBuilder.UseNpgsql(GetConnectionString());
         }
 
